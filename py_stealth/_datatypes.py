@@ -1,4 +1,4 @@
-
+﻿
 import struct
 
 from .config import STEALTH_CODEC, SCRIPT_CODEC
