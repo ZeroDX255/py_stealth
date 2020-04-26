@@ -81,11 +81,13 @@ class Connection:
             if len(data) < 10:
                 self._buffer += data
                 break
-            size, type_, length = struct.unpack_from('=IHI', data, offset)
+            size = struct.unpack_from('!I', data, offset)[0]
+            offset += 4
+            type_, length = struct.unpack_from('=HI', data, offset)
             if size > len(data):
                 self._buffer += data
                 break
-            offset += 10
+            offset += 6
             # packet type is 1 (a returned value)
             if type_ == 1:
                 index = struct.unpack_from('H', data, offset)[0]
