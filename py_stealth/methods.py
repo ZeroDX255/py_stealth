@@ -2388,8 +2388,8 @@ class _ItemProperty:
     keys = 'Prop', 'ElemNum'
 
 class _Gump:
-    fmt = '=2I2Hi4?'
-    args = [_uint, _uint, _ushort, _ushort, _int] + [_bool] * 4
+    fmt = '=2I2hi4?'
+    args = [_uint, _uint, _short, _short, _int] + [_bool] * 4
     keys = ('Serial', 'GumpID', 'X', 'Y', 'Pages', 'NoMove', 'NoResize',
             'NoDispose', 'NoClose')
 
