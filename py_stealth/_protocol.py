@@ -78,7 +78,7 @@ class Connection:
                 data = self._buffer + data
                 self._buffer = bytes()
             # parse packet header
-            if len(data) < 10:
+            if len(data) - offset < 10:
                 self._buffer += data
                 break
             size = struct.unpack_from('!I', data, offset)[0]
