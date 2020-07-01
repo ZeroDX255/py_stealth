@@ -159,7 +159,7 @@ class ScriptMethod:
 def get_port():
     def win():
         import os
-        from . import _winapi
+        from . import py_stealth_winapi as _winapi
         wnd = 'TStealthForm'.decode() if b'' == '' else 'TStealthForm'  # py2
         hwnd = _winapi.FindWindow(wnd, None)
         if not hwnd:
