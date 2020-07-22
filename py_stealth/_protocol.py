@@ -71,6 +71,8 @@ class Connection:
                 exit(1)
         except socket.error:
             return
+        if DEBUG:
+            print('Data received: {}'.format(data))
         # parse data
         offset = 0
         while 1:
@@ -119,6 +121,8 @@ class Connection:
                 break
 
     def send(self, data):
+        if DEBUG:
+            print('Packet sent: {}'.format(data))
         self._sock.send(data)
 
 
