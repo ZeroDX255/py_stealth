@@ -1243,7 +1243,7 @@ def Journal(StringIndex):
     return _get_journal_line(StringIndex)
 
 
-_set_journal_line = _ScriptMethod(123)  # SetJournalLine
+_set_journal_line = _ScriptMethod(124)  # SetJournalLine
 _set_journal_line.argtypes = [_uint,  # StringIndex
                               _str]   # Text
 
