@@ -1021,6 +1021,10 @@ def CastToObj(SpellName, ObjID):
     _wait_target_object(ObjID)
     _cast_spell(_get_spell_id(SpellName))
 
+def CastToObject(SpellName, ObjID):
+    _wait_target_object(ObjID)
+    _cast_spell(_get_spell_id(SpellName))
+
 
 _is_active_spell_ability = _ScriptMethod(98)  # IsActiveSpellAbility
 _is_active_spell_ability.restype = _bool
@@ -2080,6 +2084,9 @@ def MenuPresent():
 _cancel_menu = _ScriptMethod(209)  # CancelMenu
 
 def CancelMenu():
+    _cancel_menu()
+
+def CancelAllMenuHooks():
     _cancel_menu()
 
 
