@@ -1,5 +1,4 @@
-﻿
-from __future__ import print_function
+﻿from __future__ import print_function
 
 import platform
 import sys
@@ -12,7 +11,6 @@ import time
 from .config import DEBUG, HOST, PORT, MSG_TIMEOUT, SOCK_TIMEOUT, GET_PORT_ATTEMPT_COUNT
 from ._datatypes import *
 from .utils import show_error_message
-
 
 EVENTS_NAMES = (
     'eviteminfo', 'evitemdeleted', 'evspeech', 'evdrawgameplayer',
@@ -41,6 +39,7 @@ class Connection:
         self.pause = False
         self.results = {}
         self.callbacks = {}
+        self._handlers = []
         for i in range(len(EVENTS_NAMES)):
             self.callbacks[i] = None
 
@@ -93,7 +92,7 @@ class Connection:
             # packet type is 1 (a returned value)
             if type_ == 1:
                 index = struct.unpack_from('H', data, offset)[0]
-                self.results[index] = data[offset+2:offset+length]
+                self.results[index] = data[offset + 2:offset + length]
                 offset += length
             # packet type is 3 (an event callback)
             elif type_ == 3:
@@ -108,8 +107,12 @@ class Connection:
                     arg = argtype.from_buffer(data, offset)
                     offset += struct.calcsize(arg.fmt)
                     args.append(arg.value)
-                # run handler
-                self.callbacks[index](*args)
+                # save handler
+                handler = {
+                    'handler': self.callbacks[index],
+                    'args': args
+                }
+                self._handlers.append(handler)
             # packet type is 4 (a pause script packet)
             elif type_ == 4:
                 self.pause = True if not self.pause else False
@@ -119,6 +122,11 @@ class Connection:
                 exit(0)
             if offset >= len(data):
                 break
+
+        # run event handlers
+        while len(self._handlers):
+            handler = self._handlers.pop(0)
+            handler['handler'](*handler['args'])
 
     def send(self, data):
         if DEBUG:
@@ -147,9 +155,9 @@ class ScriptMethod:
             data += cls(val).serialize()
         # form packet
         header = struct.pack('=HI', self.index, len(data))
-        size = struct.pack('!I', len(header+data))
+        size = struct.pack('!I', len(header + data))
         # send to the stealth
-        conn.send(size+header+data)
+        conn.send(size + header + data)
         # wait for a result if required
         while self.restype is not None:
             conn.receive()
