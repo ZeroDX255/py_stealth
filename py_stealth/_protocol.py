@@ -80,15 +80,15 @@ class Connection:
                 data = self._buffer + data
                 self._buffer = bytes()
             # parse packet header
-            if len(data) - offset < 10:
+            if len(data) - offset < 4:
                 self._buffer += data[offset:]
                 break
             size = struct.unpack_from('!I', data, offset)[0]
             offset += 4
-            type_, length = struct.unpack_from('=HI', data, offset)
-            if size > len(data):
-                self._buffer += data
+            if size > len(data) - offset:
+                self._buffer += data[offset - 4:]
                 break
+            type_, length = struct.unpack_from('=HI', data, offset)
             offset += 6
             # packet type is 1 (a returned value)
             if type_ == 1:
