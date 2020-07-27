@@ -4129,4 +4129,67 @@ def PlayWav(FileName):
         AddToSystemJournal(error)
 
 
+_get_multis = _ScriptMethod(347) # GetMultis
+_get_multis.restype = _buffer
+
+def GetMultis():
+    data = _get_multis()
+    result = []
+    count = _struct.unpack_from('I', data, 0)
+    offset = 4
+
+
+
+    return result
+
+
+"""
+SCGetMultis:
+  begin
+    TempCardinal := Script_GetMultis(MultiItems);
+    ScriptMethodAnswer.AddParam(TempCardinal);
+    if(TempCardinal > 0) then
+      ScriptMethodAnswer.AddParamWithSize(MultiItems[0], TempCardinal * SizeOf(TMultiItem))
+    else
+      ScriptMethodAnswer.AddParamWithSize(TempCardinal, 0);
+  end;
+  
+  TMultiItem = packed record
+    ID : Cardinal;
+    X : Word;
+    Y : Word;
+    Z : ShortInt;
+
+    XMin : Word;
+    XMax : Word;
+    YMin : Word;
+    YMax : Word;
+    Width : Word;
+    Height : Word;
+end;
+"""
+
+
+"""
+SCGetMenuItemsEx:
+  begin
+    RecvMsgStream.Read(TempStrLen, 4);
+    SetLength(TempStr, TempStrLen);
+    if TempStrLen > 0 then
+      RecvMsgStream.Read(TempStr[Low(TempStr)], TempStrLen * SizeOf(Char));
+
+    MenuResponses := Script_GetMenuItemsEx(TempStr);
+    if Length(MenuResponses) > 0 then
+      for I := 0 to Length(MenuResponses) - 1 do
+      begin
+        ScriptMethodAnswer.AddParamWithSize(MenuResponses[i].Model, SizeOf(Word));
+        ScriptMethodAnswer.AddParamWithSize(MenuResponses[i].Color, SizeOf(Word));
+        ScriptMethodAnswer.AddStringParam(MenuResponses[i].Text);
+      end
+    else
+      ScriptMethodAnswer.ReadyForSend := True;
+  end;
+"""
+
+
 # TODO: 347(SCGetMultis)  358(SCGetMenuItemsEx)

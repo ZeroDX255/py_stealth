@@ -82,18 +82,18 @@ class Connection:
             if len(data) - offset < 4:
                 self._buffer += data[offset:]
                 break
-            size = struct.unpack_from('!I', data, offset)[0]
+            size, = struct.unpack_from('!I', data, offset)
             offset += 4
             if size > len(data) - offset:
                 self._buffer += data[offset - 4:]
                 break
-            type_, length = struct.unpack_from('=HI', data, offset)
-            offset += 6
+            type_, = struct.unpack_from('H', data, offset)
+            offset += 2
             # packet type is 1 (a returned value)
             if type_ == 1:
-                index = struct.unpack_from('H', data, offset)[0]
-                self.results[index] = data[offset + 2:offset + length]
-                offset += length
+                index, = struct.unpack_from('H', data, offset)
+                self.results[index] = data[offset + 2:offset + size]
+                offset += size
             # packet type is 3 (an event callback)
             elif type_ == 3:
                 index, count = struct.unpack_from('=2B', data, offset)
@@ -116,7 +116,7 @@ class Connection:
             # packet type is 4 (a pause script packet)
             elif type_ == 4:
                 self.pause = True if not self.pause else False
-                offset += length
+                offset += size
             # packet type is 2 (terminate script)
             elif type_ == 2:
                 exit(0)
@@ -154,10 +154,11 @@ class ScriptMethod:
         for cls, val in zip(self.argtypes, args):
             data += cls(val).serialize()
         # form packet
-        header = struct.pack('=HI', self.index, len(data))
-        size = struct.pack('!I', len(header + data))
+        index = struct.pack('H', self.index)
+        packet = index + data
+        size = struct.pack('!I', len(packet))
         # send to the stealth
-        conn.send(size + header + data)
+        conn.send(size + packet)
         # wait for a result if required
         while self.restype is not None:
             conn.receive()
