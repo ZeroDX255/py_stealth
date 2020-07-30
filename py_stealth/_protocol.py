@@ -47,6 +47,8 @@ class Connection:
     @property
     def method_id(self):
         self._id += 1
+        if self._id >= 65535:
+            self._id = 0
         return self._id
 
     def connect(self, host=None, port=None):
