@@ -35,6 +35,7 @@ class Connection:
     def __init__(self):
         self._sock = socket.socket()
 
+        self._id = 0
         self._buffer = bytes()
         self.pause = False
         self.results = {}
@@ -42,6 +43,11 @@ class Connection:
         self._handlers = []
         for i in range(len(EVENTS_NAMES)):
             self.callbacks[i] = None
+
+    @property
+    def method_id(self):
+        self._id += 1
+        return self._id
 
     def connect(self, host=None, port=None):
         if host is None:
@@ -59,7 +65,7 @@ class Connection:
     def close(self):
         self._sock.close()
 
-    def receive(self, size=4096):
+    def receive(self, size=3):
         # try to get a new data from socket
         data = b''
         try:
@@ -91,8 +97,8 @@ class Connection:
             offset += 2
             # packet type is 1 (a returned value)
             if type_ == 1:
-                index, = struct.unpack_from('H', data, offset)
-                self.results[index] = data[offset + 2:offset + size]
+                id_, = struct.unpack_from('H', data, offset)
+                self.results[id_] = data[offset + 2:offset + size]
                 offset += size
             # packet type is 3 (an event callback)
             elif type_ == 3:
@@ -154,8 +160,9 @@ class ScriptMethod:
         for cls, val in zip(self.argtypes, args):
             data += cls(val).serialize()
         # form packet
-        index = struct.pack('H', self.index)
-        packet = index + data
+        id_ = conn.method_id if self.restype else 0
+        header = struct.pack('=2H', self.index, id_)
+        packet = header + data
         size = struct.pack('!I', len(packet))
         # send to the stealth
         conn.send(size + packet)
@@ -163,7 +170,7 @@ class ScriptMethod:
         while self.restype is not None:
             conn.receive()
             try:
-                result = self.restype.from_buffer(conn.results.pop(self.index))
+                result = self.restype.from_buffer(conn.results.pop(id_))
                 return result.value
             except KeyError:
                 time.sleep(.001)
