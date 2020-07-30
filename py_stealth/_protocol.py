@@ -65,7 +65,7 @@ class Connection:
     def close(self):
         self._sock.close()
 
-    def receive(self, size=3):
+    def receive(self, size=4096):
         # try to get a new data from socket
         data = b''
         try:
