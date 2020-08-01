@@ -3,7 +3,7 @@
 import datetime as _datetime
 import struct as _struct
 import time as _time
-from os import linesep as _LINESEP
+from os import linesep as _linesep
 
 from ._datatypes import *
 from ._protocol import EVENTS_NAMES as _EVENTS_NAMES
@@ -2470,7 +2470,7 @@ _get_gump_text.argtypes = [_ushort]  # GumpIndex
 
 def GetGumpTextLines(GumpIndex):
     result = _get_gump_text(GumpIndex)
-    return result.split(_LINESEP)[:-1]  # cause '' was in the end of list
+    return result.split(_linesep)[:-1]  # cause '' was in the end of list
 
 
 _get_gump_full_lines = _ScriptMethod(226)  # GetGumpFullLines
@@ -2480,7 +2480,7 @@ _get_gump_full_lines.argtypes = [_ushort]  # GumpIndex
 
 def GetGumpFullLines(GumpIndex):
     result = _get_gump_full_lines(GumpIndex)
-    return result.split(_LINESEP)[:-1]  # cause '' was in the end of list
+    return result.split(_linesep)[:-1]  # cause '' was in the end of list
 
 
 _get_gump_short_lines = _ScriptMethod(227)  # GetGumpShortLines
@@ -2490,7 +2490,7 @@ _get_gump_short_lines.argtypes = [_ushort]  # GumpIndex
 
 def GetGumpShortLines(GumpIndex):
     result = _get_gump_short_lines(GumpIndex)
-    return result.split(_LINESEP)[:-1]  # cause '' was in the end of list
+    return result.split(_linesep)[:-1]  # cause '' was in the end of list
 
 
 _get_gump_buttons = _ScriptMethod(228)  # GetGumpButtonsDescription
@@ -2500,7 +2500,7 @@ _get_gump_buttons.argtypes = [_ushort]  # GumpIndex
 
 def GetGumpButtonsDescription(GumpIndex):
     result = _get_gump_buttons(GumpIndex)
-    return result.split(_LINESEP)[:-1]  # cause '' was in the end of list
+    return result.split(_linesep)[:-1]  # cause '' was in the end of list
 
 
 _get_gump_info = _ScriptMethod(229)  # GetGumpInfo
@@ -3647,7 +3647,7 @@ _uint_to_flags.argtypes = [_ubyte,  # Group
 def ConvertIntegerToFlags(Group, Flags):
     if Group not in _tile_groups.keys():
         raise ValueError('GetTileFlags: Group must be "Land" or "Static"')
-    return _uint_to_flags(_tile_groups[Group], Flags).split(_LINESEP)[:-1]
+    return _uint_to_flags(_tile_groups[Group], Flags).split(_linesep)[:-1]
 
 
 _get_land_tile_data = _ScriptMethod(280)  # GetLandTileData
@@ -4449,7 +4449,7 @@ global_chat_channel_list.restype = _str
 
 def GlobalChatChannelsList():
     result = global_chat_channel_list()
-    return result.split(_LINESEP)[:-1]  # cause '' was in the end of list
+    return result.split(_linesep)[:-1]  # cause '' was in the end of list
 
 
 _set_open_doors = _ScriptMethod(400)  # SetMoveOpenDoor
