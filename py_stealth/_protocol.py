@@ -64,6 +64,12 @@ class Connection:
         self._sock.connect((host, port))
         self._sock.setblocking(False)
 
+        # send language to stealth (data type - 5)
+        # python - 1; delphi - 2; c# - 3; other - 255
+        data = struct.pack('=HB', 5, 1)
+        size = struct.pack('!I', len(data))
+        self.send(size + data)
+
     def close(self):
         self._sock.close()
 
