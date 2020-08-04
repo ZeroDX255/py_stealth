@@ -66,7 +66,7 @@ class Connection:
 
         # send language to stealth (data type - 5)
         # python - 1; delphi - 2; c# - 3; other - 255
-        data = struct.pack('=HB', 5, 1)
+        data = struct.pack('=HHB', 5, 0, 1)
         size = struct.pack('!I', len(data))
         self.send(size + data)
 
