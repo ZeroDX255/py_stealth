@@ -107,7 +107,7 @@ class Connection:
             if type_ == 1:
                 id_, = struct.unpack_from('H', data, offset)
                 self.results[id_] = data[offset + 2:offset + size]
-                offset += size
+                offset += size - 2  # - type_
             # packet type is 3 (an event callback)
             elif type_ == 3:
                 index, count = struct.unpack_from('=2B', data, offset)
@@ -130,7 +130,7 @@ class Connection:
             # packet type is 4 (a pause script packet)
             elif type_ == 4:
                 self.pause = True if not self.pause else False
-                offset += size
+                offset += size - 2  # - type_
             # packet type is 2 (terminate script)
             elif type_ == 2:
                 exit(0)
