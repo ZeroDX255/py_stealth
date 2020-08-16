@@ -30,6 +30,12 @@ EVENTS_ARGTYPES = _str, _uint, _int, _ushort, _short, _ubyte, _byte, _bool
 VERSION = 1, 0, 0, 0
 
 
+class TerminateScript(Exception):
+    """Exception raised for terminate script packet."""
+
+    message = 'Terminate script packet received.'
+
+
 class Connection:
     port = None
 
@@ -135,7 +141,7 @@ class Connection:
                 offset += size - 2  # - type_
             # packet type is 2 (terminate script)
             elif type_ == 2:
-                exit(0)
+                raise TerminateScript()
             if offset >= len(data):
                 break
 
