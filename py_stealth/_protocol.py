@@ -27,6 +27,7 @@ EVENTS_NAMES = (
 )
 
 EVENTS_ARGTYPES = _str, _uint, _int, _ushort, _short, _ubyte, _byte, _bool
+VERSION = 1, 0, 0, 0
 
 
 class Connection:
@@ -64,9 +65,9 @@ class Connection:
         self._sock.connect((host, port))
         self._sock.setblocking(False)
 
-        # send language to stealth (data type - 5)
+        # send language to stealth (data type - 5) + protocol version
         # python - 1; delphi - 2; c# - 3; other - 255
-        data = struct.pack('=HHB', 5, 0, 1)
+        data = struct.pack('=HH5B', 5, 0, 1, *VERSION)
         size = struct.pack('!I', len(data))
         self.send(size + data)
 
