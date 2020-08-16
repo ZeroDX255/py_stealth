@@ -65,7 +65,8 @@ class Connection:
         self._sock.connect((host, port))
         self._sock.setblocking(False)
 
-        # send language to stealth (data type - 5) + protocol version
+        # SCLangVersion
+        # send language type and protocol version to stealth (data type - 5)
         # python - 1; delphi - 2; c# - 3; other - 255
         data = struct.pack('=HH5B', 5, 0, 1, *VERSION)
         size = struct.pack('!I', len(data))
