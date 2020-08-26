@@ -3969,11 +3969,7 @@ def StealthPath():
 
 
 def CurrentScriptPath():
-    import sys
-    try:
-        return sys.argv[1]
-    except IndexError:
-        return sys.modules['__main__'].__file__
+    return __file__
 
 
 _get_stealth_profile_path = _ScriptMethod(306)  # GetStealthProfilePath
