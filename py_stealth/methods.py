@@ -4632,7 +4632,8 @@ def GetMenuItemsEx(MenuCaption):
 
     data = _get_menu_items_ex(MenuCaption)
     result = []
-    offset = 0
+    # count = _struct.unpack_from('H', data, 0)
+    offset = 2
     while offset < len(data):
         model, color = _struct.unpack_from('HH', data, offset)
         offset += 4
