@@ -4649,3 +4649,46 @@ def GetMenuItemsEx(MenuCaption):
 
     return result
 
+
+_close_client_gump = _ScriptMethod(342)  # CloseClientGump
+_close_client_gump.argtypes = [_uint]  # ID
+
+def CloseClientGump(ID):
+    _close_client_gump(ID)
+
+
+_get_next_step_z = _ScriptMethod(366)  # GetNextStepZ
+_get_next_step_z.restype = _byte
+_get_next_step_z.argtypes = [_ushort,  # CurrX
+                             _ushort,  # CurrY
+                             _ushort,  # DestX
+                             _ushort,  # DestY
+                             _ubyte,  # WorldNum
+                             _byte]  # CurrZ
+
+def GetNextStepZ(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ):
+    return _get_next_step_z(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ)
+
+
+_client_hide = _ScriptMethod(368)  # ClientHide
+_client_hide.restype = _bool
+_client_hide.argtypes = [_uint]  # ID
+
+def ClientHide(ID):
+    return _client_hide(ID)
+
+
+_get_skill_lock_state = _ScriptMethod(369)  # GetSkillLockState
+_get_skill_lock_state.restype = _byte
+_get_skill_lock_state.argtypes = [_str]  # SkillName
+
+def GetSkillLockState(SkillName):
+    return _get_skill_lock_state(SkillName)
+
+
+_get_stat_lock_state = _ScriptMethod(372)  # GetStatLockState
+_get_stat_lock_state.restype = _byte
+_get_stat_lock_state.argtypes = [_str]  # SkillName
+
+def GetStatLockState(SkillName):
+    _get_stat_lock_state(SkillName)
