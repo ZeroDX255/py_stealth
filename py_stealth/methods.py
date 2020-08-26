@@ -501,14 +501,15 @@ def GetExtInfo():
     keys = ('MaxWeight', 'Race', 'StatCap', 'PetsCurrent', 'PetsMax',
             'FireResist', 'ColdResist', 'PoisonResist', 'EnergyResist',
             'Luck', 'DamageMin', 'DamageMax', 'Tithing_points',
-            'Hit_Chance_Incr', 'Swing_Speed_Incr', 'Damage_Incr',
-            'Lower_Reagent_Cost', 'HP_Regen', 'Stam_Regen', 'Mana_Regen',
-            'Reflect_Phys_Damage', 'Enhance_Potions', 'Defense_Chance_Incr',
-            'Spell_Damage_Incr', 'Faster_Cast_Recovery', 'Faster_Casting',
-            'Lower_Mana_Cost', 'Strength_Incr', 'Dex_Incr', 'Int_Incr',
-            'HP_Incr', 'Mana_Incr', 'Max_HP_Incr', 'Max_Stam_Incr',
-            'Max_Mana_Increase')
-    fmt = '<HBH2B4Hh2Hi23H'
+            'ArmorMax', 'fireresistMax', 'coldresistMax',
+            'poisonresistMax', 'energyresistMax', 'DefenseChance',
+            'DefensceChanceMax', 'Hit_Chance_Incr', 'Damage_Incr',
+            'Swing_Speed_Incr', 'Lower_Reagent_Cost', 'Spell_Damage_Incr',
+            'Faster_Cast_Recovery', 'Faster_Casting', 'Lower_Mana_Cost',
+            'HP_Regen', 'Stam_Regen', 'Mana_Regen', 'Reflect_Phys_Damage',
+            'Enhance_Potions', 'Strength_Incr', 'Dex_Incr', 'Int_Incr',
+            'HP_Incr', 'Mana_Incr')
+    fmt = '=HBH2B4Hh2Hi26H'
     data = _get_extended_info()
     if b'' == '':  # py2
         data = bytes(data)
