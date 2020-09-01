@@ -3014,6 +3014,10 @@ def EquipDressSet():
     return all(res)
 
 
+def DressSavedSet():
+    EquipDressSet()
+
+
 def Count(ObjType):
     FindType(ObjType, Backpack())
     return FindFullQuantity()
