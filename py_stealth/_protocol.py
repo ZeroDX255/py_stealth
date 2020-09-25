@@ -108,7 +108,7 @@ class Connection:
             # packet type is 1 (a returned value)
             if type_ == 1:
                 id_, = struct.unpack_from('H', data, offset)
-                self.results[id_] = data[offset + 2:offset + size]
+                self.results[id_] = data[offset + 2:offset + size - 2]
                 offset += size - 2  # - type_
             # packet type is 3 (an event callback)
             elif type_ == 3:
