@@ -4586,6 +4586,7 @@ def PlayWav(FileName):
 _get_multis = _ScriptMethod(347)  # GetMultis
 _get_multis.restype = _buffer
 
+
 def GetMultis():
     data = _get_multis()
     result = []
@@ -4605,6 +4606,7 @@ _get_menu_items_ex = _ScriptMethod(358)  # GetMenuItemsEx
 _get_menu_items_ex.restype = _buffer
 _get_menu_items_ex.argtypes = [_str]
 
+
 def GetMenuItemsEx(MenuCaption):
     """
     GetMenuItemsEx(MenuCaption: str) => Array of MenuItems
@@ -4619,6 +4621,7 @@ def GetMenuItemsEx(MenuCaption):
         print(menu_items[0].text)
         >> 1 Blank scroll
     """
+
     class MenuItems:
         model = None
         color = None
@@ -4653,6 +4656,7 @@ def GetMenuItemsEx(MenuCaption):
 _close_client_gump = _ScriptMethod(342)  # CloseClientGump
 _close_client_gump.argtypes = [_uint]  # ID
 
+
 def CloseClientGump(ID):
     _close_client_gump(ID)
 
@@ -4666,6 +4670,7 @@ _get_next_step_z.argtypes = [_ushort,  # CurrX
                              _ubyte,  # WorldNum
                              _byte]  # CurrZ
 
+
 def GetNextStepZ(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ):
     return _get_next_step_z(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ)
 
@@ -4673,6 +4678,7 @@ def GetNextStepZ(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ):
 _client_hide = _ScriptMethod(368)  # ClientHide
 _client_hide.restype = _bool
 _client_hide.argtypes = [_uint]  # ID
+
 
 def ClientHide(ID):
     return _client_hide(ID)
@@ -4682,6 +4688,7 @@ _get_skill_lock_state = _ScriptMethod(369)  # GetSkillLockState
 _get_skill_lock_state.restype = _byte
 _get_skill_lock_state.argtypes = [_str]  # SkillName
 
+
 def GetSkillLockState(SkillName):
     return _get_skill_lock_state(SkillName)
 
@@ -4689,6 +4696,7 @@ def GetSkillLockState(SkillName):
 _get_stat_lock_state = _ScriptMethod(372)  # GetStatLockState
 _get_stat_lock_state.restype = _byte
 _get_stat_lock_state.argtypes = [_str]  # SkillName
+
 
 def GetStatLockState(SkillName):
     _get_stat_lock_state(SkillName)
