@@ -183,7 +183,7 @@ class ScriptMethod:
                 result = self.restype.from_buffer(conn.results.pop(id_))
                 return result.value
             except KeyError:
-                time.sleep(.001)
+                pass
 
 
 def get_port():
