@@ -3933,7 +3933,7 @@ def GetQuestArrow():
     return ()
 
 
-_get_silent_mode = _ScriptMethod(301)  # GetSilentMode
+_get_silent_mode = _ScriptMethod(302)  # GetSilentMode
 _get_silent_mode.restype = _bool
 
 
@@ -3948,7 +3948,7 @@ def ClearInfoWindow():
     _clear_info_window()
 
 
-_set_silent_mode = _ScriptMethod(302)  # SetSilentMode
+_set_silent_mode = _ScriptMethod(301)  # SetSilentMode
 _set_silent_mode.argtypes = [_bool]  # Value
 
 
