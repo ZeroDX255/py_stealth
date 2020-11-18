@@ -6,7 +6,8 @@ import socket
 import threading
 
 
-__all__ = ['show_error_message',
+__all__ = ['convert_packet_data',
+           'show_error_message',
            'get_main_thread',
            'ddt2pdt',
            'pdt2ddt',
@@ -17,10 +18,14 @@ __all__ = ['show_error_message',
 PY2 = b'' == ''
 
 
+def convert_packet_data(data):
+    return ' '.join(['{x:02X}'.format(x=x) for x in data])
+
+
 def show_error_message(msg):
     system = platform.system()
     if system == 'Windows':
-        from py_stealth import _winapi
+        from py_stealth import py_stealth_winapi as _winapi
         title = 'Error'
         if PY2:  # py2
             msg = msg.decode()

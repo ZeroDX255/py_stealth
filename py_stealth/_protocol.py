@@ -10,7 +10,7 @@ import time
 
 from .config import DEBUG, HOST, PORT, MSG_TIMEOUT, SOCK_TIMEOUT, GET_PORT_ATTEMPT_COUNT
 from ._datatypes import *
-from .utils import show_error_message
+from .utils import convert_packet_data, show_error_message
 
 EVENTS_NAMES = (
     'eviteminfo', 'evitemdeleted', 'evspeech', 'evdrawgameplayer',
@@ -87,7 +87,7 @@ class Connection:
         except socket.error:
             return
         if DEBUG:
-            print('Data received: {}'.format(data))
+            print('Data received: {}'.format(convert_packet_data(data)))
         # parse data
         offset = 0
         while 1:
@@ -146,7 +146,7 @@ class Connection:
 
     def send(self, data):
         if DEBUG:
-            print('Packet sent: {}'.format(data))
+            print('Packet sent: {}'.format(convert_packet_data(data)))
         self._sock.send(data)
 
 
