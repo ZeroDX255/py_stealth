@@ -8,7 +8,8 @@ import threading
 import types
 import time
 
-from .config import DEBUG, HOST, PORT, MSG_TIMEOUT, SOCK_TIMEOUT, GET_PORT_ATTEMPT_COUNT
+from .config import DEBUG, HOST, PORT, MSG_TIMEOUT, SOCK_TIMEOUT, \
+    GET_PORT_ATTEMPT_COUNT
 from ._datatypes import *
 from .utils import convert_packet_data, show_error_message
 
@@ -32,6 +33,7 @@ VERSION = 1, 0, 1, 0
 
 class Connection:
     port = None
+    port_lock = threading.Lock()
 
     def __init__(self):
         self._sock = socket.socket()
@@ -205,8 +207,10 @@ def get_port():
         copydata = _winapi.COPYDATA(dw, cb, lp)
         # send message
         _winapi.SetLastError(0)
-        if not _winapi.SendMessage(hwnd, _winapi.WM_COPYDATA, 0, copydata.pointer):
-            error = 'Can not send message. ErrNo: {}'.format(_winapi.GetLastError())
+        if not _winapi.SendMessage(hwnd, _winapi.WM_COPYDATA, 0,
+                                   copydata.pointer):
+            error = 'Can not send message. ErrNo: {}'.format(
+                _winapi.GetLastError())
             _winapi.MessageBox(0, error.decode() if b'' == '' else error,  # py2
                                'Error'.decode() if b'' == '' else 'Error', 0)
             exit(1)
@@ -261,7 +265,10 @@ def get_port():
                     length = struct.unpack_from('=H', data)[0]
                     if DEBUG:
                         print('length: {}'.format(length))
-                    port = struct.unpack_from('=' + 'H' if length == 2 else 'I', data, 2)[0]
+                    port = \
+                        struct.unpack_from('=' + 'H' if length == 2 else 'I',
+                                           data,
+                                           2)[0]
                     if DEBUG:
                         print('port: {}'.format(port))
                     sock.close()
@@ -273,16 +280,23 @@ def get_port():
                     show_error_message(error)
                     exit(1)
 
-    # First way - get port from cmd parameters.
-    # If script was launched as internal script from Stealth.
-    if len(sys.argv) >= 3 and sys.argv[2].isalnum():
-        return int(sys.argv[2])
-    # Second way - ask Stealth for a port number via socket connection or windows messages.
-    # If script was launched as external script.
-    if platform.system() == 'Windows':
-        return win()
-    else:
-        return unix()
+    with Connection.port_lock:
+        # Zero way - if we already got the port
+        if Connection.port:
+            return Connection.port
+        # First way - get port from cmd parameters.
+        # If script was launched as internal script from Stealth.
+        if len(sys.argv) >= 3 and sys.argv[2].isalnum():
+            Connection.port = int(sys.argv[2])
+        # Second way - ask Stealth for a port number via socket connection or
+        # windows messages. If script was launched as external script.
+        elif platform.system() == 'Windows':
+            Connection.port = win()
+        elif platform.system() == 'Linux':
+            Connection.port = unix()
+        else:
+            raise Exception('Can not to get port from Stealth.')
+        return Connection.port
 
 
 def get_connection():
