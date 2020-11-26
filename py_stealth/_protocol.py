@@ -86,7 +86,10 @@ class Connection:
                 error = 'Connection to Stealth was lost.'
                 show_error_message(error)
                 exit(1)
-        except socket.error:
+        except socket.error as err:
+            # TODO: Linux error code
+            if platform.system() == 'Windows' and err.errno == 10054:
+                exit(1)
             return
         if DEBUG:
             print('Data received: {}'.format(convert_packet_data(data)))
