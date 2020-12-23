@@ -7,7 +7,7 @@ try:
     from py_stealth import methods, _protocol, utils
 except ImportError:
     sys.path.insert(0, os.path.split(os.path.dirname(__file__))[0])
-    from py_stealth import methods, _protocol
+    from py_stealth import methods, _protocol, utils
 finally:
     from py_stealth.config import DEBUG, ERROR_FILTER
 
@@ -29,7 +29,7 @@ class SysJournalOut:
 
     def flush(self):
         if self._buffer:
-            methods._add_to_system_journal(self._buffer)
+            methods.AddToSystemJournal(self._buffer)
             self._buffer = str()
 
 
@@ -41,6 +41,7 @@ def main():
         error = 'CMD params must be: path_to_script [port] [func] [args]'
         utils.show_error_message(error)
         exit(4)
+        return
     # change output to the stealth system journal
     if not DEBUG:
         sys.stdout = sys.stderr = SysJournalOut()
