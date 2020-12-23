@@ -1,5 +1,5 @@
 ﻿
-STEALTH_CODEC = 'UTF_16LE'
+STEALTH_CODEC = 'UTF_16BE'
 SCRIPT_CODEC = 'UTF8'  # your files encoding. py2 only
 
 HOST = 'localhost'

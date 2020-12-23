@@ -70,7 +70,7 @@ class Connection:
         # SCLangVersion
         # send language type and protocol version to stealth (data type - 5)
         # python - 1; delphi - 2; c# - 3; other - 255
-        data = struct.pack('=HH5B', 5, 0, 1, *VERSION)
+        data = struct.pack('!HH5B', 5, 0, 1, *VERSION)
         size = struct.pack('!I', len(data))
         self.send(size + data)
 
@@ -108,21 +108,21 @@ class Connection:
             if size > len(data) - offset:
                 self._buffer += data[offset - 4:]
                 break
-            type_, = struct.unpack_from('H', data, offset)
+            type_, = struct.unpack_from('!H', data, offset)
             offset += 2
             # packet type is 1 (a returned value)
             if type_ == 1:
-                id_, = struct.unpack_from('H', data, offset)
+                id_, = struct.unpack_from('!H', data, offset)
                 self.results[id_] = data[offset + 2:offset + size - 2]
                 offset += size - 2  # - type_
             # packet type is 3 (an event callback)
             elif type_ == 3:
-                index, count = struct.unpack_from('=2B', data, offset)
+                index, count = struct.unpack_from('!2B', data, offset)
                 offset += 2
                 # parse args
                 args = []
                 for i in range(count):
-                    argtype = EVENTS_ARGTYPES[struct.unpack_from('B', data,
+                    argtype = EVENTS_ARGTYPES[struct.unpack_from('!B', data,
                                                                  offset)[0]]
                     offset += 1
                     arg = argtype.from_buffer(data, offset)
@@ -176,7 +176,7 @@ class ScriptMethod:
             data += cls(val).serialize()
         # form packet
         id_ = conn.method_id if self.restype else 0
-        header = struct.pack('=2H', self.index, id_)
+        header = struct.pack('!2H', self.index, id_)
         packet = header + data
         size = struct.pack('!I', len(packet))
         # send to the stealth
@@ -252,7 +252,7 @@ def get_port():
         for i in range(GET_PORT_ATTEMPT_COUNT):
             if DEBUG:
                 print('attempt №' + str(i + 1))
-            packet = struct.pack('=HI', 4, 0xDEADBEEF)
+            packet = struct.pack('!HI', 4, 0xDEADBEEF)
             sock.send(packet)
             if DEBUG:
                 print('packet sent: {}'.format(packet))
@@ -265,11 +265,11 @@ def get_port():
                 if data:
                     if DEBUG:
                         print('received: {}'.format(data))
-                    length = struct.unpack_from('=H', data)[0]
+                    length = struct.unpack_from('!H', data)[0]
                     if DEBUG:
                         print('length: {}'.format(length))
                     port = \
-                        struct.unpack_from('=' + 'H' if length == 2 else 'I',
+                        struct.unpack_from('!' + 'H' if length == 2 else 'I',
                                            data,
                                            2)[0]
                     if DEBUG:

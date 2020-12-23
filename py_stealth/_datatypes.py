@@ -33,7 +33,7 @@ class _SimpleDataType:
 
 
 class _bool(_SimpleDataType):  # Boolean
-    fmt = '?'
+    fmt = '!?'
     _value = None
 
     def __init__(self, value):
@@ -48,53 +48,53 @@ class _bool(_SimpleDataType):  # Boolean
 
 
 class _char(bytes, _SimpleDataType):  # Char
-    fmt = 'c'
+    fmt = '!c'
 
 
 class _byte(int, _SimpleDataType):  # ShortInt
-    fmt = 'b'
+    fmt = '!b'
 
 
 class _ubyte(int, _SimpleDataType):  # Byte
-    fmt = 'B'
+    fmt = '!B'
 
 
 class _short(int, _SimpleDataType):  # SmallInt
-    fmt = 'h'
+    fmt = '!h'
 
 
 class _ushort(int, _SimpleDataType):  # Word
-    fmt = 'H'
+    fmt = '!H'
 
 
 class _int(int, _SimpleDataType):  # Integer
-    fmt = 'i'
+    fmt = '!i'
 
 
 class _uint(int, _SimpleDataType):  # Cardinal
-    fmt = 'I'
+    fmt = '!I'
 
 
 class _float(float, _SimpleDataType):  # Single
-    fmt = 'f'
+    fmt = '!f'
 
 
 class _double(float, _SimpleDataType):  # Double
-    fmt = 'd'
+    fmt = '!d'
 
 
 class _long(int, _SimpleDataType):  # Int64
-    fmt = 'q'
+    fmt = '!q'
 
 
 class _ulong(int, _SimpleDataType):  # UInt64
-    fmt = 'Q'
+    fmt = '!Q'
 
 
 class _str(unicode if b'' == '' else str):  # String
     @property
     def fmt(self):
-        return 'I{0}s'.format(len(self)*UNICODE_LENGTH)
+        return '!I{0}s'.format(len(self)*UNICODE_LENGTH)
 
     @property
     def value(self):
@@ -117,7 +117,7 @@ class _str(unicode if b'' == '' else str):  # String
 class _buffer(bytes, _SimpleDataType):  # Buffer
     @property
     def fmt(self):
-        return '{0}s'.format(len(self))
+        return '!{0}s'.format(len(self))
 
     @property
     def size(self):
