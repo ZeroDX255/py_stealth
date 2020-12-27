@@ -2160,11 +2160,21 @@ def SetContextMenuHook(MenuID, EntryNumber):
 
 
 _get_context_menu = _ScriptMethod(195)  # GetContextMenu
-_get_context_menu.restype = _str
+_get_context_menu.restype = _buffer
 
 
 def GetContextMenu():
-    return _get_context_menu()
+    result = []
+    data = _get_context_menu()
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result
 
 
 _get_context_menu_record = _ScriptMethod(345)  # GetContextMenuRec
@@ -3172,11 +3182,21 @@ def AutoBuy(ItemType, ItemColor, Quantity):
 
 
 _get_shop_list = _ScriptMethod(241)  # GetShopList
-_get_shop_list.restype = _str
+_get_shop_list.restype = _buffer
 
 
 def GetShopList():
-    return _get_shop_list()
+    result = []
+    data = _get_shop_list()
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result
 
 
 _clear_shop_list = _ScriptMethod(242)  # ClearShopList
