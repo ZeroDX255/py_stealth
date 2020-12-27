@@ -1493,10 +1493,10 @@ _find_graphics_array.argtypes = [_uint,  # Len
 
 def FindTypesArrayEx(ObjTypes, Colors, Containers, InSub):
     args = []
-    for array, fmt in ((ObjTypes, '!H'),
-                       (Colors, '!H'),
-                       (Containers, '!I')):
-        args += [len(array), _struct.pack(str(len(array)) + fmt, *array)]
+    for array, fmt in ((ObjTypes, 'H'),
+                       (Colors, 'H'),
+                       (Containers, 'I')):
+        args += [len(array), _struct.pack('!' + str(len(array)) + fmt, *array)]
     args.append(InSub)
     return _find_graphics_array(*args)
 
