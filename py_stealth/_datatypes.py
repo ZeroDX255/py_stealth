@@ -106,7 +106,7 @@ class _str(unicode if b'' == '' else str):  # String
 
     @classmethod
     def from_buffer(cls, buffer, offset=0):
-        size = struct.unpack_from('I', buffer, offset)[0]
+        size = struct.unpack_from('!I', buffer, offset)[0]
         offset += 4
         return cls(buffer[offset:offset+size*2], STEALTH_CODEC)
 

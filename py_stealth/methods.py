@@ -2677,7 +2677,7 @@ def GetGumpInfo(GumpIndex):
                 _ItemProperty)
     for cls in elements:
         result[cls.container] = []
-        count = _ushort.from_buffer(data, offset)
+        count = _uint.from_buffer(data, offset)
         offset += count.size
         for i in range(count):
             values = []
@@ -3779,7 +3779,7 @@ _get_statics_array.argtypes = [_ushort,  # Xmin
                                _ushort,  # Xmax
                                _ushort,  # Ymax
                                _ubyte,  # WorldNum
-                               _ushort,  # Len
+                               _uint,  # Len
                                _buffer]  # TileTypes: Array of Word
 
 
@@ -3803,7 +3803,7 @@ _get_lands_array.argtypes = [_ushort,  # Xmin
                              _ushort,  # Xmax
                              _ushort,  # Ymax
                              _ubyte,  # WorldNum
-                             _ushort,  # Len
+                             _uint,  # Len
                              _buffer]  # TileTypes: Array of Word
 
 

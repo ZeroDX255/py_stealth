@@ -28,7 +28,7 @@ EVENTS_NAMES = (
 )
 
 EVENTS_ARGTYPES = _str, _uint, _int, _ushort, _short, _ubyte, _byte, _bool
-VERSION = 1, 0, 1, 0
+VERSION = 0, 2, 0, 1
 
 
 class Connection:
