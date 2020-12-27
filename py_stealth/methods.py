@@ -2315,20 +2315,48 @@ def CloseMenu():
 
 
 _get_menu = _ScriptMethod(338)  # GetMenuItems
-_get_menu.restype = _str
+_get_menu.restype = _buffer
 _get_menu.argtypes = [_str]  # MenuCaption
 
 
-def GetMenuItems(MenuCaption):  # TODO: split items, return list
-    return _get_menu(MenuCaption)
+def GetMenu(MenuCaption):
+    result = []
+    data = _get_menu(MenuCaption)
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        result.append(string.value)
+        offset += string.size
+    return result
+
+
+def GetMenuItems(MenuCaption):
+    return '\n'.join(GetMenu(MenuCaption))
 
 
 _get_last_menu = _ScriptMethod(339)  # GetLastMenuItems
-_get_last_menu.restype = _str
+_get_last_menu.restype = _buffer
 
 
-def GetLastMenuItems():  # TODO: split items, return list
-    return _get_last_menu()
+def GetLastMenu():
+    result = []
+    data = _get_last_menu()
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        result.append(string.value)
+        offset += string.size
+    return result
+
+
+def GetLastMenuItems():
+    return '\n'.join(GetLastMenu())
 
 
 _wait_gump = _ScriptMethod(211)  # WaitGumpInt
@@ -2465,43 +2493,79 @@ def IsGumpCanBeClosed(GumpIndex):
 
 
 _get_gump_text = _ScriptMethod(225)  # GetGumpTextLines
-_get_gump_text.restype = _str
+_get_gump_text.restype = _buffer
 _get_gump_text.argtypes = [_ushort]  # GumpIndex
 
 
 def GetGumpTextLines(GumpIndex):
-    result = _get_gump_text(GumpIndex)
-    return result.split(_linesep)[:-1]  # cause '' was in the end of list
+    result = []
+    data = _get_gump_text(GumpIndex)
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result
 
 
 _get_gump_full_lines = _ScriptMethod(226)  # GetGumpFullLines
-_get_gump_full_lines.restype = _str
+_get_gump_full_lines.restype = _buffer
 _get_gump_full_lines.argtypes = [_ushort]  # GumpIndex
 
 
 def GetGumpFullLines(GumpIndex):
-    result = _get_gump_full_lines(GumpIndex)
-    return result.split(_linesep)[:-1]  # cause '' was in the end of list
+    result = []
+    data = _get_gump_full_lines(GumpIndex)
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result
 
 
 _get_gump_short_lines = _ScriptMethod(227)  # GetGumpShortLines
-_get_gump_short_lines.restype = _str
+_get_gump_short_lines.restype = _buffer
 _get_gump_short_lines.argtypes = [_ushort]  # GumpIndex
 
 
 def GetGumpShortLines(GumpIndex):
-    result = _get_gump_short_lines(GumpIndex)
-    return result.split(_linesep)[:-1]  # cause '' was in the end of list
+    result = []
+    data = _get_gump_short_lines(GumpIndex)
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result
 
 
 _get_gump_buttons = _ScriptMethod(228)  # GetGumpButtonsDescription
-_get_gump_buttons.restype = _str
+_get_gump_buttons.restype = _buffer
 _get_gump_buttons.argtypes = [_ushort]  # GumpIndex
 
 
 def GetGumpButtonsDescription(GumpIndex):
-    result = _get_gump_buttons(GumpIndex)
-    return result.split(_linesep)[:-1]  # cause '' was in the end of list
+    result = []
+    data = _get_gump_buttons(GumpIndex)
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result
 
 
 _get_gump_info = _ScriptMethod(229)  # GetGumpInfo
@@ -2998,7 +3062,7 @@ def EquipDressSet():
     if client_version_int < 7007400:
         delay = GetDressSpeed()
         data = _get_dress_set()
-        count = _struct.unpack('!B', data[:1])[0]
+        count = _struct.unpack('!I', data[:1])[0]
         data = data[1:]
         offset = 0
         for i in range(count):
@@ -4445,12 +4509,22 @@ def GlobalChatActiveChannel():
 
 
 global_chat_channel_list = _ScriptMethod(365)  # SCGlobalChatChannelsList
-global_chat_channel_list.restype = _str
+global_chat_channel_list.restype = _buffer
 
 
 def GlobalChatChannelsList():
-    result = global_chat_channel_list()
-    return result.split(_linesep)[:-1]  # cause '' was in the end of list
+    result = []
+    data = global_chat_channel_list()
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+
+    return result
 
 
 _set_open_doors = _ScriptMethod(400)  # SetMoveOpenDoor
@@ -4636,8 +4710,8 @@ def GetMenuItemsEx(MenuCaption):
 
     data = _get_menu_items_ex(MenuCaption)
     result = []
-    # count = _struct.unpack_from('H', data, 0)
-    offset = 2
+    # count = _struct.unpack_from('!I', data, 0)
+    offset = 4
     while offset < len(data):
         model, color = _struct.unpack_from('!HH', data, offset)
         offset += 4
