@@ -65,10 +65,10 @@ _get_stealth_info.restype = _buffer  # TAboutData
 def GetStealthInfo():
     data = _get_stealth_info()
     result = dict()
-    result['StealthVersion'] = _struct.unpack('!3H', data[:6])
-    result['Build'] = _struct.unpack('!H', data[6:8])[0]
-    result['BuildDate'] = _ddt2pdt(_struct.unpack('!d', data[8:16])[0])
-    result['GITRevNumber'] = _struct.unpack('!H', data[16:18])[0]
+    result['StealthVersion'] = _struct.unpack('<3H', data[:6])
+    result['Build'] = _struct.unpack('<H', data[6:8])[0]
+    result['BuildDate'] = _ddt2pdt(_struct.unpack('<d', data[8:16])[0])
+    result['GITRevNumber'] = _struct.unpack('<H', data[16:18])[0]
     result['GITRevision'] = _str.from_buffer(data[18:]).value
     return result
 
@@ -337,13 +337,13 @@ _get_buff_bar_info.restype = _buffer  # TBuffBarInfo
 
 def GetBuffBarInfo():
     result = []
-    fmt = '!HdHII'
+    fmt = '<HdHII'
     size = _struct.calcsize(fmt)
     keys = ('Attribute_ID', 'TimeStart', 'Seconds', 'ClilocID1', 'ClilocID2')
     data = _get_buff_bar_info()
     if b'' == '':  # py2
         data = bytes(data)
-    count = _struct.unpack('!B', data[:1])[0]
+    count = _struct.unpack('<B', data[:1])[0]
     data = data[1:]
     for i in range(count):
         values = _struct.unpack(fmt, data[i * size:i * size + size])
@@ -509,7 +509,7 @@ def GetExtInfo():
             'HP_Regen', 'Stam_Regen', 'Mana_Regen', 'Reflect_Phys_Damage',
             'Enhance_Potions', 'Strength_Incr', 'Dex_Incr', 'Int_Incr',
             'HP_Incr', 'Mana_Incr')
-    fmt = '!HBH2B4Hh2Hi26H'
+    fmt = '<HBH2B4Hh2Hi26H'
     data = _get_extended_info()
     if b'' == '':  # py2
         data = bytes(data)
@@ -1496,7 +1496,7 @@ def FindTypesArrayEx(ObjTypes, Colors, Containers, InSub):
     for array, fmt in ((ObjTypes, 'H'),
                        (Colors, 'H'),
                        (Containers, 'I')):
-        args += [len(array), _struct.pack('!' + str(len(array)) + fmt, *array)]
+        args += [len(array), _struct.pack('<' + str(len(array)) + fmt, *array)]
     args.append(InSub)
     return _find_graphics_array(*args)
 
@@ -1552,7 +1552,7 @@ def GetIgnoreList():
     result = []
     data = _get_ignore_list()
     if data:
-        fmt = '!' + str(len(data) // 4) + 'I'
+        fmt = '<' + str(len(data) // 4) + 'I'
         result.extend(_struct.unpack(fmt, data))
     return result
 
@@ -1565,7 +1565,7 @@ def GetFoundList():
     result = []
     data = _get_found_objects_list()
     if data:
-        fmt = '!' + str(len(data) // 4) + 'I'
+        fmt = '<' + str(len(data) // 4) + 'I'
         result.extend(_struct.unpack(fmt, data))
     return result
 
@@ -1722,10 +1722,10 @@ _get_tooltip_obj.argtypes = [_uint]  # ObjID
 def GetTooltipRec(ObjID):
     result = []
     data = _get_tooltip_obj(ObjID)
-    count = _struct.unpack_from('!i', data)[0]
+    count = _struct.unpack_from('<i', data)[0]
     offset = 4
     for i in range(count):
-        cliloc, length = _struct.unpack_from('!2i', data, offset)
+        cliloc, length = _struct.unpack_from('<2i', data, offset)
         offset += 8
         strings = []
         for j in range(length):
@@ -2731,7 +2731,7 @@ class _ItemProperty:
 
 
 class _Gump:
-    fmt = '!2I2hi4?'
+    fmt = '<2I2hi4?'
     args = [_uint, _uint, _short, _short, _int] + [_bool] * 4
     keys = ('Serial', 'GumpID', 'X', 'Y', 'Pages', 'NoMove', 'NoResize',
             'NoDispose', 'NoClose')
@@ -3072,11 +3072,11 @@ def EquipDressSet():
     if client_version_int < 7007400:
         delay = GetDressSpeed()
         data = _get_dress_set()
-        count = _struct.unpack('!I', data[:1])[0]
+        count = _struct.unpack('<I', data[:1])[0]
         data = data[1:]
         offset = 0
         for i in range(count):
-            layer, item = _struct.unpack_from('!BI', data, offset)
+            layer, item = _struct.unpack_from('<BI', data, offset)
             offset += 5
             if item:
                 res.append(Equip(layer, item))
@@ -3579,7 +3579,7 @@ def PartyMembersList():
     result = []
     data = _get_party_members()
     if data:
-        fmt = '!' + 'I' * (len(data) // 4)
+        fmt = '<' + 'I' * (len(data) // 4)
         result.extend(_struct.unpack(fmt, data))
     return result
 
@@ -3748,7 +3748,7 @@ def GetLandTileData(Tile):
     result = {}
     data = _get_land_tile_data(Tile)
     if data:
-        fmt = '!2IH20s'
+        fmt = '<2IH20s'
         keys = 'Flags', 'Flags2', 'TextureID', 'Name'
         values = _struct.unpack(fmt, data)
         result.update(zip(keys, values))
@@ -3769,7 +3769,7 @@ def GetStaticTileData(Tile):
     result = {}
     data = _get_static_tile_data(Tile)
     if data:
-        fmt = '!Q2i4B20s'
+        fmt = '<Q2i4B20s'
         keys = 'Flags', 'Weight', 'Height', 'RadarColorRGBA', 'Name'
         tmp = _struct.unpack(fmt, data)
         values = tmp[:3] + (tmp[3:7],) + tmp[7:]
@@ -3792,7 +3792,7 @@ def GetCell(X, Y, WorldNum):
     result = {}
     data = _get_cell(X, Y, WorldNum)
     if data:
-        fmt = '!Hb'
+        fmt = '<Hb'
         keys = 'Tile', 'Z'
         values = _struct.unpack(fmt, data)
         result.update(zip(keys, values))
@@ -3821,7 +3821,7 @@ def ReadStaticsXY(X, Y, WorldNum):
     result = []
     data = _read_static_xy(X, Y, WorldNum)
     if data:
-        fmt = '!3HbH'
+        fmt = '<3HbH'
         keys = 'Tile', 'X', 'Y', 'Z', 'Color'
         for pos in range(0, len(data), _struct.calcsize(fmt)):
             values = _struct.unpack_from(fmt, data, pos)
@@ -3853,7 +3853,7 @@ _is_cell_passable.argtypes = [_ushort,  # CurrX
 
 def IsWorldCellPassable(CurrX, CurrY, CurrZ, DestX, DestY, WorldNum):
     data = _is_cell_passable(CurrX, CurrY, CurrZ, DestX, DestY, WorldNum)
-    return _struct.unpack('!?b', data)
+    return _struct.unpack('<?b', data)
 
 
 _get_statics_array = _ScriptMethod(286)  # GetStaticTilesArray
@@ -3872,9 +3872,9 @@ def GetStaticTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
         TileTypes = [TileTypes]
     result = []
     data = _get_statics_array(Xmin, Ymin, Xmax, Ymax, WorldNum, len(TileTypes),
-                              _struct.pack('!H' * len(TileTypes), *TileTypes))
+                              _struct.pack('<H' * len(TileTypes), *TileTypes))
     if data:
-        fmt = '!3Hb'
+        fmt = '<3Hb'
         for pos in range(0, len(data), _struct.calcsize(fmt)):
             result.append(_struct.unpack_from(fmt, data, pos))
     return result
@@ -3897,9 +3897,9 @@ def GetLandTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
     result = []
     data = _get_lands_array(Xmin, Ymin, Xmax, Ymax, WorldNum,
                             len(TileTypes),
-                            _struct.pack('!H' * len(TileTypes), *TileTypes))
+                            _struct.pack('<H' * len(TileTypes), *TileTypes))
     if data:
-        fmt = '!3Hb'
+        fmt = '<3Hb'
         for pos in range(0, len(data), _struct.calcsize(fmt)):
             result.append(_struct.unpack_from(fmt, data, pos))
     return result
@@ -3973,7 +3973,7 @@ def ClientTargetResponse():
     result = {}
     data = _client_target_response()
     if data:
-        fmt = '!I3Hb'
+        fmt = '<I3Hb'
         keys = 'ID', 'Tile', 'X', 'Y', 'Z'
         values = _struct.unpack(fmt, data)
         result.update(zip(keys, values))
@@ -4013,7 +4013,7 @@ _get_quest_arrow.restype = _buffer  # TPoint
 def GetQuestArrow():
     data = _get_quest_arrow()
     if data:
-        return _struct.unpack('!ii', data)
+        return _struct.unpack('<ii', data)
     return ()
 
 
@@ -4320,7 +4320,7 @@ def GetPathArray(DestX, DestY, Optimized, Accuracy):
     result = []
     data = _get_path_array(DestX, DestY, Optimized, Accuracy)
     if data:
-        fmt = '!2Hb'
+        fmt = '<2Hb'
         for pos in range(0, len(data), _struct.calcsize(fmt)):
             result.append(_struct.unpack_from(fmt, data, pos))
     return result
@@ -4346,7 +4346,7 @@ def GetPathArray3D(StartX, StartY, StartZ, FinishX, FinishY, FinishZ, WorldNum,
     data = _get_path_array_3d(StartX, StartY, StartZ, FinishX, FinishY,
                               FinishZ, WorldNum, AccuracyXY, AccuracyZ, Run)
     if data:
-        fmt = '!2Hb'
+        fmt = '<2Hb'
         for pos in range(0, len(data), _struct.calcsize(fmt)):
             result.append(_struct.unpack_from(fmt, data, pos))
     return result
@@ -4684,8 +4684,8 @@ _get_multis.restype = _buffer
 def GetMultis():
     data = _get_multis()
     result = []
-    count, = _struct.unpack_from('!I', data, 0)
-    fmt = '!I2Hb6H'
+    count, = _struct.unpack_from('<I', data, 0)
+    fmt = '<I2Hb6H'
     size = _struct.calcsize(fmt)
     keys = ("ID", "X", "Y", "Z",
             "XMin", "XMax", "YMin", "YMax",
@@ -4730,10 +4730,10 @@ def GetMenuItemsEx(MenuCaption):
 
     data = _get_menu_items_ex(MenuCaption)
     result = []
-    # count = _struct.unpack_from('!I', data, 0)
+    # count = _struct.unpack_from('<I', data, 0)
     offset = 4
     while offset < len(data):
-        model, color = _struct.unpack_from('!HH', data, offset)
+        model, color = _struct.unpack_from('<HH', data, offset)
         offset += 4
         text = _str.from_buffer(data, offset)
         offset += text.size
