@@ -260,22 +260,19 @@ def get_port():
             buffer = bytearray()
             while timer + SOCK_TIMEOUT > time.time():
                 try:
-                    buffer += sock.recv(4096)
+                    data = sock.recv(4096)
+                    buffer += data
+                    if DEBUG:
+                        print('received: {}'.format(convert_packet_data(data)))
                 except socket.error:
                     continue
-                if buffer:
-                    if DEBUG:
-                        print(
-                            'received: {}'.format(convert_packet_data(buffer)))
+                if len(buffer) > 2:
                     length = struct.unpack_from('<H', buffer)[0]
                     if DEBUG:
                         print('length: {}'.format(length))
-                    if len(buffer) < length:
+                    if len(buffer[2:]) < length:
                         continue
-                    port = \
-                        struct.unpack_from('<H',  # 'H' if length == 2 else 'I'
-                                           buffer,
-                                           2)[0]
+                    port = struct.unpack_from('<H', buffer, 2)[0]
                     if DEBUG:
                         print('port: {}'.format(port))
                     sock.close()
@@ -298,8 +295,7 @@ def get_port():
         # Second way - ask Stealth for a port number via socket connection or
         # windows messages. If script was launched as external script.
         elif platform.system() == 'Windows':
-            # Connection.port = win()
-            Connection.port = unix()
+            Connection.port = win()
         elif platform.system() == 'Linux':
             Connection.port = unix()
         else:
