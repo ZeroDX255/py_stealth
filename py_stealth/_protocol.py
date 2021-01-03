@@ -255,22 +255,26 @@ def get_port():
             packet = struct.pack('<HI', 4, 0xDEADBEEF)
             sock.send(packet)
             if DEBUG:
-                print('packet sent: {}'.format(packet))
+                print('packet sent: {}'.format(convert_packet_data(packet)))
             timer = time.time()
+            buffer = bytearray()
             while timer + SOCK_TIMEOUT > time.time():
                 try:
-                    data = sock.recv(4096)
+                    buffer += sock.recv(4096)
                 except socket.error:
                     continue
-                if data:
+                if buffer:
                     if DEBUG:
-                        print('received: {}'.format(data))
-                    length = struct.unpack_from('<H', data)[0]
+                        print(
+                            'received: {}'.format(convert_packet_data(buffer)))
+                    length = struct.unpack_from('<H', buffer)[0]
                     if DEBUG:
                         print('length: {}'.format(length))
+                    if len(buffer) < length:
+                        continue
                     port = \
-                        struct.unpack_from('<' + 'H' if length == 2 else 'I',
-                                           data,
+                        struct.unpack_from('<H',  # 'H' if length == 2 else 'I'
+                                           buffer,
                                            2)[0]
                     if DEBUG:
                         print('port: {}'.format(port))
@@ -278,10 +282,10 @@ def get_port():
                     if DEBUG:
                         print('socket closed')
                     return port
-                else:
-                    error = 'Connection to Stealth was lost.'
-                    show_error_message(error)
-                    exit(1)
+            else:
+                error = 'Connection to Stealth was lost.'
+                show_error_message(error)
+                exit(1)
 
     with Connection.port_lock:
         # Zero way - if we already got the port
@@ -294,7 +298,8 @@ def get_port():
         # Second way - ask Stealth for a port number via socket connection or
         # windows messages. If script was launched as external script.
         elif platform.system() == 'Windows':
-            Connection.port = win()
+            # Connection.port = win()
+            Connection.port = unix()
         elif platform.system() == 'Linux':
             Connection.port = unix()
         else:
