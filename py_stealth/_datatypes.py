@@ -1,12 +1,9 @@
-﻿
-import struct
+﻿import struct
 
 from .config import STEALTH_CODEC, SCRIPT_CODEC
 
-
 __all__ = ['_char', '_byte', '_ubyte', '_short', '_ushort', '_int',
            '_uint', '_float', '_double', '_bool', '_str', '_buffer']
-
 
 UNICODE_LENGTH = len('s'.encode(STEALTH_CODEC))
 
@@ -28,7 +25,8 @@ class _SimpleDataType:
 
     def serialize(self):
         if self.fmt.isupper() and self < 0:  # unsigned < 0
-            return struct.pack(self.fmt, 2**(struct.calcsize(self.fmt)*8)-1)
+            return struct.pack(self.fmt,
+                               2 ** (struct.calcsize(self.fmt) * 8) - 1)
         return struct.pack(self.fmt, self)
 
 
@@ -94,7 +92,7 @@ class _ulong(int, _SimpleDataType):  # UInt64
 class _str(unicode if b'' == '' else str):  # String
     @property
     def fmt(self):
-        return '<I{0}s'.format(len(self)*UNICODE_LENGTH)
+        return '<I{0}s'.format(len(self) * UNICODE_LENGTH)
 
     @property
     def value(self):
@@ -108,10 +106,11 @@ class _str(unicode if b'' == '' else str):  # String
     def from_buffer(cls, buffer, offset=0):
         size = struct.unpack_from('<I', buffer, offset)[0]
         offset += 4
-        return cls(buffer[offset:offset+size*2], STEALTH_CODEC)
+        return cls(buffer[offset:offset + size], STEALTH_CODEC)
 
     def serialize(self):
-        return struct.pack(self.fmt, len(self), self.encode(STEALTH_CODEC))
+        return struct.pack(self.fmt, len(self) * UNICODE_LENGTH,
+                           self.encode(STEALTH_CODEC))
 
 
 class _buffer(bytes, _SimpleDataType):  # Buffer
