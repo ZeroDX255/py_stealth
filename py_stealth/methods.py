@@ -486,7 +486,7 @@ def MaxStam():
 
 
 _get_char_luck = _ScriptMethod(58)  # GetSelfLuck
-_get_char_luck.restype = _int
+_get_char_luck.restype = _ushort
 
 
 def Luck():
