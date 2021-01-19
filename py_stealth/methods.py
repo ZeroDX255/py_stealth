@@ -2124,7 +2124,7 @@ def MoveItems(Container, ItemsType, ItemsColor, MoveIntoID, X, Y, Z,
     if not items:  # nothing found
         return False
     drop_delay = GetDropDelay()
-    if not 50 < drop_delay < 10000:
+    if not 50 <= drop_delay <= 10000:
         drop_delay = 50 if drop_delay < 50 else 10000
     if drop_delay > DelayMS:
         DelayMS = 0
