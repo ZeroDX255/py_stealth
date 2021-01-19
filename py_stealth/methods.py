@@ -791,6 +791,10 @@ def ChangeSkillLockState(SkillName, skillState):
     _lock_skill(_get_skill_id_from_socket(SkillName), skillState)
 
 
+def SetSkillLockState(SkillName, skillState):
+    ChangeSkillLockState(SkillName, skillState)
+
+
 _get_skill_cap = _ScriptMethod(92)  # GetSkillCap
 _get_skill_cap.restype = _double
 _get_skill_cap.argtypes = [_int]  # SkillID
