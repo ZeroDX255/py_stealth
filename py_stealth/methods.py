@@ -3732,7 +3732,7 @@ def GetTileFlags(TileGroup, Tile):
 
 
 _uint_to_flags = _ScriptMethod(350)  # ConvertIntegerToFlags
-_uint_to_flags.restype = _str
+_uint_to_flags.restype = _buffer
 _uint_to_flags.argtypes = [_ubyte,  # Group
                            _uint]  # Flags
 
@@ -3740,7 +3740,17 @@ _uint_to_flags.argtypes = [_ubyte,  # Group
 def ConvertIntegerToFlags(Group, Flags):
     if Group not in _tile_groups.keys():
         raise ValueError('GetTileFlags: Group must be "Land" or "Static"')
-    return _uint_to_flags(_tile_groups[Group], Flags).split(_linesep)[:-1]
+    result = []
+    data = _uint_to_flags(_tile_groups[Group], Flags)
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result
 
 
 _get_land_tile_data = _ScriptMethod(280)  # GetLandTileData
