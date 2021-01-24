@@ -3,7 +3,6 @@
 import datetime as _datetime
 import struct as _struct
 import time as _time
-from os import linesep as _linesep
 
 from ._datatypes import *
 from ._protocol import EVENTS_NAMES as _EVENTS_NAMES
@@ -3889,7 +3888,7 @@ def GetStaticTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
                               _struct.pack('<H' * len(TileTypes), *TileTypes))
     if data:
         fmt = '<3Hb'
-        for pos in range(0, len(data), _struct.calcsize(fmt)):
+        for pos in range(4, len(data), _struct.calcsize(fmt)):
             result.append(_struct.unpack_from(fmt, data, pos))
     return result
 
@@ -3909,12 +3908,11 @@ def GetLandTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
     if not _iterable(TileTypes):
         TileTypes = [TileTypes]
     result = []
-    data = _get_lands_array(Xmin, Ymin, Xmax, Ymax, WorldNum,
-                            len(TileTypes),
+    data = _get_lands_array(Xmin, Ymin, Xmax, Ymax, WorldNum, len(TileTypes),
                             _struct.pack('<H' * len(TileTypes), *TileTypes))
     if data:
         fmt = '<3Hb'
-        for pos in range(0, len(data), _struct.calcsize(fmt)):
+        for pos in range(4, len(data), _struct.calcsize(fmt)):
             result.append(_struct.unpack_from(fmt, data, pos))
     return result
 
@@ -4361,7 +4359,7 @@ def GetPathArray3D(StartX, StartY, StartZ, FinishX, FinishY, FinishZ, WorldNum,
                               FinishZ, WorldNum, AccuracyXY, AccuracyZ, Run)
     if data:
         fmt = '<2Hb'
-        for pos in range(0, len(data), _struct.calcsize(fmt)):
+        for pos in range(4, len(data), _struct.calcsize(fmt)):
             result.append(_struct.unpack_from(fmt, data, pos))
     return result
 
