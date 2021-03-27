@@ -1475,11 +1475,15 @@ _find_graphic.argtypes = [_ushort,  # ObjType
                           _bool]  # InSub
 
 
-def FindTypeEx(ObjType, Color, Container=Backpack(), InSub=True):
+def FindTypeEx(ObjType, Color, Container=None, InSub=True):
+    if Container is None:
+        Container = Backpack()
     return _find_graphic(ObjType, Color, Container, InSub)
 
 
-def FindType(ObjType, Container=Backpack()):
+def FindType(ObjType, Container=None):
+    if Container is None:
+        Container = Backpack()
     return _find_graphic(ObjType, 0xFFFF, Container, False)
 
 
