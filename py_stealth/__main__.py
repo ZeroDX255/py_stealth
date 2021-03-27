@@ -9,7 +9,7 @@ except ImportError:
     sys.path.insert(0, os.path.split(os.path.dirname(__file__))[0])
     from py_stealth import methods, _protocol, utils
 finally:
-    from py_stealth.config import DEBUG, ERROR_FILTER
+    from py_stealth.config import DEBUG, ERROR_FILTER, USE_STEALTH_SYSTEM_JOURNAL
 
 
 PY2 = b'' == ''
@@ -43,7 +43,7 @@ def main():
         exit(4)
         return
     # change output to the stealth system journal
-    if not DEBUG:
+    if USE_STEALTH_SYSTEM_JOURNAL:
         sys.stdout = sys.stderr = SysJournalOut()
     # modify the python import system
     if sys.version_info < (3, 4):  # 2.6 - 3.3
