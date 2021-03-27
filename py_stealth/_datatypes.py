@@ -1,12 +1,9 @@
-﻿
-import struct
+﻿import struct
 
 from .config import STEALTH_CODEC, SCRIPT_CODEC
 
-
 __all__ = ['_char', '_byte', '_ubyte', '_short', '_ushort', '_int',
-           '_uint', '_float', '_double', '_bool', '_str', '_buffer']
-
+           '_uint', '_float', '_double', '_ulong', '_bool', '_str', '_buffer']
 
 UNICODE_LENGTH = len('s'.encode(STEALTH_CODEC))
 
@@ -28,12 +25,13 @@ class _SimpleDataType:
 
     def serialize(self):
         if self.fmt.isupper() and self < 0:  # unsigned < 0
-            return struct.pack(self.fmt, 2**(struct.calcsize(self.fmt)*8)-1)
+            return struct.pack(self.fmt,
+                               2 ** (struct.calcsize(self.fmt) * 8) - 1)
         return struct.pack(self.fmt, self)
 
 
 class _bool(_SimpleDataType):  # Boolean
-    fmt = '!?'
+    fmt = '<?'
     _value = None
 
     def __init__(self, value):
@@ -48,53 +46,53 @@ class _bool(_SimpleDataType):  # Boolean
 
 
 class _char(bytes, _SimpleDataType):  # Char
-    fmt = '!c'
+    fmt = '<c'
 
 
 class _byte(int, _SimpleDataType):  # ShortInt
-    fmt = '!b'
+    fmt = '<b'
 
 
 class _ubyte(int, _SimpleDataType):  # Byte
-    fmt = '!B'
+    fmt = '<B'
 
 
 class _short(int, _SimpleDataType):  # SmallInt
-    fmt = '!h'
+    fmt = '<h'
 
 
 class _ushort(int, _SimpleDataType):  # Word
-    fmt = '!H'
+    fmt = '<H'
 
 
 class _int(int, _SimpleDataType):  # Integer
-    fmt = '!i'
+    fmt = '<i'
 
 
 class _uint(int, _SimpleDataType):  # Cardinal
-    fmt = '!I'
+    fmt = '<I'
 
 
 class _float(float, _SimpleDataType):  # Single
-    fmt = '!f'
+    fmt = '<f'
 
 
 class _double(float, _SimpleDataType):  # Double
-    fmt = '!d'
+    fmt = '<d'
 
 
 class _long(int, _SimpleDataType):  # Int64
-    fmt = '!q'
+    fmt = '<q'
 
 
 class _ulong(int, _SimpleDataType):  # UInt64
-    fmt = '!Q'
+    fmt = '<Q'
 
 
 class _str(unicode if b'' == '' else str):  # String
     @property
     def fmt(self):
-        return '!I{0}s'.format(len(self)*UNICODE_LENGTH)
+        return '<I{0}s'.format(len(self) * UNICODE_LENGTH)
 
     @property
     def value(self):
@@ -106,18 +104,19 @@ class _str(unicode if b'' == '' else str):  # String
 
     @classmethod
     def from_buffer(cls, buffer, offset=0):
-        size = struct.unpack_from('!I', buffer, offset)[0]
+        size = struct.unpack_from('<I', buffer, offset)[0]
         offset += 4
-        return cls(buffer[offset:offset+size*2], STEALTH_CODEC)
+        return cls(buffer[offset:offset + size], STEALTH_CODEC)
 
     def serialize(self):
-        return struct.pack(self.fmt, len(self), self.encode(STEALTH_CODEC))
+        return struct.pack(self.fmt, len(self) * UNICODE_LENGTH,
+                           self.encode(STEALTH_CODEC))
 
 
 class _buffer(bytes, _SimpleDataType):  # Buffer
     @property
     def fmt(self):
-        return '!{0}s'.format(len(self))
+        return '<{0}s'.format(len(self))
 
     @property
     def size(self):

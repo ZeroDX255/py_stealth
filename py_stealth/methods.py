@@ -3,7 +3,6 @@
 import datetime as _datetime
 import struct as _struct
 import time as _time
-from os import linesep as _linesep
 
 from ._datatypes import *
 from ._protocol import EVENTS_NAMES as _EVENTS_NAMES
@@ -65,11 +64,11 @@ _get_stealth_info.restype = _buffer  # TAboutData
 def GetStealthInfo():
     data = _get_stealth_info()
     result = dict()
-    result['StealthVersion'] = _struct.unpack('!3H', data[:6])
-    result['Build'] = _struct.unpack('!H', data[6:8])[0]
-    result['BuildDate'] = _ddt2pdt(_struct.unpack('!d', data[8:16])[0])
-    result['GITRevNumber'] = _struct.unpack('!H', data[16:18])[0]
-    result['GITRevision'] = _str.from_buffer(data[18:]).value
+    result['StealthVersion'] = _struct.unpack('<3H', data[4:10])
+    result['Build'] = _struct.unpack('<H', data[10:12])[0]
+    result['BuildDate'] = _ddt2pdt(_struct.unpack('<d', data[12:20])[0])
+    result['GITRevNumber'] = _struct.unpack('<H', data[20:22])[0]
+    result['GITRevision'] = _str.from_buffer(data[22:]).value
     return result
 
 
@@ -337,14 +336,14 @@ _get_buff_bar_info.restype = _buffer  # TBuffBarInfo
 
 def GetBuffBarInfo():
     result = []
-    fmt = '!HdHII'
+    fmt = '<HdHII'
     size = _struct.calcsize(fmt)
     keys = ('Attribute_ID', 'TimeStart', 'Seconds', 'ClilocID1', 'ClilocID2')
     data = _get_buff_bar_info()
     if b'' == '':  # py2
         data = bytes(data)
-    count = _struct.unpack('!B', data[:1])[0]
-    data = data[1:]
+    count = _uint.from_buffer(data)
+    data = data[4:]
     for i in range(count):
         values = _struct.unpack(fmt, data[i * size:i * size + size])
         buff = dict(zip(keys, values))
@@ -486,7 +485,7 @@ def MaxStam():
 
 
 _get_char_luck = _ScriptMethod(58)  # GetSelfLuck
-_get_char_luck.restype = _int
+_get_char_luck.restype = _ushort
 
 
 def Luck():
@@ -509,7 +508,7 @@ def GetExtInfo():
             'HP_Regen', 'Stam_Regen', 'Mana_Regen', 'Reflect_Phys_Damage',
             'Enhance_Potions', 'Strength_Incr', 'Dex_Incr', 'Int_Incr',
             'HP_Incr', 'Mana_Incr')
-    fmt = '!HBH2B4Hh2Hi26H'
+    fmt = '<HBH2B4Hh2Hi26H'
     data = _get_extended_info()
     if b'' == '':  # py2
         data = bytes(data)
@@ -789,6 +788,10 @@ _lock_skill.argtypes = [_int,  # SkillID
 
 def ChangeSkillLockState(SkillName, skillState):
     _lock_skill(_get_skill_id_from_socket(SkillName), skillState)
+
+
+def SetSkillLockState(SkillName, skillState):
+    ChangeSkillLockState(SkillName, skillState)
 
 
 _get_skill_cap = _ScriptMethod(92)  # GetSkillCap
@@ -1472,11 +1475,11 @@ _find_graphic.argtypes = [_ushort,  # ObjType
                           _bool]  # InSub
 
 
-def FindTypeEx(ObjType, Color, Container, InSub=True):
+def FindTypeEx(ObjType, Color, Container=Backpack(), InSub=True):
     return _find_graphic(ObjType, Color, Container, InSub)
 
 
-def FindType(ObjType, Container):
+def FindType(ObjType, Container=Backpack()):
     return _find_graphic(ObjType, 0xFFFF, Container, False)
 
 
@@ -1496,7 +1499,7 @@ def FindTypesArrayEx(ObjTypes, Colors, Containers, InSub):
     for array, fmt in ((ObjTypes, 'H'),
                        (Colors, 'H'),
                        (Containers, 'I')):
-        args += [len(array), _struct.pack('!' + str(len(array)) + fmt, *array)]
+        args += [len(array), _struct.pack('<' + str(len(array)) + fmt, *array)]
     args.append(InSub)
     return _find_graphics_array(*args)
 
@@ -1551,9 +1554,10 @@ _get_ignore_list.restype = _buffer  # TArray
 def GetIgnoreList():
     result = []
     data = _get_ignore_list()
-    if data:
-        fmt = '!' + str(len(data) // 4) + 'I'
-        result.extend(_struct.unpack(fmt, data))
+    count = _uint.from_buffer(data)
+    if count:
+        fmt = '<' + count * 'I'
+        result.extend(_struct.unpack(fmt, data[4:]))
     return result
 
 
@@ -1564,9 +1568,10 @@ _get_found_objects_list.restype = _buffer  # TArray
 def GetFoundList():
     result = []
     data = _get_found_objects_list()
-    if data:
-        fmt = '!' + str(len(data) // 4) + 'I'
-        result.extend(_struct.unpack(fmt, data))
+    count = _uint.from_buffer(data)
+    if count:
+        fmt = '<' + count * 'I'
+        result.extend(_struct.unpack(fmt, data[4:]))
     return result
 
 
@@ -1722,10 +1727,10 @@ _get_tooltip_obj.argtypes = [_uint]  # ObjID
 def GetTooltipRec(ObjID):
     result = []
     data = _get_tooltip_obj(ObjID)
-    count = _struct.unpack_from('!i', data)[0]
+    count = _uint.from_buffer(data)
     offset = 4
     for i in range(count):
-        cliloc, length = _struct.unpack_from('!2i', data, offset)
+        cliloc, length = _struct.unpack_from('<iI', data, offset)
         offset += 8
         strings = []
         for j in range(length):
@@ -2124,7 +2129,7 @@ def MoveItems(Container, ItemsType, ItemsColor, MoveIntoID, X, Y, Z,
     if not items:  # nothing found
         return False
     drop_delay = GetDropDelay()
-    if not 50 < drop_delay < 10000:
+    if not 50 <= drop_delay <= 10000:
         drop_delay = 50 if drop_delay < 50 else 10000
     if drop_delay > DelayMS:
         DelayMS = 0
@@ -2456,7 +2461,7 @@ def NumGumpCheckBox(GumpIndex, CBID, Value):
 
 
 _get_gumps_count = _ScriptMethod(220)  # GetGumpsCount
-_get_gumps_count.restype = _int
+_get_gumps_count.restype = _ushort
 
 
 def GetGumpsCount():
@@ -2731,7 +2736,7 @@ class _ItemProperty:
 
 
 class _Gump:
-    fmt = '!2I2hi4?'
+    fmt = '<2I2hi4?'
     args = [_uint, _uint, _short, _short, _int] + [_bool] * 4
     keys = ('Serial', 'GumpID', 'X', 'Y', 'Pages', 'NoMove', 'NoResize',
             'NoDispose', 'NoClose')
@@ -3072,11 +3077,11 @@ def EquipDressSet():
     if client_version_int < 7007400:
         delay = GetDressSpeed()
         data = _get_dress_set()
-        count = _struct.unpack('!I', data[:1])[0]
-        data = data[1:]
+        count = _uint.from_buffer(data)
+        data = data[count.size:]
         offset = 0
         for i in range(count):
-            layer, item = _struct.unpack_from('!BI', data, offset)
+            layer, item = _struct.unpack_from('<BI', data, offset)
             offset += 5
             if item:
                 res.append(Equip(layer, item))
@@ -3578,8 +3583,9 @@ _get_party_members.restype = _buffer  # Array of Cardinal
 def PartyMembersList():
     result = []
     data = _get_party_members()
-    if data:
-        fmt = '!' + 'I' * (len(data) // 4)
+    count = _uint.from_buffer(data)
+    if count:
+        fmt = '<' + count * 'I'
         result.extend(_struct.unpack(fmt, data))
     return result
 
@@ -3728,7 +3734,7 @@ def GetTileFlags(TileGroup, Tile):
 
 
 _uint_to_flags = _ScriptMethod(350)  # ConvertIntegerToFlags
-_uint_to_flags.restype = _str
+_uint_to_flags.restype = _buffer
 _uint_to_flags.argtypes = [_ubyte,  # Group
                            _uint]  # Flags
 
@@ -3736,7 +3742,17 @@ _uint_to_flags.argtypes = [_ubyte,  # Group
 def ConvertIntegerToFlags(Group, Flags):
     if Group not in _tile_groups.keys():
         raise ValueError('GetTileFlags: Group must be "Land" or "Static"')
-    return _uint_to_flags(_tile_groups[Group], Flags).split(_linesep)[:-1]
+    result = []
+    data = _uint_to_flags(_tile_groups[Group], Flags)
+    count = _uint.from_buffer(data)
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result
 
 
 _get_land_tile_data = _ScriptMethod(280)  # GetLandTileData
@@ -3748,13 +3764,11 @@ def GetLandTileData(Tile):
     result = {}
     data = _get_land_tile_data(Tile)
     if data:
-        fmt = '!2IH20s'
-        keys = 'Flags', 'Flags2', 'TextureID', 'Name'
-        values = _struct.unpack(fmt, data)
-        result.update(zip(keys, values))
-        result['Flags'] = ConvertIntegerToFlags(0, result['Flags'])
-        result['Flags2'] = ConvertIntegerToFlags(0, result['Flags2'])
-        result['Name'] = result['Name'].rstrip(b'\x00')
+        result['Flags'] = ConvertIntegerToFlags(0, _uint.from_buffer(data))
+        result['Flags2'] = ConvertIntegerToFlags(0, _uint.from_buffer(data[4:]))
+        result['TextureID'] = _ushort.from_buffer(data[8:])
+        length = _uint.from_buffer(data[10:])
+        result['Name'] = data[14:14 + length].rstrip(b'\x00')
         if b'' != '':  # py3
             result['Name'] = result['Name'].decode()
     return result
@@ -3769,13 +3783,12 @@ def GetStaticTileData(Tile):
     result = {}
     data = _get_static_tile_data(Tile)
     if data:
-        fmt = '!Q2i4B20s'
-        keys = 'Flags', 'Weight', 'Height', 'RadarColorRGBA', 'Name'
-        tmp = _struct.unpack(fmt, data)
-        values = tmp[:3] + (tmp[3:7],) + tmp[7:]
-        result.update(zip(keys, values))
-        result['Flags'] = ConvertIntegerToFlags(1, result['Flags'])
-        result['Name'] = result['Name'].rstrip(b'\x00')
+        result['Flags'] = ConvertIntegerToFlags(1, _ulong.from_buffer(data))
+        result['Weight'] = _int.from_buffer(data, 4)
+        result['Height'] = _int.from_buffer(data, 8)
+        result['RadarColorRGBA'] = _struct.unpack_from('<4B', data, 12)
+        length = _uint.from_buffer(data, 16)
+        result['Name'] = data[20: 20 + length].rstrip(b'\x00')
         if b'' != '':  # py3
             result['Name'] = result['Name'].decode()
     return result
@@ -3792,7 +3805,7 @@ def GetCell(X, Y, WorldNum):
     result = {}
     data = _get_cell(X, Y, WorldNum)
     if data:
-        fmt = '!Hb'
+        fmt = '<Hb'
         keys = 'Tile', 'Z'
         values = _struct.unpack(fmt, data)
         result.update(zip(keys, values))
@@ -3820,13 +3833,21 @@ _read_static_xy.argtypes = [_ushort,  # X
 def ReadStaticsXY(X, Y, WorldNum):
     result = []
     data = _read_static_xy(X, Y, WorldNum)
-    if data:
-        fmt = '!3HbH'
-        keys = 'Tile', 'X', 'Y', 'Z', 'Color'
-        for pos in range(0, len(data), _struct.calcsize(fmt)):
-            values = _struct.unpack_from(fmt, data, pos)
-            item = dict(zip(keys, values))
-            result.append(item)
+    count = _uint.from_buffer(data)
+    fmt = '<3HbH'
+    size = _struct.calcsize(fmt)
+    keys = 'Tile', 'X', 'Y', 'Z', 'Color'
+    for i in range(count):
+        values = _struct.unpack_from(fmt, data, 4 + i * size)
+        item = dict(zip(keys, values))
+        result.append(item)
+
+    # if count:
+    #     keys = 'Tile', 'X', 'Y', 'Z', 'Color'
+    #     for pos in range(0, len(data), _struct.calcsize(fmt)):
+    #         values = _struct.unpack_from(fmt, data, pos)
+    #         item = dict(zip(keys, values))
+    #         result.append(item)
     return result
 
 
@@ -3853,7 +3874,7 @@ _is_cell_passable.argtypes = [_ushort,  # CurrX
 
 def IsWorldCellPassable(CurrX, CurrY, CurrZ, DestX, DestY, WorldNum):
     data = _is_cell_passable(CurrX, CurrY, CurrZ, DestX, DestY, WorldNum)
-    return _struct.unpack('!?b', data)
+    return _struct.unpack('<?b', data)
 
 
 _get_statics_array = _ScriptMethod(286)  # GetStaticTilesArray
@@ -3872,11 +3893,12 @@ def GetStaticTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
         TileTypes = [TileTypes]
     result = []
     data = _get_statics_array(Xmin, Ymin, Xmax, Ymax, WorldNum, len(TileTypes),
-                              _struct.pack('!H' * len(TileTypes), *TileTypes))
-    if data:
-        fmt = '!3Hb'
-        for pos in range(0, len(data), _struct.calcsize(fmt)):
-            result.append(_struct.unpack_from(fmt, data, pos))
+                              _struct.pack('<H' * len(TileTypes), *TileTypes))
+    count = _uint.from_buffer(data)
+    fmt = '<3Hb'
+    size = _struct.calcsize(fmt)
+    for i in range(count):
+        result.append(_struct.unpack_from(fmt, data, count.size + i * size))
     return result
 
 
@@ -3895,13 +3917,13 @@ def GetLandTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
     if not _iterable(TileTypes):
         TileTypes = [TileTypes]
     result = []
-    data = _get_lands_array(Xmin, Ymin, Xmax, Ymax, WorldNum,
-                            len(TileTypes),
-                            _struct.pack('!H' * len(TileTypes), *TileTypes))
-    if data:
-        fmt = '!3Hb'
-        for pos in range(0, len(data), _struct.calcsize(fmt)):
-            result.append(_struct.unpack_from(fmt, data, pos))
+    data = _get_lands_array(Xmin, Ymin, Xmax, Ymax, WorldNum, len(TileTypes),
+                            _struct.pack('<H' * len(TileTypes), *TileTypes))
+    count = _uint.from_buffer(data)
+    fmt = '<3Hb'
+    size = _struct.calcsize(fmt)
+    for i in range(count):
+        result.append(_struct.unpack_from(fmt, data, count.size + i * size))
     return result
 
 
@@ -3973,7 +3995,7 @@ def ClientTargetResponse():
     result = {}
     data = _client_target_response()
     if data:
-        fmt = '!I3Hb'
+        fmt = '<I3Hb'
         keys = 'ID', 'Tile', 'X', 'Y', 'Z'
         values = _struct.unpack(fmt, data)
         result.update(zip(keys, values))
@@ -4013,7 +4035,7 @@ _get_quest_arrow.restype = _buffer  # TPoint
 def GetQuestArrow():
     data = _get_quest_arrow()
     if data:
-        return _struct.unpack('!ii', data)
+        return _struct.unpack('<ii', data)
     return ()
 
 
@@ -4319,10 +4341,11 @@ _get_path_array.argtypes = [_ushort,  # DestX
 def GetPathArray(DestX, DestY, Optimized, Accuracy):
     result = []
     data = _get_path_array(DestX, DestY, Optimized, Accuracy)
-    if data:
-        fmt = '!2Hb'
-        for pos in range(0, len(data), _struct.calcsize(fmt)):
-            result.append(_struct.unpack_from(fmt, data, pos))
+    count = _uint.from_buffer(data)
+    fmt = '<2Hb'
+    size = _struct.calcsize(fmt)
+    for i in range(count):
+        result.append(_struct.unpack_from(fmt, data, count.size + i * size))
     return result
 
 
@@ -4345,10 +4368,11 @@ def GetPathArray3D(StartX, StartY, StartZ, FinishX, FinishY, FinishZ, WorldNum,
     result = []
     data = _get_path_array_3d(StartX, StartY, StartZ, FinishX, FinishY,
                               FinishZ, WorldNum, AccuracyXY, AccuracyZ, Run)
-    if data:
-        fmt = '!2Hb'
-        for pos in range(0, len(data), _struct.calcsize(fmt)):
-            result.append(_struct.unpack_from(fmt, data, pos))
+    count = _uint.from_buffer(data)
+    fmt = '<2Hb'
+    size = _struct.calcsize(fmt)
+    for i in range(count):
+        result.append(_struct.unpack_from(fmt, data, count.size + i * size))
     return result
 
 
@@ -4537,13 +4561,10 @@ def GlobalChatChannelsList():
     data = global_chat_channel_list()
     count = _uint.from_buffer(data)
     offset = count.size
-    while 42:
-        if offset >= len(data) - 1:
-            break
+    for i in range(count):
         string = _str.from_buffer(data, offset)
         offset += string.size
         result.append(string.value)
-
     return result
 
 
@@ -4684,14 +4705,14 @@ _get_multis.restype = _buffer
 def GetMultis():
     data = _get_multis()
     result = []
-    count, = _struct.unpack_from('!I', data, 0)
-    fmt = '!I2Hb6H'
+    count = _uint.from_buffer(data)
+    fmt = '<I2Hb6H'
     size = _struct.calcsize(fmt)
     keys = ("ID", "X", "Y", "Z",
             "XMin", "XMax", "YMin", "YMax",
             "Width", "Height")
     for i in range(count):
-        obj = dict(zip(keys, _struct.unpack_from(fmt, data, i * size + 4)))
+        obj = dict(zip(keys, _struct.unpack_from(fmt, data, i * size + count.size)))
         result.append(obj)
     return result
 
@@ -4730,10 +4751,10 @@ def GetMenuItemsEx(MenuCaption):
 
     data = _get_menu_items_ex(MenuCaption)
     result = []
-    # count = _struct.unpack_from('!I', data, 0)
-    offset = 4
+    count = _struct.unpack_from('<I', data, 0)
+    offset = count.size
     while offset < len(data):
-        model, color = _struct.unpack_from('!HH', data, offset)
+        model, color = _struct.unpack_from('<HH', data, offset)
         offset += 4
         text = _str.from_buffer(data, offset)
         offset += text.size

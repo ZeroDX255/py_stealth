@@ -28,7 +28,7 @@ EVENTS_NAMES = (
 )
 
 EVENTS_ARGTYPES = _str, _uint, _int, _ushort, _short, _ubyte, _byte, _bool
-VERSION = 0, 2, 0, 1
+VERSION = 2, 2, 0, 1
 
 
 class Connection:
@@ -70,8 +70,8 @@ class Connection:
         # SCLangVersion
         # send language type and protocol version to stealth (data type - 5)
         # python - 1; delphi - 2; c# - 3; other - 255
-        data = struct.pack('!HH5B', 5, 0, 1, *VERSION)
-        size = struct.pack('!I', len(data))
+        data = struct.pack('<HH5B', 5, 0, 1, *VERSION)
+        size = struct.pack('<I', len(data))
         self.send(size + data)
 
     def close(self):
@@ -103,26 +103,26 @@ class Connection:
             if len(data) - offset < 4:
                 self._buffer += data[offset:]
                 break
-            size, = struct.unpack_from('!I', data, offset)
+            size, = struct.unpack_from('<I', data, offset)
             offset += 4
             if size > len(data) - offset:
                 self._buffer += data[offset - 4:]
                 break
-            type_, = struct.unpack_from('!H', data, offset)
+            type_, = struct.unpack_from('<H', data, offset)
             offset += 2
             # packet type is 1 (a returned value)
             if type_ == 1:
-                id_, = struct.unpack_from('!H', data, offset)
+                id_, = struct.unpack_from('<H', data, offset)
                 self.results[id_] = data[offset + 2:offset + size - 2]
                 offset += size - 2  # - type_
             # packet type is 3 (an event callback)
             elif type_ == 3:
-                index, count = struct.unpack_from('!2B', data, offset)
+                index, count = struct.unpack_from('<2B', data, offset)
                 offset += 2
                 # parse args
                 args = []
                 for i in range(count):
-                    argtype = EVENTS_ARGTYPES[struct.unpack_from('!B', data,
+                    argtype = EVENTS_ARGTYPES[struct.unpack_from('<B', data,
                                                                  offset)[0]]
                     offset += 1
                     arg = argtype.from_buffer(data, offset)
@@ -176,9 +176,9 @@ class ScriptMethod:
             data += cls(val).serialize()
         # form packet
         id_ = conn.method_id if self.restype else 0
-        header = struct.pack('!2H', self.index, id_)
+        header = struct.pack('<2H', self.index, id_)
         packet = header + data
-        size = struct.pack('!I', len(packet))
+        size = struct.pack('<I', len(packet))
         # send to the stealth
         conn.send(size + packet)
         # wait for a result if required
@@ -252,36 +252,37 @@ def get_port():
         for i in range(GET_PORT_ATTEMPT_COUNT):
             if DEBUG:
                 print('attempt №' + str(i + 1))
-            packet = struct.pack('!HI', 4, 0xDEADBEEF)
+            packet = struct.pack('<HI', 4, 0xDEADBEEF)
             sock.send(packet)
             if DEBUG:
-                print('packet sent: {}'.format(packet))
+                print('packet sent: {}'.format(convert_packet_data(packet)))
             timer = time.time()
+            buffer = bytearray()
             while timer + SOCK_TIMEOUT > time.time():
                 try:
                     data = sock.recv(4096)
+                    buffer += data
+                    if DEBUG:
+                        print('received: {}'.format(convert_packet_data(data)))
                 except socket.error:
                     continue
-                if data:
-                    if DEBUG:
-                        print('received: {}'.format(data))
-                    length = struct.unpack_from('!H', data)[0]
+                if len(buffer) > 2:
+                    length = struct.unpack_from('<H', buffer)[0]
                     if DEBUG:
                         print('length: {}'.format(length))
-                    port = \
-                        struct.unpack_from('!' + 'H' if length == 2 else 'I',
-                                           data,
-                                           2)[0]
+                    if len(buffer[2:]) < length:
+                        continue
+                    port = struct.unpack_from('<H', buffer, 2)[0]
                     if DEBUG:
                         print('port: {}'.format(port))
                     sock.close()
                     if DEBUG:
                         print('socket closed')
                     return port
-                else:
-                    error = 'Connection to Stealth was lost.'
-                    show_error_message(error)
-                    exit(1)
+            else:
+                error = 'Connection to Stealth was lost.'
+                show_error_message(error)
+                exit(1)
 
     with Connection.port_lock:
         # Zero way - if we already got the port
@@ -299,6 +300,8 @@ def get_port():
             Connection.port = unix()
         else:
             raise Exception('Can not to get port from Stealth.')
+        if DEBUG:
+            print('Port number: {0}'.format(Connection.port))
         return Connection.port
 
 
