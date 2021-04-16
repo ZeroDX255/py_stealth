@@ -2769,7 +2769,8 @@ def GetGumpInfo(GumpIndex):
                 offset += element.size
                 values.append(element.value)
             if cls is _Text:
-                result[cls.container].append(*[values])  # there is only one element
+                result[cls.container].append(
+                    *[values])  # there is only one element
             else:
                 element = dict(zip(cls.keys, values))
                 if 'ClilocID' in cls.keys and 'Arguments' in cls.keys:  # need to represent clilocs
@@ -2782,7 +2783,8 @@ def GetGumpInfo(GumpIndex):
                                 arg = GetClilocByID(int(arg.strip('#')))
                             s = text.index('~')
                             e = text.index('~', s + 1)
-                            text = text.replace(text[s:e + 1], arg, 1) or arg  # TODO: wtf?
+                            text = text.replace(text[s:e + 1], arg,
+                                                1) or arg  # TODO: wtf?
                     element['Arguments'] = text
                 result[cls.container].append(element)
     return result
@@ -3432,7 +3434,8 @@ def SetEasyUO(num, Regvalue):
     key = winreg.HKEY_CURRENT_USER
     access = winreg.KEY_WRITE
     with winreg.OpenKey(key, _easyuo_sub_key, 0, access) as easyuo_key:
-        winreg.SetValueEx(easyuo_key, '*' + str(num), 0, winreg.REG_SZ, Regvalue)
+        winreg.SetValueEx(easyuo_key, '*' + str(num), 0, winreg.REG_SZ,
+                          Regvalue)
 
 
 def GetEasyUO(num):
@@ -3896,8 +3899,10 @@ def GetStaticTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
     if not _iterable(TileTypes):
         TileTypes = [TileTypes]
     result = []
-    data = _get_statics_array(Xmin, Ymin, Xmax, Ymax, WorldNum, len(TileTypes),
-                              _struct.pack('<H' * len(TileTypes), *TileTypes))
+    data = _get_statics_array(
+        Xmin, Ymin, Xmax, Ymax, WorldNum, len(TileTypes),
+        _struct.pack('<' + 'H' * len(TileTypes), *TileTypes)
+    )
     count = _uint.from_buffer(data)
     fmt = '<3Hb'
     size = _struct.calcsize(fmt)
@@ -4175,7 +4180,8 @@ def newMoveXYZ(Xdst, Ydst, Zdst, AccuracyXY, AccuracyZ, Running, Callback=None):
                 if IsWorldCellPassable(cx, cy, cz, x, y, WorldNum()):
                     cx, cy, cz = x, y, z
                 else:
-                    debug('Point ({0}, {1}, {2}) is not passable.'.format(x, y, z))
+                    debug('Point ({0}, {1}, {2}) is not passable.'.format(x, y,
+                                                                          z))
                     find_path = True
                     break
             except IndexError:
@@ -4716,7 +4722,8 @@ def GetMultis():
             "XMin", "XMax", "YMin", "YMax",
             "Width", "Height")
     for i in range(count):
-        obj = dict(zip(keys, _struct.unpack_from(fmt, data, i * size + count.size)))
+        obj = dict(
+            zip(keys, _struct.unpack_from(fmt, data, i * size + count.size)))
         result.append(obj)
     return result
 
@@ -4748,7 +4755,8 @@ def GetMenuItemsEx(MenuCaption):
 
         def __str__(self):
             template = 'Model: {0}, Color: {1}, Text: {2}'
-            return '{ ' + template.format(hex(self.model), hex(self.color), self.text) + ' }'
+            return '{ ' + template.format(hex(self.model), hex(self.color),
+                                          self.text) + ' }'
 
         def __repr__(self):
             return self.__str__()
