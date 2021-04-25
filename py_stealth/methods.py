@@ -3926,8 +3926,10 @@ def GetLandTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
     if not _iterable(TileTypes):
         TileTypes = [TileTypes]
     result = []
-    data = _get_lands_array(Xmin, Ymin, Xmax, Ymax, WorldNum, len(TileTypes),
-                            _struct.pack('<H' * len(TileTypes), *TileTypes))
+    data = _get_lands_array(
+        Xmin, Ymin, Xmax, Ymax, WorldNum, len(TileTypes),
+        _struct.pack('<' + 'H' * len(TileTypes), *TileTypes)
+    )
     count = _uint.from_buffer(data)
     fmt = '<3Hb'
     size = _struct.calcsize(fmt)
