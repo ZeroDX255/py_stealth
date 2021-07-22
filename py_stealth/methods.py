@@ -3866,7 +3866,7 @@ _get_surface_z.argtypes = [_ushort,  # X
 
 
 def GetSurfaceZ(X, Y, WorldNum):
-    return _get_surface_z(X, Y, WorldNum())
+    return _get_surface_z(X, Y, WorldNum)
 
 
 _is_cell_passable = _ScriptMethod(285)  # IsWorldCellPassable
