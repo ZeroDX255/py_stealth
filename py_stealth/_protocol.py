@@ -296,7 +296,7 @@ def get_port():
         # windows messages. If script was launched as external script.
         elif platform.system() == 'Windows':
             Connection.port = win()
-        elif platform.system() == 'Linux':
+        elif platform.system() in ['Linux', 'Darwin']:
             Connection.port = unix()
         else:
             raise Exception('Can not to get port from Stealth.')
