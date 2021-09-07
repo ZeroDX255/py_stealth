@@ -3791,11 +3791,11 @@ def GetStaticTileData(Tile):
     data = _get_static_tile_data(Tile)
     if data:
         result['Flags'] = ConvertIntegerToFlags(1, _ulong.from_buffer(data))
-        result['Weight'] = _int.from_buffer(data, 4)
-        result['Height'] = _int.from_buffer(data, 8)
-        result['RadarColorRGBA'] = _struct.unpack_from('<4B', data, 12)
-        length = _uint.from_buffer(data, 16)
-        result['Name'] = data[20: 20 + length].rstrip(b'\x00')
+        result['Weight'] = _ushort.from_buffer(data, 8)
+        result['AnimID'] = _ushort.from_buffer(data, 10)
+        result['Height'] = _int.from_buffer(data, 12)
+        result['RadarColorRGBA'] = _struct.unpack_from('<4B', data, 16)
+        result['Name'] = data[20:40].rstrip(b'\x00')
         if b'' != '':  # py3
             result['Name'] = result['Name'].decode()
     return result
