@@ -3795,7 +3795,8 @@ def GetStaticTileData(Tile):
         result['AnimID'] = _ushort.from_buffer(data, 10)
         result['Height'] = _int.from_buffer(data, 12)
         result['RadarColorRGBA'] = _struct.unpack_from('<4B', data, 16)
-        result['Name'] = data[20:40].rstrip(b'\x00')
+        length = _uint.from_buffer(data, 20)
+        result['Name'] = data[24: 24 + length].rstrip(b'\x00')
         if b'' != '':  # py3
             result['Name'] = result['Name'].decode()
     return result
