@@ -179,7 +179,7 @@ def GetCharTitle():
 
 
 _get_gold_count = _ScriptMethod(27)  # GetSelfGold
-_get_gold_count.restype = _ushort
+_get_gold_count.restype = _uint
 
 
 def Gold():
