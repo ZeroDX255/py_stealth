@@ -179,7 +179,7 @@ def GetCharTitle():
 
 
 _get_gold_count = _ScriptMethod(27)  # GetSelfGold
-_get_gold_count.restype = _uint
+_get_gold_count.restype = _ushort
 
 
 def Gold():
@@ -4830,3 +4830,188 @@ _get_stat_lock_state.argtypes = [_str]  # SkillName
 
 def GetStatLockState(SkillName):
     _get_stat_lock_state(SkillName)
+
+
+_equip_last_weapon = _ScriptMethod(370)
+
+
+def EquipLastWeapon():
+    _equip_last_weapon()
+
+
+# Book functions
+
+_book_get_page_text = _ScriptMethod(373)
+_book_get_page_text.restype = _str
+_book_get_page_text.argtypes = [_ushort]
+
+
+def BookGetPageText(Page):
+    return _book_get_page_text(Page)
+
+
+_book_set_text = _ScriptMethod(374)
+_book_set_text.argtypes = [_str]
+
+
+def BookSetText(Text):
+    _book_set_text(Text)
+
+
+_book_set_page_text = _ScriptMethod(375)
+_book_set_page_text.argtypes = [_ushort, _str]
+
+
+def BookSetPageText(Page, Text):
+    _book_set_page_text(Page, Text)
+
+
+_book_clear_text = _ScriptMethod(376)
+
+
+def BookClearText():
+    _book_clear_text()
+
+
+_book_set_header = _ScriptMethod(377)
+_book_set_header.argtypes = [_str, _str]
+
+
+def BookSetHeader(title, author):
+    _book_set_header(title, author)
+
+
+# Character creation
+
+_create_char = _ScriptMethod(371)
+_create_char.argtypes =[
+    _str,  # ProfileName
+    _str,  # ShardName
+    _str,  # CharName
+    _bool, # Gender
+    _byte, # Race
+    _byte, # Str
+    _byte, # Dex
+    _byte, # Int
+    _str,  # Skill1
+    _str,  # Skill2
+    _str,  # Skill3
+    _str,  # Skill4
+    _int,  # SkillValue1
+    _int,  # SkillValue2
+    _int,  # SkillValue3
+    _int,  # SkillValue4
+    _byte, # Start City
+    _uint, # Free Slot
+]
+
+
+def CreateChar(
+        ProfileName,  # ProfileName
+        ShardName,  # ShardName
+        CharName,  # CharName
+        Gender,  # Gender
+        Race,  # Race
+        Strn,  # Str
+        Dex,  # Dex
+        Int,  # Int
+        Skill1,  # Skill1
+        Skill2,  # Skill2
+        Skill3,  # Skill3
+        Skill4,  # Skill4
+        SkillValue1,  # SkillValue1
+        SkillValue2,  # SkillValue2
+        SkillValue3,  # SkillValue3
+        SkillValue4,  # SkillValue4
+        City,  # Start City
+        Slot,  # Free Slot
+):
+    _create_char(
+        ProfileName,    # ProfileName
+        ShardName,      # ShardName
+        CharName,       # CharName
+        Gender,         # Gender
+        Race,           # Race
+        Strn,           # Str
+        Dex,            # Dex
+        Int,            # Int
+        Skill1,         # Skill1
+        Skill2,         # Skill2
+        Skill3,         # Skill3
+        Skill4,         # Skill4
+        SkillValue1,    # SkillValue1
+        SkillValue2,    # SkillValue2
+        SkillValue3,    # SkillValue3
+        SkillValue4,    # SkillValue4
+        City,           # Start City
+        Slot,           # Free Slot
+    )
+
+
+# Script control functions
+
+_get_script_count = _ScriptMethod(450)
+_get_script_count.restype = _ushort
+
+
+def GetScriptCount():
+    return _get_script_count()
+
+
+_get_script_path = _ScriptMethod(451)
+_get_script_path.argtypes = [_ushort]
+_get_script_path.restype = _str
+
+
+def GetScriptPath(ScriptIndex):
+    return _get_script_path(ScriptIndex)
+
+
+_get_script_name = _ScriptMethod(452)
+_get_script_name.argtypes = [_ushort]
+_get_script_name.restype = _str
+
+
+def GetScriptName(ScriptIndex):
+    return _get_script_name(ScriptIndex)
+
+
+_get_script_state = _ScriptMethod(453)
+_get_script_state.argtypes = [_ushort]
+_get_script_state.restype = _byte
+
+
+def GetScriptState(ScriptIndex):
+    return _get_script_state(ScriptIndex)
+
+
+_start_script = _ScriptMethod(454)
+_start_script.argtypes = [_str]
+_start_script.restype = _ushort
+
+
+def StartScript(ScriptPath):
+    return _start_script(ScriptPath)
+
+
+_stop_script = _ScriptMethod(455)
+_stop_script.argtypes = [_ushort]
+
+def StopScript(ScriptIndex):
+    _stop_script(ScriptIndex)
+
+
+_pause_resume_sel_script = _ScriptMethod(456)
+_pause_resume_sel_script.argtypes = [_ushort]
+
+
+def PauseResumeScript(ScriptIndex):
+    _pause_resume_sel_script(ScriptIndex)
+
+
+_stop_all_scripts = _ScriptMethod(457)
+
+
+def StopAllScripts():
+    _stop_all_scripts()
+
