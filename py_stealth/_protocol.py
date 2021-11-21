@@ -30,6 +30,10 @@ EVENTS_NAMES = (
 EVENTS_ARGTYPES = _str, _uint, _int, _ushort, _short, _ubyte, _byte, _bool
 VERSION = 2, 3, 0, 0
 
+_IS_WIN = platform.system() == 'Windows'
+if _IS_WIN:
+    from ._win_multimedia_timers import timer_resolution
+
 
 class Connection:
     port = None
@@ -188,7 +192,11 @@ class ScriptMethod:
                 result = self.restype.from_buffer(conn.results.pop(id_))
                 return result.value
             except KeyError:
-                pass
+                if _IS_WIN:
+                    with timer_resolution():
+                        time.sleep(.005)
+                else:
+                    time.sleep(.005)
 
 
 def get_port():
@@ -294,12 +302,10 @@ def get_port():
             Connection.port = int(sys.argv[2])
         # Second way - ask Stealth for a port number via socket connection or
         # windows messages. If script was launched as external script.
-        elif platform.system() == 'Windows':
+        elif _IS_WIN:
             Connection.port = win()
-        elif platform.system() in ['Linux', 'Darwin']:
-            Connection.port = unix()
         else:
-            raise Exception('Can not to get port from Stealth.')
+            Connection.port = unix()
         if DEBUG:
             print('Port number: {0}'.format(Connection.port))
         return Connection.port
