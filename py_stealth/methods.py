@@ -1,6 +1,7 @@
 ﻿from __future__ import division
 
 import datetime as _datetime
+import platform as _platform
 import struct as _struct
 import time as _time
 
@@ -11,6 +12,11 @@ from ._protocol import get_connection as _get_connection
 from .utils import ddt2pdt as _ddt2pdt
 from .utils import pdt2ddt as _pdt2ddt
 from .utils import iterable as _iterable
+
+_IS_WIN = _platform.system() == 'Windows'
+if _IS_WIN:
+    from ._win_multimedia_timers import timer_resolution as _timer_resolution
+
 
 _clear_event_callback = _ScriptMethod(7)  # ClearEventProc
 _clear_event_callback.argtypes = [_ubyte]  # EventIndex
@@ -726,7 +732,11 @@ def Wait(WaitTimeMS):
     end = _time.time() + WaitTimeMS / 1000
     while _time.time() < end:
         _wait()  # pause script and event checks
-        _time.sleep(0.010)
+        if _IS_WIN:
+            with _timer_resolution():
+                _time.sleep(.005)
+        else:
+            _time.sleep(.005)
     else:
         _wait()  # condition does not work while delay is a very small number
 
