@@ -3593,7 +3593,7 @@ def PartyMembersList():
     count = _uint.from_buffer(data)
     if count:
         fmt = '<' + count * 'I'
-        result.extend(_struct.unpack(fmt, data))
+        result.extend(_struct.unpack_from(fmt, data, count.size))
     return result
 
 
