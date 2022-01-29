@@ -4816,7 +4816,6 @@ def GetNextStepZ(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ):
 
 
 _client_hide = _ScriptMethod(368)  # ClientHide
-_client_hide.restype = _bool
 _client_hide.argtypes = [_uint]  # ID
 
 
