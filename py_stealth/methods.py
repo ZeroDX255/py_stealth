@@ -4976,16 +4976,7 @@ def GetScriptPath(ScriptIndex):
     return _get_script_path(ScriptIndex)
 
 
-_get_script_name = _ScriptMethod(452)
-_get_script_name.argtypes = [_ushort]
-_get_script_name.restype = _str
-
-
-def GetScriptName(ScriptIndex):
-    return _get_script_name(ScriptIndex)
-
-
-_get_script_state = _ScriptMethod(453)
+_get_script_state = _ScriptMethod(452)
 _get_script_state.argtypes = [_ushort]
 _get_script_state.restype = _byte
 
@@ -4994,7 +4985,7 @@ def GetScriptState(ScriptIndex):
     return _get_script_state(ScriptIndex)
 
 
-_start_script = _ScriptMethod(454)
+_start_script = _ScriptMethod(453)
 _start_script.argtypes = [_str]
 _start_script.restype = _ushort
 
@@ -5003,14 +4994,15 @@ def StartScript(ScriptPath):
     return _start_script(ScriptPath)
 
 
-_stop_script = _ScriptMethod(455)
+_stop_script = _ScriptMethod(454)
 _stop_script.argtypes = [_ushort]
+
 
 def StopScript(ScriptIndex):
     _stop_script(ScriptIndex)
 
 
-_pause_resume_sel_script = _ScriptMethod(456)
+_pause_resume_sel_script = _ScriptMethod(455)
 _pause_resume_sel_script.argtypes = [_ushort]
 
 
@@ -5018,9 +5010,27 @@ def PauseResumeScript(ScriptIndex):
     _pause_resume_sel_script(ScriptIndex)
 
 
-_stop_all_scripts = _ScriptMethod(457)
+_stop_all_scripts = _ScriptMethod(456)
 
 
 def StopAllScripts():
     _stop_all_scripts()
+
+
+_set_script_name = _ScriptMethod(457)
+_set_script_name.argtypes = [_ushort, _str]
+
+
+def SetScriptName(ScriptIndex, ScriptName):
+    return _set_script_name(ScriptIndex, ScriptName)
+
+
+_get_script_name = _ScriptMethod(458)
+_get_script_name.argtypes = [_ushort]
+_get_script_name.restype = _str
+
+
+def GetScriptName(ScriptIndex):
+    return _get_script_name(ScriptIndex)
+
 
