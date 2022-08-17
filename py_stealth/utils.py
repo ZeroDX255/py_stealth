@@ -26,7 +26,7 @@ def show_error_message(msg):
     system = platform.system()
     if system == 'Windows':
         from py_stealth import py_stealth_winapi as _winapi
-        title = 'Error'
+        title = 'PyStealth error'
         if PY2:  # py2
             msg = msg.decode()
             title = title.decode()
