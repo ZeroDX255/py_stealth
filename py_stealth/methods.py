@@ -2788,14 +2788,14 @@ def GetGumpInfo(GumpIndex):
                     args = element.get('Arguments', '')
                     args = args.split('@')[1:] or []
                     for arg in args:
-                        if '~' in text:
+                        if '~' in text and arg:
                             if arg.startswith('#'):  # another cliloc
                                 arg = GetClilocByID(int(arg.strip('#')))
                             s = text.index('~')
                             e = text.index('~', s + 1)
                             text = text.replace(text[s:e + 1], arg,
-                                                1) or arg  # TODO: wtf?
-                    element['Arguments'] = text
+                                                1) or arg  # TODO: wtf? why or arg?
+                    element['ClilocText'] = text
                 result[cls.container].append(element)
     return result
 
