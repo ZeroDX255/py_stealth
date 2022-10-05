@@ -2201,16 +2201,15 @@ _get_context_menu_record.restype = _buffer  # TODO: What is this do?
 
 
 def GetContextMenuRec():
-    """
-    fmt = 'HH'
+    keys = 'ID', 'EntriesNumber', 'NewCliloc'
+    entry_keys = 'Tag', 'IntLocID', 'Flags', 'Color'
     data = _get_context_menu_record()
-    keys = 'Tag', 'Flags'
-    serial, count, tmp = _struct.unpack('>IBI', data[:9])
-    l = []
-    for i in range(count):
-        l.append(_struct.unpack('HHIHH', data[9+i*12:9+i*12+12]))
-    """
-    return None
+    res = dict(zip(keys, _struct.unpack('<IB?', data[:6])))
+    res['Entries'] = []
+    for i in range(res['EntriesNumber']):
+        entry_data = _struct.unpack('<HIHH', data[6+i*10:6+i*10+10])
+        res['Entries'].append(dict(zip(entry_keys, entry_data)))
+    return res
 
 
 _clear_context_menu = _ScriptMethod(196)  # ClearContextMenu
