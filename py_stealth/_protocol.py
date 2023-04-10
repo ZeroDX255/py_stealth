@@ -28,7 +28,7 @@ EVENTS_NAMES = (
 )
 
 EVENTS_ARGTYPES = _str, _uint, _int, _ushort, _short, _ubyte, _byte, _bool
-VERSION = 2, 4, 0, 0
+VERSION = 2, 5, 0, 0
 
 _IS_WIN = platform.system() == 'Windows'
 if _IS_WIN:
