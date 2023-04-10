@@ -2026,6 +2026,15 @@ def IsFemale(ObjID):
     return _is_female(ObjID)
 
 
+_is_house = _ScriptMethod(382)  # IsHouse
+_is_house.restype = _bool
+_is_house.argtypes = [_uint]  # ObjID
+
+
+def IsHouse(ObjID):
+    return _is_house(ObjID)
+
+
 _open_door = _ScriptMethod(182)  # OpenDoor
 
 
