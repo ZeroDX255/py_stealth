@@ -4,6 +4,7 @@ import datetime as _datetime
 import platform as _platform
 import struct as _struct
 import time as _time
+from turtle import _Screen
 
 from ._datatypes import *
 from ._protocol import EVENTS_NAMES as _EVENTS_NAMES
@@ -5042,3 +5043,31 @@ def GetScriptName(ScriptIndex):
     return _get_script_name(ScriptIndex)
 
 
+_add_user_static = _ScriptMethod(383)
+_add_user_static.argtypes = [_buffer, _byte]
+_add_user_static.restype = _uint
+
+
+def AddUserStatic(Tile, X, Y, Z, Color, WorldNum):
+    buff = _struct.pack("<HHHbH", Tile, X, Y, Z, Color)
+    return _add_user_static(buff, WorldNum)
+
+
+def AddUserStaticItem(StaticItem, WorldNum):
+    return AddUserStatic(StaticItem["tile"], StaticItem["x"], StaticItem["y"], StaticItem["z"], StaticItem["color"], WorldNum)
+
+
+_remove_user_static = _ScriptMethod(384)
+_remove_user_static.argtypes = [_uint]
+_remove_user_static.restype = _bool
+
+
+def RemoveUserStatic(ID):
+    return _remove_user_static(ID)
+
+
+_clear_user_static = _ScriptMethod(385)
+
+
+def ClearUserStatics():
+    return _clear_user_static()
