@@ -4,7 +4,6 @@ import datetime as _datetime
 import platform as _platform
 import struct as _struct
 import time as _time
-from turtle import _Screen
 
 from ._datatypes import *
 from ._protocol import EVENTS_NAMES as _EVENTS_NAMES
