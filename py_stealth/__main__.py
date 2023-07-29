@@ -9,7 +9,7 @@ except ImportError:
     sys.path.insert(0, os.path.split(os.path.dirname(__file__))[0])
     from py_stealth import methods, _protocol, utils
 finally:
-    from py_stealth.config import DEBUG, ERROR_FILTER, USE_STEALTH_SYSTEM_JOURNAL
+    from py_stealth.config import DEBUG, ERROR_FILTER, USE_STEALTH_SYSTEM_JOURNAL, REMOVE_NEW_LINES
 
 
 PY2 = b'' == ''
@@ -28,6 +28,8 @@ class SysJournalOut:
             self.flush()
 
     def flush(self):
+        if REMOVE_NEW_LINES:
+            self._buffer = self._buffer.replace('\n', '', -1)
         if self._buffer:
             methods.AddToSystemJournal(self._buffer)
             self._buffer = str()
