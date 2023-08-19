@@ -24,7 +24,7 @@ EVENTS_NAMES = (
     'evincominggump', 'evtimer1', 'evtimer2', 'evwindowsmessage', 'evsound',
     'evdeath', 'evquestarrow', 'evpartyinvite', 'evmappin', 'evgumptextentry',
     'evgraphicaleffect', 'evircincomingtext', 'evmessengerevent',
-    'evsetglobalvar', 'evupdateobjstats', 'evglobalchat'
+    'evsetglobalvar', 'evupdateobjstats', 'evglobalchat', 'evWarDamage'
 )
 
 EVENTS_ARGTYPES = _str, _uint, _int, _ushort, _short, _ubyte, _byte, _bool
