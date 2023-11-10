@@ -63,6 +63,18 @@ def AddToSystemJournal(*args, **kwargs):
     _add_to_system_journal(text)
 
 
+_add_to_system_journal_ex = _ScriptMethod(386)  # AddToSystemJournalEx
+_add_to_system_journal_ex.argtypes = [_str,  # Text
+                                      _int,  # TextColor
+                                      _int,  # BgColor
+                                      _int,  # FontSize
+                                      _str  # FontName
+                                      ]
+
+
+def AddToSystemJournalEx(value: str, textcolor: int = 0, bgcolor: int = -1, fontsize: int = 10, fontname: str = 'Consolas'):
+    _add_to_system_journal_ex(value, textcolor, bgcolor, fontsize, fontname)
+
 _get_stealth_info = _ScriptMethod(12)  # GetStealthInfo
 _get_stealth_info.restype = _buffer  # TAboutData
 
@@ -185,7 +197,7 @@ def GetCharTitle():
 
 
 _get_gold_count = _ScriptMethod(27)  # GetSelfGold
-_get_gold_count.restype = _ushort
+_get_gold_count.restype = _uint
 
 
 def Gold():
