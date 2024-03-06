@@ -4845,20 +4845,20 @@ def ClientHide(ID):
 
 _get_skill_lock_state = _ScriptMethod(369)  # GetSkillLockState
 _get_skill_lock_state.restype = _byte
-_get_skill_lock_state.argtypes = [_str]  # SkillName
+_get_skill_lock_state.argtypes = [_int]  # SkillName
 
 
 def GetSkillLockState(SkillName):
-    return _get_skill_lock_state(SkillName)
+    return _get_skill_lock_state(_get_skill_id(SkillName))
 
 
 _get_stat_lock_state = _ScriptMethod(372)  # GetStatLockState
 _get_stat_lock_state.restype = _byte
-_get_stat_lock_state.argtypes = [_str]  # SkillName
+_get_stat_lock_state.argtypes = [_byte]  # StatId
 
 
-def GetStatLockState(SkillName):
-    _get_stat_lock_state(SkillName)
+def GetStatLockState(StatId):
+    return _get_stat_lock_state(StatId)
 
 
 _equip_last_weapon = _ScriptMethod(370)
