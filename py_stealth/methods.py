@@ -2237,7 +2237,7 @@ _clear_context_menu = _ScriptMethod(196)  # ClearContextMenu
 
 
 def ClearContextMenu():
-    _clear_context_menu()
+    AddToSystemJournal('ClearContextMenu deprecated and removed')
 
 
 _is_trade = _ScriptMethod(197)  # CheckTradeState
