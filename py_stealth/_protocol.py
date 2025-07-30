@@ -7,6 +7,8 @@ import socket
 import threading
 import types
 import time
+import os
+
 
 from .config import DEBUG, HOST, PORT, MSG_TIMEOUT, SOCK_TIMEOUT, \
     GET_PORT_ATTEMPT_COUNT
@@ -24,11 +26,12 @@ EVENTS_NAMES = (
     'evincominggump', 'evtimer1', 'evtimer2', 'evwindowsmessage', 'evsound',
     'evdeath', 'evquestarrow', 'evpartyinvite', 'evmappin', 'evgumptextentry',
     'evgraphicaleffect', 'evircincomingtext', 'evmessengerevent',
-    'evsetglobalvar', 'evupdateobjstats', 'evglobalchat', 'evwardamage'
+    'evsetglobalvar', 'evupdateobjstats', 'evglobalchat', 'evwardamage',
+    'evcontextmenu' 
 )
 
 EVENTS_ARGTYPES = _str, _uint, _int, _ushort, _short, _ubyte, _byte, _bool
-VERSION = 2, 6, 0, 0
+VERSION = 2, 7, 0, 0
 
 _IS_WIN = platform.system() == 'Windows'
 if _IS_WIN:
@@ -119,8 +122,8 @@ class Connection:
                 id_, = struct.unpack_from('<H', data, offset)
                 self.results[id_] = data[offset + 2:offset + size - 2]
                 offset += size - 2  # - type_
-            # packet type is 3 (an event callback)
-            elif type_ == 3:
+            # packet type is 6 (an event callback)
+            elif type_ == 6:
                 index, count = struct.unpack_from('<2B', data, offset)
                 offset += 2
                 # parse args
@@ -141,6 +144,16 @@ class Connection:
             # packet type is 4 (a pause script packet)
             elif type_ == 4:
                 self.pause = True if not self.pause else False
+                offset += size - 2  # - type_
+            # packet type is 9 (ReqScriptPath)
+            elif type_ == 9:
+                lp = os.path.realpath(sys.argv[0])
+#                lp = os.path.realpath(__file__)
+                datap = struct.pack('<I{0}s'.format(len(lp) * 2), len(lp) * 2, lp.encode('UTF_16LE'))
+                header = struct.pack('<2H', 10, 0)
+                packet = header + datap
+                sizepkt = struct.pack('<I', len(packet))
+                self._sock.send(sizepkt + packet)
                 offset += size - 2  # - type_
             # packet type is 2 (terminate script)
             elif type_ == 2:
@@ -200,8 +213,16 @@ class ScriptMethod:
 
 
 def get_port():
-    def win():
-        import os
+    def win():        
+        import ctypes
+        from ctypes.wintypes import BOOL, DWORD, UINT
+        
+        dlluser32 = ctypes.windll.user32  
+        
+        ChangeWindowMessageFilter = dlluser32.ChangeWindowMessageFilter
+        ChangeWindowMessageFilter.restype = BOOL
+        ChangeWindowMessageFilter.argtypes = (UINT, DWORD)
+        
         from . import py_stealth_winapi as _winapi
         wnd = 'TStealthForm'.decode() if b'' == '' else 'TStealthForm'  # py2
         hwnd = _winapi.FindWindow(wnd, None)
@@ -228,6 +249,8 @@ def get_port():
         # wait for an answer
         msg = _winapi.MSG()
         now = time.time()
+        if int(platform.release()) >= 6 :
+            ChangeWindowMessageFilter(_winapi.FM_GETFOCUS, 1)
         while now + MSG_TIMEOUT > time.time():
             if _winapi.PeekMessage(msg, 0, _winapi.FM_GETFOCUS,
                                    _winapi.FM_GETFOCUS, _winapi.PM_REMOVE):
@@ -238,9 +261,10 @@ def get_port():
             else:
                 time.sleep(0.005)
         error = 'PeekMessage timeout'
-        _winapi.MessageBox(0, error.decode() if b'' == '' else error,  # py2
+        if DEBUG:
+            _winapi.MessageBox(0, error.decode() if b'' == '' else error,  # py2
                            'Error'.decode() if b'' == '' else 'Error', 0)  # py2
-        exit(1)
+        return 0
 
     def unix():
         # attempt to connect to Stealth
@@ -304,6 +328,8 @@ def get_port():
         # windows messages. If script was launched as external script.
         elif _IS_WIN:
             Connection.port = win()
+            if not Connection.port :
+                Connection.port = unix()  #2nd way
         else:
             Connection.port = unix()
         if DEBUG:

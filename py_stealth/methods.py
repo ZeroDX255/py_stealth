@@ -18,31 +18,34 @@ if _IS_WIN:
     from ._win_multimedia_timers import timer_resolution as _timer_resolution
 
 
-_clear_event_callback = _ScriptMethod(7)  # ClearEventProc
-_clear_event_callback.argtypes = [_ubyte]  # EventIndex
-
-_set_event_callback = _ScriptMethod(11)  # SetEventProc
+_set_event_callback = _ScriptMethod(7)  # SetEventProc
 _set_event_callback.argtypes = [_ubyte]  # EventIndex
+
+_clear_event_callback = _ScriptMethod(8)  # ClearEventProc
+_clear_event_callback.argtypes = [_ubyte]  # EventIndex
 
 
 def SetEventProc(EventName, Callback=None):
     conn = _get_connection()
-    try:
-        index = _EVENTS_NAMES.index(EventName.lower())
-    except ValueError:
+    if EventName.lower() not in _EVENTS_NAMES:
         raise ValueError('Unknown event "' + EventName + '".')
-    # clear event
-    if Callback is None:
+    index = _EVENTS_NAMES.index(EventName.lower())
+
+    # if need to clear stealth Callback processing of index event
+    if not Callback and conn.callbacks[index]:
         _clear_event_callback(index)
-        # conn.callbacks[index] = None
-    # set event
-    else:
-        if conn.callbacks[index] is None:
-            _set_event_callback(index)
+        conn.callbacks[index] = None
+        return
+    # if need to set stealth Callback processing of index event
+    elif Callback and not conn.callbacks[index]:
+        _set_event_callback(index)
+    #if need to change Callback function while this event index is already processed by stealth
+    if Callback:
         conn.callbacks[index] = Callback
 
 
-_connected = _ScriptMethod(9)  # GetConnectedStatus
+
+_connected = _ScriptMethod(12)  # GetConnectedStatus
 _connected.restype = _bool
 
 
@@ -50,7 +53,7 @@ def Connected():
     return _connected()
 
 
-_add_to_system_journal = _ScriptMethod(10)  # AddToSystemJournal
+_add_to_system_journal = _ScriptMethod(13)  # AddToSystemJournal
 _add_to_system_journal.argtypes = [_str]  # Text
 
 
@@ -75,7 +78,7 @@ _add_to_system_journal_ex.argtypes = [_str,  # Text
 def AddToSystemJournalEx(value: str, textcolor: int = 0, bgcolor: int = -1, fontsize: int = 10, fontname: str = 'Consolas'):
     _add_to_system_journal_ex(value, textcolor, bgcolor, fontsize, fontname)
 
-_get_stealth_info = _ScriptMethod(12)  # GetStealthInfo
+_get_stealth_info = _ScriptMethod(387)  # GetStealthInfo
 _get_stealth_info.restype = _buffer  # TAboutData
 
 
@@ -164,7 +167,7 @@ def ChangeProfileEx(PName, ShardName, CharName):
     return _change_profile_ex(PName, ShardName, CharName)
 
 
-_get_profile_name = _ScriptMethod(8)  # ProfileName
+_get_profile_name = _ScriptMethod(11)  # ProfileName
 _get_profile_name.restype = _str
 
 
@@ -354,24 +357,60 @@ _get_buff_bar_info.restype = _buffer  # TBuffBarInfo
 
 def GetBuffBarInfo():
     result = []
-    fmt = '<HdHII'
+    fmt = '<HdHIII'  # Attribute_ID, TimeStart, Seconds, ClilocID1, ClilocID2, ClilocID3
     size = _struct.calcsize(fmt)
-    keys = ('Attribute_ID', 'TimeStart', 'Seconds', 'ClilocID1', 'ClilocID2')
+    keys = ('Attribute_ID', 'TimeStart', 'Seconds', 'ClilocID1', 'ClilocID2', 'ClilocID3', 'BuffText')
+
     data = _get_buff_bar_info()
-    if b'' == '':  # py2
+    if b'' == '':  # Py2 compatibility
         data = bytes(data)
+
     count = _uint.from_buffer(data)
-    data = data[4:]
-    for i in range(count):
-        values = _struct.unpack(fmt, data[i * size:i * size + size])
-        buff = dict(zip(keys, values))
+    data = data[4:]  # skip the count header
+    offset = 0
+
+    for _ in range(count):
+        # Ensure there's enough data left for the fixed part
+        if offset + size > len(data):
+            break  # Prevent overread if data is malformed
+
+        # Read fixed part
+        values = _struct.unpack(fmt, data[offset:offset + size])
+        offset += size
+
+        # Read UTF-16LE string: length (uint32) + content
+        if offset + 4 > len(data):
+            break
+
+        strlen = _struct.unpack('<I', data[offset:offset + 4])[0]
+        offset += 4
+
+        if offset + strlen > len(data):
+            break
+
+        str_bytes = data[offset:offset + strlen]
+        offset += strlen
+
+        try:
+            buff_text = str_bytes.decode('utf-16le')
+        except UnicodeDecodeError:
+            buff_text = ''
+
+        # Optionally strip garbage after '@'
+        buff_text = buff_text.split('@')[0].strip()
+
+        # Combine values and text
+        full_values = values + (buff_text,)
+        buff = dict(zip(keys, full_values))
+
+        # Convert Delphi TDateTime to Python datetime
         buff['TimeStart'] = _ddt2pdt(buff['TimeStart'])
+
         result.append(buff)
+
     return result
 
 
-_get_shard_name = _ScriptMethod(47)  # GetShardName
-_get_shard_name.restype = _str
 
 
 def ShardName():
@@ -3832,7 +3871,7 @@ def GetStaticTileData(Tile):
     return result
 
 
-_get_cell = _ScriptMethod(13)  # GetCell
+_get_cell = _ScriptMethod(388)  # GetCell
 _get_cell.restype = _buffer  # TMapCell
 _get_cell.argtypes = [_ushort,  # X
                       _ushort,  # Y
@@ -5082,3 +5121,89 @@ _clear_user_static = _ScriptMethod(385)
 
 def ClearUserStatics():
     return _clear_user_static()
+
+_get_multi_parts_at_position = _ScriptMethod(380)
+_get_multi_parts_at_position.argtypes = [_ushort, _ushort]
+_get_multi_parts_at_position.restype = _buffer
+def GetMultiPartsAtPosition(X, Y):
+    result = []
+    data = _get_multi_parts_at_position(X, Y)
+    count = _uint.from_buffer(data)
+    fmt = '<3HbI'
+    size = _struct.calcsize(fmt)
+    keys = 'Graphic', 'X', 'Y', 'Z', 'Flag'
+    for i in range(count):
+        values = _struct.unpack_from(fmt, data, 4 + i * size)
+        item = dict(zip(keys, values))
+        result.append(item)
+    result.append(data)
+    return result
+
+_get_multi_all_parts = _ScriptMethod(381)
+_get_multi_all_parts.argtypes = [_uint]
+_get_multi_all_parts.restype = _buffer
+
+def GetMultiAllParts(MultiID):
+    result = []
+    data = _get_multi_parts_at_position(MultiID)
+    count = _uint.from_buffer(data)
+    fmt = '<3HbI'
+    size = _struct.calcsize(fmt)
+    keys = 'Graphic', 'X', 'Y', 'Z', 'Flag'
+    for i in range(count):
+        values = _struct.unpack_from(fmt, data, 4 + i * size)
+        item = dict(zip(keys, values))
+        result.append(item)
+    result.append(data)
+    return result
+
+
+_get_script_params = _ScriptMethod(459)
+_get_script_params.restype = _uint
+def GetScriptParams():
+    return _get_script_params()
+
+    
+_get_script_list = _ScriptMethod(460)
+_get_script_list.restype = _buffer
+
+def GetScriptsList():
+    data = _get_script_list()
+    result = []
+    count = _uint.from_buffer(data)
+    offset = count.size     # 4
+    for _ in range(count):
+        if offset>= len(data) - 1: break
+        src = dict()
+        src['ScriptIndex'], length = _struct.unpack_from('<2I', data, offset)
+        src['ScriptName'] = _str.from_buffer(data, offset+4)
+        offset += 8 + length  # index 4, str_length 4  # sss = src['ScriptName'].size +4 length
+        src['ScriptState'] = ('Unknown', 'Started', 'Paused')[_ubyte.from_buffer(data, offset)]
+        offset +=1
+        result.append(src)
+    return result
+
+
+_target_by_resource = _ScriptMethod(389)
+_target_by_resource.argtypes = [_uint, _ushort]
+
+def TargetByResource(ID, Resource):
+    resource_map = {
+        "ore": 0,
+        "sand": 1,
+        "wood": 2,
+        "graves": 3,
+        "red_mushroom": 4
+    }
+
+    if isinstance(Resource, int):  # check if Resource is an integer
+        return _target_by_resource(ID, Resource)
+       
+    if isinstance(Resource, str):  # check if Resource is a string
+        resource_id = resource_map.get(Resource.lower())
+
+        if resource_id is not None:  # valid resource name
+            return _target_by_resource(item_serial, resource_id)
+            
+        else:
+            raise ValueError(f"Unknown resource name: {resource_name}")
