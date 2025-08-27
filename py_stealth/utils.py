@@ -33,9 +33,16 @@ def show_error_message(msg):
         _winapi.MessageBox(0, msg, title, 0)
     elif system == 'Linux':
         import subprocess
-        path = '/usr/bin/notify-send'
-        options = ['--icon=error', '--urgency=critical']
-        subprocess.call([path] + options + [msg])
+        import shutil
+
+        path = shutil.which('notify-send')
+        if path:
+            options = ['--icon=error', '--urgency=critical']
+            subprocess.call([path] + options + [msg])
+        else:
+            if PY2:
+                from __future__ import print_function
+            print('Error: ' + msg)
 
 
 def get_main_thread():  # py2
