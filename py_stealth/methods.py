@@ -45,7 +45,7 @@ def SetEventProc(EventName, Callback=None):
 
 
 
-_connected = _ScriptMethod(12)  # GetConnectedStatus
+_connected = _ScriptMethod(12)  # Connected
 _connected.restype = _bool
 
 
@@ -139,7 +139,7 @@ def GetARStatus():
     return _get_reconnector()
 
 
-_get_self_name = _ScriptMethod(19)  # GetCharName
+_get_self_name = _ScriptMethod(19)  # CharName
 _get_self_name.restype = _str
 
 
@@ -175,7 +175,7 @@ def ProfileName():
     return _get_profile_name()
 
 
-_get_self_id = _ScriptMethod(14)  # GetSelfID
+_get_self_id = _ScriptMethod(14)  # GetSelf
 _get_self_id.restype = _uint
 
 
@@ -411,7 +411,8 @@ def GetBuffBarInfo():
     return result
 
 
-
+_get_shard_name = _ScriptMethod(47)  # GetShardName
+_get_shard_name.restype = _str
 
 def ShardName():
     return _get_shard_name()
@@ -1626,7 +1627,7 @@ def GetIgnoreList():
     return result
 
 
-_get_found_objects_list = _ScriptMethod(138)  # GetFindedList
+_get_found_objects_list = _ScriptMethod(138)  # GetFoundList
 _get_found_objects_list.restype = _buffer  # TArray
 
 
@@ -3666,55 +3667,6 @@ def PartyMembersList():
     return result
 
 
-_get_icq_connection_state = _ScriptMethod(272)  # GetConnectedStatus
-_get_icq_connection_state.restype = _bool
-
-
-def ICQConnected():
-    return _get_icq_connection_state()
-
-
-_icq_connect = _ScriptMethod(273)  # ICQ_Connect
-_icq_connect.argtypes = [_uint,  # UIN
-                         _str]  # Password
-
-
-def ICQConnect(UIN, Password):
-    _icq_connect(UIN, Password)
-
-
-_icq_disconnect = _ScriptMethod(274)  # ICQ_Disconnect
-
-
-def ICQDisconnect():
-    _icq_disconnect()
-
-
-_icq_set_status = _ScriptMethod(275)  # ICQ_SetStatus
-_icq_set_status.argtypes = [_ubyte]  # Num
-
-
-def ICQSetStatus(Num):
-    _icq_set_status(Num)
-
-
-_icq_set_x_status = _ScriptMethod(276)  # ICQ_SetXStatus
-_icq_set_x_status.argtypes = [_ubyte]  # Num
-
-
-def ICQSetXStatus(Num):
-    _icq_set_x_status(Num)
-
-
-_icq_send_message = _ScriptMethod(277)  # ICQ_SendText
-_icq_send_message.argtypes = [_uint,  # DestinationUIN
-                              _str]  # Text
-
-
-def ICQSendText(DestinationUIN, Text):
-    _icq_send_message(DestinationUIN, Text)
-
-
 _messengers = {0: 1,  # default - telegram
                1: 1, 'Telegram': 1, 'telegram': 1,
                2: 2, 'Viber': 2, 'viber': 2,
@@ -5207,3 +5159,11 @@ def TargetByResource(ID, Resource):
             
         else:
             raise ValueError(f"Unknown resource name: {resource_name}")
+
+_get_player_status_text = _ScriptMethod(390)  # GetPlayerStatusText
+_get_player_status_text.restype = _str
+_get_player_status_text.argtypes = [_uint]  # ObjID
+
+
+def GetPlayerStatusText(ObjID):
+    return _get_player_status_text(ObjID)
