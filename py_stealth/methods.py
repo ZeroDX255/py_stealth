@@ -565,7 +565,7 @@ def GetExtInfo():
             'Faster_Cast_Recovery', 'Faster_Casting', 'Lower_Mana_Cost',
             'HP_Regen', 'Stam_Regen', 'Mana_Regen', 'Reflect_Phys_Damage',
             'Enhance_Potions', 'Strength_Incr', 'Dex_Incr', 'Int_Incr',
-            'HP_Incr', 'Mana_Incr')
+            'HP_Incr', 'Stam_Incr', 'Mana_Incr')
     fmt = '<HBH2B4Hh2Hi26H'
     data = _get_extended_info()
     if b'' == '':  # py2
@@ -4788,7 +4788,7 @@ def GetMenuItemsEx(MenuCaption):
     data = _get_menu_items_ex(MenuCaption)
     result = []
     count = _struct.unpack_from('<I', data, 0)
-    offset = count.size
+    offset = _struct.calcsize('<I')
     while offset < len(data):
         model, color = _struct.unpack_from('<HH', data, offset)
         offset += 4
