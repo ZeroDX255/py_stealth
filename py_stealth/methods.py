@@ -1201,6 +1201,7 @@ def UnsetCatchBag():
 
 
 _set_catch_bag = _ScriptMethod(99)  # SetCatchBag
+_set_catch_bag.restype = _ubyte
 _set_catch_bag.argtypes = [_uint]  # ObjectID
 
 
@@ -1428,7 +1429,7 @@ def InJournalBetweenTimes(Str, TimeBegin, TimeEnd):
 
 _get_journal_line = _ScriptMethod(123)  # Journal
 _get_journal_line.restype = _str
-_get_journal_line.argtypes = [_uint]  # StringIndex
+_get_journal_line.argtypes = [_int]  # StringIndex
 
 
 def Journal(StringIndex):
@@ -1436,7 +1437,7 @@ def Journal(StringIndex):
 
 
 _set_journal_line = _ScriptMethod(124)  # SetJournalLine
-_set_journal_line.argtypes = [_uint,  # StringIndex
+_set_journal_line.argtypes = [_int,  # StringIndex
                               _str]  # Text
 
 
@@ -2859,7 +2860,7 @@ def GetGumpInfo(GumpIndex):
                 _HtmlGump, _XmfHtmlGump, _XmfHTMLGumpColor, _XmfHTMLTok,
                 _ItemProperty, _PicInPic, _TilePicAsGumpPic, _ToggleUpperWordCase,
                 _ToggleCroppedText, _ECHandleInput)
-    
+
     for cls in elements:
         result[cls.container] = []
         count = _uint.from_buffer(data, offset)
@@ -3051,6 +3052,7 @@ def GetLayer(Obj):
 
 
 _wear_item = _ScriptMethod(235)  # WearItem
+_wear_item.restype = _bool
 _wear_item.argtypes = [_ubyte,  # Layer
                        _uint]  # Obj
 
@@ -4859,6 +4861,7 @@ def GetNextStepZ(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ):
 
 
 _client_hide = _ScriptMethod(368)  # ClientHide
+_client_hide.restype = _bool
 _client_hide.argtypes = [_uint]  # ID
 
 
@@ -5021,7 +5024,7 @@ def GetScriptPath(ScriptIndex):
 
 _get_script_state = _ScriptMethod(452)
 _get_script_state.argtypes = [_ushort]
-_get_script_state.restype = _byte
+_get_script_state.restype = _ubyte
 
 
 def GetScriptState(ScriptIndex):
@@ -5078,8 +5081,8 @@ def GetScriptName(ScriptIndex):
 
 
 _add_user_static = _ScriptMethod(383)
-_add_user_static.argtypes = [_buffer, _byte]
-_add_user_static.restype = _uint
+_add_user_static.argtypes = [_buffer, _ubyte]
+_add_user_static.restype = _int
 
 
 def AddUserStatic(Tile, X, Y, Z, Color, WorldNum):
@@ -5092,7 +5095,7 @@ def AddUserStaticItem(StaticItem, WorldNum):
 
 
 _remove_user_static = _ScriptMethod(384)
-_remove_user_static.argtypes = [_uint]
+_remove_user_static.argtypes = [_int]
 _remove_user_static.restype = _bool
 
 
