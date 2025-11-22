@@ -2809,6 +2809,36 @@ class _ItemProperty:
     keys = 'Prop', 'ElemNum'
 
 
+class _PicInPic:
+    args = [_int, _int, _int, _int, _int, _int, _int, _int]
+    container = "PicInPics"
+    keys = 'X', 'Y', 'Graphic', 'StartX', 'StartY', 'Width', 'Height', 'ElemNum'
+
+
+class _TilePicAsGumpPic:
+    args = [_int, _int, _int, _int, _int, _int, _int]
+    container = "TilePicAsGumpPics"
+    keys = 'X', 'Y', 'Graphic', 'Color', 'Race', 'BodyID', 'ElemNum'
+
+
+class _ToggleUpperWordCase:
+    args = [_str, _int]
+    container = "ToggleUpperWordCases"
+    keys = 'Argument', 'ElemNum'
+
+
+class _ToggleCroppedText:
+    args = [_str, _int]
+    container = "ToggleCroppedTexts"
+    keys = 'Argument', 'ElemNum'
+
+
+class _ECHandleInput:
+    args = [_str, _int]
+    container = "ECHandleInputs"
+    keys = 'Argument', 'ElemNum'
+
+
 class _Gump:
     fmt = '<2I2hi4?'
     args = [_uint, _uint, _short, _short, _int] + [_bool] * 4
@@ -2827,7 +2857,9 @@ def GetGumpInfo(GumpIndex):
                 _Radiobutton, _ResizePic, _GumpText, _TextEntry, _Text,
                 _TextEntryLimited, _TilePic, _TilePicHue, _Tooltip,
                 _HtmlGump, _XmfHtmlGump, _XmfHTMLGumpColor, _XmfHTMLTok,
-                _ItemProperty)
+                _ItemProperty, _PicInPic, _TilePicAsGumpPic, _ToggleUpperWordCase,
+                _ToggleCroppedText, _ECHandleInput)
+    
     for cls in elements:
         result[cls.container] = []
         count = _uint.from_buffer(data, offset)
