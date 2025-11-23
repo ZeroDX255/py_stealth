@@ -45,7 +45,7 @@ def SetEventProc(EventName, Callback=None):
 
 
 
-_connected = _ScriptMethod(12)  # Connected
+_connected = _ScriptMethod(20)  # Connected
 _connected.restype = _bool
 
 
@@ -53,7 +53,7 @@ def Connected():
     return _connected()
 
 
-_add_to_system_journal = _ScriptMethod(13)  # AddToSystemJournal
+_add_to_system_journal = _ScriptMethod(39)  # AddToSystemJournal
 _add_to_system_journal.argtypes = [_str]  # Text
 
 
@@ -66,7 +66,7 @@ def AddToSystemJournal(*args, **kwargs):
     _add_to_system_journal(text)
 
 
-_add_to_system_journal_ex = _ScriptMethod(386)  # AddToSystemJournalEx
+_add_to_system_journal_ex = _ScriptMethod(40)  # AddToSystemJournalEx
 _add_to_system_journal_ex.argtypes = [_str,  # Text
                                       _int,  # TextColor
                                       _int,  # BgColor
@@ -78,7 +78,7 @@ _add_to_system_journal_ex.argtypes = [_str,  # Text
 def AddToSystemJournalEx(value: str, textcolor: int = 0, bgcolor: int = -1, fontsize: int = 10, fontname: str = 'Consolas'):
     _add_to_system_journal_ex(value, textcolor, bgcolor, fontsize, fontname)
 
-_get_stealth_info = _ScriptMethod(387)  # GetStealthInfo
+_get_stealth_info = _ScriptMethod(86)  # GetStealthInfo
 _get_stealth_info.restype = _buffer  # TAboutData
 
 
@@ -93,21 +93,21 @@ def GetStealthInfo():
     return result
 
 
-_connect = _ScriptMethod(45)  # Connect
+_connect = _ScriptMethod(23)  # Connect
 
 
 def Connect():
     _connect()
 
 
-_disconnect = _ScriptMethod(46)  # Disconnect
+_disconnect = _ScriptMethod(24)  # Disconnect
 
 
 def Disconnect():
     _disconnect()
 
 
-_set_pause_on_disc = _ScriptMethod(24)  # SetPauseScriptOnDisconnectStatus
+_set_pause_on_disc = _ScriptMethod(31)  # SetPauseScriptOnDisconnectStatus
 _set_pause_on_disc.argtypes = [_bool]  # Value
 
 
@@ -115,7 +115,7 @@ def SetPauseScriptOnDisconnectStatus(Value):
     _set_pause_on_disc(Value)
 
 
-_get_pause_on_disc = _ScriptMethod(23)  # GetPauseScriptOnDisconnectStatus
+_get_pause_on_disc = _ScriptMethod(30)  # GetPauseScriptOnDisconnectStatus
 _get_pause_on_disc.restype = _bool
 
 
@@ -123,7 +123,7 @@ def GetPauseScriptOnDisconnectStatus():
     return _get_pause_on_disc()
 
 
-_set_reconnector = _ScriptMethod(22)  # SetARStatus
+_set_reconnector = _ScriptMethod(29)  # SetARStatus
 _set_reconnector.argtypes = [_bool]  # Value
 
 
@@ -131,7 +131,7 @@ def SetARStatus(Value):
     _set_reconnector(Value)
 
 
-_get_reconnector = _ScriptMethod(21)  # GetARStatus
+_get_reconnector = _ScriptMethod(28)  # GetARStatus
 _get_reconnector.restype = _bool
 
 
@@ -139,7 +139,7 @@ def GetARStatus():
     return _get_reconnector()
 
 
-_get_self_name = _ScriptMethod(19)  # CharName
+_get_self_name = _ScriptMethod(32)  # CharName
 _get_self_name.restype = _str
 
 
@@ -147,7 +147,7 @@ def CharName():
     return _get_self_name()
 
 
-_change_profile = _ScriptMethod(20)  # ChangeProfile
+_change_profile = _ScriptMethod(35)  # ChangeProfile
 _change_profile.restype = _int
 _change_profile.argtypes = [_str]  # PName
 
@@ -156,7 +156,7 @@ def ChangeProfile(PName):
     return _change_profile(PName)
 
 
-_change_profile_ex = _ScriptMethod(352)  # ChangeProfileEx
+_change_profile_ex = _ScriptMethod(528)  # ChangeProfileEx
 _change_profile_ex.restype = _int
 _change_profile_ex.argtypes = [_str,  # PName
                                _str,  # ShardName
@@ -167,7 +167,7 @@ def ChangeProfileEx(PName, ShardName, CharName):
     return _change_profile_ex(PName, ShardName, CharName)
 
 
-_get_profile_name = _ScriptMethod(11)  # ProfileName
+_get_profile_name = _ScriptMethod(34)  # ProfileName
 _get_profile_name.restype = _str
 
 
@@ -175,7 +175,7 @@ def ProfileName():
     return _get_profile_name()
 
 
-_get_self_id = _ScriptMethod(14)  # GetSelf
+_get_self_id = _ScriptMethod(200)  # GetSelf
 _get_self_id.restype = _uint
 
 
@@ -183,7 +183,7 @@ def Self():
     return _get_self_id()
 
 
-_get_self_sex = _ScriptMethod(25)  # GetSelfSex
+_get_self_sex = _ScriptMethod(205)  # GetSelfSex
 _get_self_sex.restype = _ubyte
 
 
@@ -191,7 +191,7 @@ def Sex():
     return _get_self_sex()
 
 
-_get_char_title = _ScriptMethod(26)  # GetCharTitle
+_get_char_title = _ScriptMethod(206)  # GetCharTitle
 _get_char_title.restype = _str
 
 
@@ -199,7 +199,7 @@ def GetCharTitle():
     return _get_char_title()
 
 
-_get_gold_count = _ScriptMethod(27)  # GetSelfGold
+_get_gold_count = _ScriptMethod(207)  # GetSelfGold
 _get_gold_count.restype = _uint
 
 
@@ -207,7 +207,7 @@ def Gold():
     return _get_gold_count()
 
 
-_get_armor_points = _ScriptMethod(28)  # GetSelfArmor
+_get_armor_points = _ScriptMethod(208)  # GetSelfArmor
 _get_armor_points.restype = _ushort
 
 
@@ -215,7 +215,7 @@ def Armor():
     return _get_armor_points()
 
 
-_get_weight = _ScriptMethod(29)  # GetSelfWeight
+_get_weight = _ScriptMethod(209)  # GetSelfWeight
 _get_weight.restype = _ushort
 
 
@@ -223,7 +223,7 @@ def Weight():
     return _get_weight()
 
 
-_get_max_weight = _ScriptMethod(30)  # GetSelfMaxWeight
+_get_max_weight = _ScriptMethod(210)  # GetSelfMaxWeight
 _get_max_weight.restype = _ushort
 
 
@@ -231,7 +231,7 @@ def MaxWeight():
     return _get_max_weight()
 
 
-_get_world_number = _ScriptMethod(18)  # GetWorldNum
+_get_world_number = _ScriptMethod(204)  # GetWorldNum
 _get_world_number.restype = _ubyte
 
 
@@ -239,7 +239,7 @@ def WorldNum():
     return _get_world_number()
 
 
-_get_self_race = _ScriptMethod(31)  # GetSelfRace
+_get_self_race = _ScriptMethod(211)  # GetSelfRace
 _get_self_race.restype = _ubyte
 
 
@@ -247,7 +247,7 @@ def Race():
     return _get_self_race()
 
 
-_get_max_pets = _ScriptMethod(32)  # GetSelfPetsMax
+_get_max_pets = _ScriptMethod(212)  # GetSelfPetsMax
 _get_max_pets.restype = _ubyte
 
 
@@ -255,7 +255,7 @@ def MaxPets():
     return _get_max_pets()
 
 
-_get_pets_count = _ScriptMethod(33)  # GetSelfPetsCurrent
+_get_pets_count = _ScriptMethod(213)  # GetSelfPetsCurrent
 _get_pets_count.restype = _ubyte
 
 
@@ -263,7 +263,7 @@ def PetsCurrent():
     return _get_pets_count()
 
 
-_get_fire_resist = _ScriptMethod(34)  # GetSelfFireResist
+_get_fire_resist = _ScriptMethod(214)  # GetSelfFireResist
 _get_fire_resist.restype = _ushort
 
 
@@ -271,7 +271,7 @@ def FireResist():
     return _get_fire_resist()
 
 
-_get_cold_resist = _ScriptMethod(35)  # GetSelfColdResist
+_get_cold_resist = _ScriptMethod(215)  # GetSelfColdResist
 _get_cold_resist.restype = _ushort
 
 
@@ -279,7 +279,7 @@ def ColdResist():
     return _get_cold_resist()
 
 
-_get_poison_resist = _ScriptMethod(36)  # GetSelfPoisonResist
+_get_poison_resist = _ScriptMethod(216)  # GetSelfPoisonResist
 _get_poison_resist.restype = _ushort
 
 
@@ -287,7 +287,7 @@ def PoisonResist():
     return _get_poison_resist()
 
 
-_get_energy_resist = _ScriptMethod(37)  # GetSelfEnergyResist
+_get_energy_resist = _ScriptMethod(217)  # GetSelfEnergyResist
 _get_energy_resist.restype = _ushort
 
 
@@ -295,7 +295,7 @@ def EnergyResist():
     return _get_energy_resist()
 
 
-_get_last_connection_time = _ScriptMethod(38)  # GetConnectedTime
+_get_last_connection_time = _ScriptMethod(21)  # GetConnectedTime
 _get_last_connection_time.restype = _double
 
 
@@ -303,7 +303,7 @@ def ConnectedTime():
     return _ddt2pdt(_get_last_connection_time())
 
 
-_get_last_disconnection_time = _ScriptMethod(39)  # GetDisconnectedTime
+_get_last_disconnection_time = _ScriptMethod(22)  # GetDisconnectedTime
 _get_last_disconnection_time.restype = _double
 
 
@@ -311,7 +311,7 @@ def DisconnectedTime():
     return _ddt2pdt(_get_last_disconnection_time())
 
 
-_get_last_opened_container = _ScriptMethod(40)  # GetLastContainer
+_get_last_opened_container = _ScriptMethod(230)  # GetLastContainer
 _get_last_opened_container.restype = _uint
 
 
@@ -319,7 +319,7 @@ def LastContainer():
     return _get_last_opened_container()
 
 
-_get_last_targeted_object = _ScriptMethod(41)  # GetLastTarget
+_get_last_targeted_object = _ScriptMethod(231)  # GetLastTarget
 _get_last_targeted_object.restype = _uint
 
 
@@ -327,7 +327,7 @@ def LastTarget():
     return _get_last_targeted_object()
 
 
-_get_last_attacked_object = _ScriptMethod(42)  # GetLastAttack
+_get_last_attacked_object = _ScriptMethod(232)  # GetLastAttack
 _get_last_attacked_object.restype = _uint
 
 
@@ -335,7 +335,7 @@ def LastAttack():
     return _get_last_attacked_object()
 
 
-_get_last_status = _ScriptMethod(43)  # GetLastStatus
+_get_last_status = _ScriptMethod(233)  # GetLastStatus
 _get_last_status.restype = _uint
 
 
@@ -343,7 +343,7 @@ def LastStatus():
     return _get_last_status()
 
 
-_get_last_used_object = _ScriptMethod(44)  # GetLastObject
+_get_last_used_object = _ScriptMethod(234)  # GetLastObject
 _get_last_used_object.restype = _uint
 
 
@@ -351,7 +351,7 @@ def LastObject():
     return _get_last_used_object()
 
 
-_get_buff_bar_info = _ScriptMethod(349)  # GetBuffBarInfo
+_get_buff_bar_info = _ScriptMethod(229)  # GetBuffBarInfo
 _get_buff_bar_info.restype = _buffer  # TBuffBarInfo
 
 
@@ -411,14 +411,14 @@ def GetBuffBarInfo():
     return result
 
 
-_get_shard_name = _ScriptMethod(47)  # GetShardName
+_get_shard_name = _ScriptMethod(33)  # GetShardName
 _get_shard_name.restype = _str
 
 def ShardName():
     return _get_shard_name()
 
 
-_get_profile_shard_name = _ScriptMethod(343)  # GetProfileShardName
+_get_profile_shard_name = _ScriptMethod(527)  # GetProfileShardName
 _get_profile_shard_name.restype = _str
 
 
@@ -426,7 +426,7 @@ def ProfileShardName():
     return _get_profile_shard_name()
 
 
-_get_proxy_ip = _ScriptMethod(60)  # GetProxyIP
+_get_proxy_ip = _ScriptMethod(25)  # GetProxyIP
 _get_proxy_ip.restype = _str
 
 
@@ -434,7 +434,7 @@ def ProxyIP():
     return _get_proxy_ip()
 
 
-_get_proxy_port = _ScriptMethod(61)  # GetProxyPort
+_get_proxy_port = _ScriptMethod(26)  # GetProxyPort
 _get_proxy_port.restype = _ushort
 
 
@@ -442,7 +442,7 @@ def ProxyPort():
     return _get_proxy_port()
 
 
-_is_proxy_using = _ScriptMethod(62)  # GetUseProxy
+_is_proxy_using = _ScriptMethod(27)  # GetUseProxy
 _is_proxy_using.restype = _bool
 
 
@@ -450,7 +450,7 @@ def UseProxy():
     return _is_proxy_using()
 
 
-_get_backpack_id = _ScriptMethod(48)  # GetBackpackID
+_get_backpack_id = _ScriptMethod(228)  # GetBackpackID
 _get_backpack_id.restype = _uint
 
 
@@ -462,7 +462,7 @@ def Ground():
     return 0
 
 
-_get_char_strength = _ScriptMethod(49)  # GetSelfStr
+_get_char_strength = _ScriptMethod(218)  # GetSelfStr
 _get_char_strength.restype = _int
 
 
@@ -470,7 +470,7 @@ def Str():
     return _get_char_strength()
 
 
-_get_char_intelligence = _ScriptMethod(50)  # GetSelfInt
+_get_char_intelligence = _ScriptMethod(219)  # GetSelfInt
 _get_char_intelligence.restype = _int
 
 
@@ -478,7 +478,7 @@ def Int():
     return _get_char_intelligence()
 
 
-_get_char_dexterity = _ScriptMethod(51)  # GetSelfDex
+_get_char_dexterity = _ScriptMethod(220)  # GetSelfDex
 _get_char_dexterity.restype = _int
 
 
@@ -486,7 +486,7 @@ def Dex():
     return _get_char_dexterity()
 
 
-_get_char_hp = _ScriptMethod(52)  # GetSelfLife
+_get_char_hp = _ScriptMethod(221)  # GetSelfLife
 _get_char_hp.restype = _int
 
 
@@ -498,7 +498,7 @@ def HP():
     return _get_char_hp()
 
 
-_get_char_mana = _ScriptMethod(53)  # GetSelfMana
+_get_char_mana = _ScriptMethod(222)  # GetSelfMana
 _get_char_mana.restype = _int
 
 
@@ -506,7 +506,7 @@ def Mana():
     return _get_char_mana()
 
 
-_get_char_stamina = _ScriptMethod(54)  # GetSelfStam
+_get_char_stamina = _ScriptMethod(223)  # GetSelfStam
 _get_char_stamina.restype = _int
 
 
@@ -514,7 +514,7 @@ def Stam():
     return _get_char_stamina()
 
 
-_get_char_max_hp = _ScriptMethod(55)  # GetSelfMaxLife
+_get_char_max_hp = _ScriptMethod(224)  # GetSelfMaxLife
 _get_char_max_hp.restype = _int
 
 
@@ -526,7 +526,7 @@ def MaxHP():
     return _get_char_max_hp()
 
 
-_get_char_max_mana = _ScriptMethod(56)  # GetSelfMaxMana
+_get_char_max_mana = _ScriptMethod(225)  # GetSelfMaxMana
 _get_char_max_mana.restype = _int
 
 
@@ -534,7 +534,7 @@ def MaxMana():
     return _get_char_max_mana()
 
 
-_get_char_max_stamina = _ScriptMethod(57)  # GetMaxStam
+_get_char_max_stamina = _ScriptMethod(226)  # GetMaxStam
 _get_char_max_stamina.restype = _int
 
 
@@ -542,7 +542,7 @@ def MaxStam():
     return _get_char_max_stamina()
 
 
-_get_char_luck = _ScriptMethod(58)  # GetSelfLuck
+_get_char_luck = _ScriptMethod(227)  # GetSelfLuck
 _get_char_luck.restype = _ushort
 
 
@@ -550,7 +550,7 @@ def Luck():
     return _get_char_luck()
 
 
-_get_extended_info = _ScriptMethod(59)  # GetExtInfo
+_get_extended_info = _ScriptMethod(317)  # GetExtInfo
 _get_extended_info.restype = _buffer  # TExtendedInfo
 
 
@@ -574,7 +574,7 @@ def GetExtInfo():
     return dict(zip(keys, values))
 
 
-_is_hidden = _ScriptMethod(63)  # GetHiddenStatus
+_is_hidden = _ScriptMethod(318)  # GetHiddenStatus
 _is_hidden.restype = _bool
 
 
@@ -582,7 +582,7 @@ def Hidden():
     return _is_hidden()
 
 
-_is_poisoned = _ScriptMethod(64)  # GetPoisonedStatus
+_is_poisoned = _ScriptMethod(319)  # GetPoisonedStatus
 _is_poisoned.restype = _bool
 
 
@@ -590,7 +590,7 @@ def Poisoned():
     return _is_poisoned()
 
 
-_is_paralyzed = _ScriptMethod(65)  # GetParalyzedStatus
+_is_paralyzed = _ScriptMethod(320)  # GetParalyzedStatus
 _is_paralyzed.restype = _bool
 
 
@@ -598,7 +598,7 @@ def Paralyzed():
     return _is_paralyzed()
 
 
-_is_dead = _ScriptMethod(66)  # GetDeadStatus
+_is_dead = _ScriptMethod(321)  # GetDeadStatus
 _is_dead.restype = _bool
 
 
@@ -606,7 +606,7 @@ def Dead():
     return _is_dead()
 
 
-_get_warmode = _ScriptMethod(171)  # IsWarMode
+_get_warmode = _ScriptMethod(345)  # IsWarMode
 _get_warmode.restype = _bool
 _get_warmode.argtypes = [_uint]  # ObjID
 
@@ -615,7 +615,7 @@ def WarMode():
     return _get_warmode(Self())
 
 
-_get_war_target = _ScriptMethod(67)  # GetWarTargetID
+_get_war_target = _ScriptMethod(235)  # GetWarTargetID
 _get_war_target.restype = _uint
 
 
@@ -623,7 +623,7 @@ def WarTargetID():
     return _get_war_target()
 
 
-_set_warmode = _ScriptMethod(68)  # SetWarMode
+_set_warmode = _ScriptMethod(236)  # SetWarMode
 _set_warmode.argtypes = [_bool]  # Value
 
 
@@ -631,7 +631,7 @@ def SetWarMode(Value):
     _set_warmode(Value)
 
 
-_attack = _ScriptMethod(69)  # Attack
+_attack = _ScriptMethod(237)  # Attack
 _attack.argtypes = [_uint]  # AttackedID
 
 
@@ -639,14 +639,14 @@ def Attack(AttackedID):
     _attack(AttackedID)
 
 
-_use_self_paperdoll = _ScriptMethod(70)  # UseSelfPaperdollScroll
+_use_self_paperdoll = _ScriptMethod(238)  # UseSelfPaperdollScroll
 
 
 def UseSelfPaperdollScroll():
     _use_self_paperdoll()
 
 
-_use_paperdoll = _ScriptMethod(71)  # UseOtherPaperdollScroll
+_use_paperdoll = _ScriptMethod(239)  # UseOtherPaperdollScroll
 _use_paperdoll.argtypes = [_uint]  # ID
 
 
@@ -654,7 +654,7 @@ def UseOtherPaperdollScroll(ID):
     _use_paperdoll(ID)
 
 
-_target_id = _ScriptMethod(72)  # GetTargetID
+_target_id = _ScriptMethod(240)  # GetTargetID
 _target_id.restype = _uint
 
 
@@ -673,7 +673,7 @@ def WaitForTarget(MaxWaitTimeMS):
     return time + MaxWaitTimeMS / 1000 > _time.time()
 
 
-_cancel_target = _ScriptMethod(73)  # CancelTarget
+_cancel_target = _ScriptMethod(241)  # CancelTarget
 
 
 def CancelTarget():
@@ -682,7 +682,7 @@ def CancelTarget():
         Wait(10)
 
 
-_target_to_object = _ScriptMethod(74)  # TargetToObject
+_target_to_object = _ScriptMethod(242)  # TargetToObject
 _target_to_object.argtypes = [_uint]  # ObjectID
 
 
@@ -690,7 +690,7 @@ def TargetToObject(ObjectID):
     _target_to_object(ObjectID)
 
 
-_target_xyz = _ScriptMethod(75)  # TargetToXYZ
+_target_xyz = _ScriptMethod(243)  # TargetToXYZ
 _target_xyz.argtypes = [_ushort,  # X
                         _ushort,  # Y
                         _byte]  # Z
@@ -700,7 +700,7 @@ def TargetToXYZ(X, Y, Z):
     _target_xyz(X, Y, Z)
 
 
-_target_tile = _ScriptMethod(76)  # TargetToTile
+_target_tile = _ScriptMethod(244)  # TargetToTile
 _target_tile.argtypes = [_ushort,  # TileModel
                          _ushort,  # X
                          _ushort,  # Y
@@ -711,7 +711,7 @@ def TargetToTile(TileModel, X, Y, Z):
     _target_tile(TileModel, X, Y, Z)
 
 
-_wait_target_object = _ScriptMethod(77)  # WaitTargetObject
+_wait_target_object = _ScriptMethod(245)  # WaitTargetObject
 _wait_target_object.argtypes = [_uint]  # ObjID
 
 
@@ -719,7 +719,7 @@ def WaitTargetObject(ObjID):
     _wait_target_object(ObjID)
 
 
-_wait_target_tile = _ScriptMethod(78)  # WaitTargetTile
+_wait_target_tile = _ScriptMethod(246)  # WaitTargetTile
 _wait_target_tile.argtypes = [_ushort,  # Tile
                               _ushort,  # X
                               _ushort,  # Y
@@ -730,7 +730,7 @@ def WaitTargetTile(Tile, X, Y, Z):
     _wait_target_tile(Tile, X, Y, Z)
 
 
-_wait_target_xyz = _ScriptMethod(79)  # WaitTargetXYZ
+_wait_target_xyz = _ScriptMethod(247)  # WaitTargetXYZ
 _wait_target_xyz.argtypes = [_ushort,  # X
                              _ushort,  # Y
                              _byte]  # Z
@@ -740,14 +740,14 @@ def WaitTargetXYZ(X, Y, Z):
     _wait_target_xyz(X, Y, Z)
 
 
-_wait_target_self = _ScriptMethod(80)  # WaitTargetSelf
+_wait_target_self = _ScriptMethod(248)  # WaitTargetSelf
 
 
 def WaitTargetSelf():
     _wait_target_self()
 
 
-_wait_target_graphic = _ScriptMethod(81)  # WaitTargetType
+_wait_target_graphic = _ScriptMethod(249)  # WaitTargetType
 _wait_target_graphic.argtypes = [_ushort]  # ObjType
 
 
@@ -755,14 +755,14 @@ def WaitTargetType(ObjType):
     _wait_target_graphic(ObjType)
 
 
-_cancel_wait_target = _ScriptMethod(82)  # CancelWaitTarget
+_cancel_wait_target = _ScriptMethod(250)  # CancelWaitTarget
 
 
 def CancelWaitTarget():
     _cancel_wait_target()
 
 
-_wait_target_ground = _ScriptMethod(83)  # WaitTargetGround
+_wait_target_ground = _ScriptMethod(251)  # WaitTargetGround
 _wait_target_ground.argtypes = [_ushort]  # ObjType
 
 
@@ -770,7 +770,7 @@ def WaitTargetGround(ObjType):
     _wait_target_ground(ObjType)
 
 
-_wait_target_last = _ScriptMethod(84)  # WaitTargetLast
+_wait_target_last = _ScriptMethod(252)  # WaitTargetLast
 
 
 def WaitTargetLast():
@@ -793,21 +793,21 @@ def Wait(WaitTimeMS):
         _wait()  # condition does not work while delay is a very small number
 
 
-_use_primary_ability = _ScriptMethod(85)  # UsePrimaryAbility
+_use_primary_ability = _ScriptMethod(264)  # UsePrimaryAbility
 
 
 def UsePrimaryAbility():
     _use_primary_ability()
 
 
-_use_secondary_ability = _ScriptMethod(86)  # UseSecondaryAbility
+_use_secondary_ability = _ScriptMethod(265)  # UseSecondaryAbility
 
 
 def UseSecondaryAbility():
     _use_secondary_ability()
 
 
-_get_ability = _ScriptMethod(87)  # GetAbility
+_get_ability = _ScriptMethod(266)  # GetAbility
 _get_ability.restype = _str
 
 
@@ -815,14 +815,14 @@ def GetActiveAbility():
     return _get_ability()
 
 
-_toggle_fly = _ScriptMethod(88)  # ToggleFly
+_toggle_fly = _ScriptMethod(270)  # ToggleFly
 
 
 def ToggleFly():
     _toggle_fly()
 
 
-_get_skill_id_from_socket = _ScriptMethod(89)  # GetSkillID
+_get_skill_id_from_socket = _ScriptMethod(260)  # GetSkillID
 _get_skill_id_from_socket.restype = _int  # SkillID
 _get_skill_id_from_socket.argtypes = [_str]  # SkillName
 
@@ -834,7 +834,7 @@ def _get_skill_id(name):
     return skill_id
 
 
-_use_skill = _ScriptMethod(90)  # UseSkill
+_use_skill = _ScriptMethod(261)  # UseSkill
 _use_skill.argtypes = [_int]  # SkillID
 
 
@@ -843,7 +843,7 @@ def UseSkill(SkillName):
     return True
 
 
-_lock_skill = _ScriptMethod(91)  # ChangeSkillLockState
+_lock_skill = _ScriptMethod(256)  # ChangeSkillLockState
 _lock_skill.argtypes = [_int,  # SkillID
                         _ubyte]  # SkillState
 
@@ -856,7 +856,7 @@ def SetSkillLockState(SkillName, skillState):
     ChangeSkillLockState(SkillName, skillState)
 
 
-_get_skill_cap = _ScriptMethod(92)  # GetSkillCap
+_get_skill_cap = _ScriptMethod(258)  # GetSkillCap
 _get_skill_cap.restype = _double
 _get_skill_cap.argtypes = [_int]  # SkillID
 
@@ -865,7 +865,7 @@ def GetSkillCap(SkillName):
     return _get_skill_cap(_get_skill_id_from_socket(SkillName))
 
 
-_get_skill_value = _ScriptMethod(93)  # GetSkillValue
+_get_skill_value = _ScriptMethod(259)  # GetSkillValue
 _get_skill_value.restype = _double
 _get_skill_value.argtypes = [_int]  # SkillID
 
@@ -874,7 +874,7 @@ def GetSkillValue(SkillName):
     return _get_skill_value(_get_skill_id_from_socket(SkillName))
 
 
-_get_skill_current_value = _ScriptMethod(351)  # GetSkillCurrentValue
+_get_skill_current_value = _ScriptMethod(257)  # GetSkillCurrentValue
 _get_skill_current_value.restype = _double
 _get_skill_current_value.argtypes = [_int]  # SkillID
 
@@ -883,7 +883,7 @@ def GetSkillCurrentValue(SkillName):
     return _get_skill_current_value(_get_skill_id_from_socket(SkillName))
 
 
-_request_virtues = _ScriptMethod(94)  # ReqVirtuesGump
+_request_virtues = _ScriptMethod(271)  # ReqVirtuesGump
 
 
 def ReqVirtuesGump():
@@ -901,7 +901,7 @@ _VIRTUES = {
     'valor': 0x70,
 }
 
-_use_virtue = _ScriptMethod(95)  # UseVirtue
+_use_virtue = _ScriptMethod(272)  # UseVirtue
 _use_virtue.argtypes = [_uint]
 
 
@@ -1165,7 +1165,7 @@ def _get_spell_id(name):
     return _SPELLS[name]
 
 
-_cast_spell = _ScriptMethod(96)  # CastSpell
+_cast_spell = _ScriptMethod(262)  # CastSpell
 _cast_spell.argtypes = [_int]  # SpellID
 
 
@@ -1184,7 +1184,7 @@ def CastToObject(SpellName, ObjID):
     _cast_spell(_get_spell_id(SpellName))
 
 
-_is_active_spell_ability = _ScriptMethod(98)  # IsActiveSpellAbility
+_is_active_spell_ability = _ScriptMethod(263)  # IsActiveSpellAbility
 _is_active_spell_ability.restype = _bool
 _is_active_spell_ability.argtypes = [_int]  # SpellName
 
@@ -1193,14 +1193,14 @@ def IsActiveSpellAbility(SpellName):
     return _is_active_spell_ability(_get_spell_id(SpellName))
 
 
-_clear_catch_bag = _ScriptMethod(100)  # UnsetCatchBag
+_clear_catch_bag = _ScriptMethod(284)  # UnsetCatchBag
 
 
 def UnsetCatchBag():
     _clear_catch_bag()
 
 
-_set_catch_bag = _ScriptMethod(99)  # SetCatchBag
+_set_catch_bag = _ScriptMethod(283)  # SetCatchBag
 _set_catch_bag.restype = _ubyte
 _set_catch_bag.argtypes = [_uint]  # ObjectID
 
@@ -1218,7 +1218,7 @@ def SetCatchBag(ObjectID):
         return 2
 
 
-_use_object = _ScriptMethod(101)  # UseObject
+_use_object = _ScriptMethod(273)  # UseObject
 _use_object.argtypes = [_uint]  # ObjectID
 
 
@@ -1226,7 +1226,7 @@ def UseObject(ObjectID):
     _use_object(ObjectID)
 
 
-_use_type = _ScriptMethod(102)  # UseType
+_use_type = _ScriptMethod(274)  # UseType
 _use_type.restype = _uint
 _use_type.argtypes = [_ushort,  # ObjType
                       _ushort]  # Color
@@ -1240,7 +1240,7 @@ def UseType2(ObjType):
     return _use_type(ObjType, 0xFFFF)
 
 
-_use_from_ground = _ScriptMethod(103)  # UseFromGround
+_use_from_ground = _ScriptMethod(275)  # UseFromGround
 _use_from_ground.restype = _uint
 _use_from_ground.argtypes = [_ushort,  # ObjType
                              _ushort]  # Color
@@ -1250,7 +1250,7 @@ def UseFromGround(ObjType, Color):
     return _use_from_ground(ObjType, Color)
 
 
-_click_on_object = _ScriptMethod(104)  # ClickOnObject
+_click_on_object = _ScriptMethod(276)  # ClickOnObject
 _click_on_object.argtypes = [_uint]  # ObjectID
 
 
@@ -1262,7 +1262,7 @@ def ClickOnObject(ObjectID):
         _click_on_object(ObjectID)
 
 
-_get_found_index = _ScriptMethod(105)  # GetFoundedParamID
+_get_found_index = _ScriptMethod(51)  # GetFoundedParamID
 _get_found_index.restype = _int
 
 
@@ -1274,7 +1274,7 @@ def FoundParamID():
     return _get_found_index()
 
 
-_get_last_line_serial = _ScriptMethod(106)  # GetLineID
+_get_last_line_serial = _ScriptMethod(52)  # GetLineID
 _get_last_line_serial.restype = _uint
 
 
@@ -1282,7 +1282,7 @@ def LineID():
     return _get_last_line_serial()
 
 
-_get_last_line_graphic = _ScriptMethod(107)  # GetLineType
+_get_last_line_graphic = _ScriptMethod(53)  # GetLineType
 _get_last_line_graphic.restype = _ushort
 
 
@@ -1290,7 +1290,7 @@ def LineType():
     return _get_last_line_graphic()
 
 
-_get_last_line_name = _ScriptMethod(114)  # GetLineName
+_get_last_line_name = _ScriptMethod(60)  # GetLineName
 _get_last_line_name.restype = _str
 
 
@@ -1298,7 +1298,7 @@ def LineName():
     return _get_last_line_name()
 
 
-_get_last_line_time = _ScriptMethod(108)  # GetLineTime
+_get_last_line_time = _ScriptMethod(54)  # GetLineTime
 _get_last_line_time.restype = _double
 
 
@@ -1306,7 +1306,7 @@ def LineTime():
     return _ddt2pdt(_get_last_line_time())
 
 
-_get_last_line_message_type = _ScriptMethod(109)  # GetLineMsgType
+_get_last_line_message_type = _ScriptMethod(55)  # GetLineMsgType
 _get_last_line_message_type.restype = _ubyte
 
 
@@ -1314,7 +1314,7 @@ def LineMsgType():
     return _get_last_line_message_type()
 
 
-_get_last_line_font_color = _ScriptMethod(110)  # GetLineTextColor
+_get_last_line_font_color = _ScriptMethod(56)  # GetLineTextColor
 _get_last_line_font_color.restype = _ushort
 
 
@@ -1322,7 +1322,7 @@ def LineTextColor():
     return _get_last_line_font_color()
 
 
-_get_last_line_font = _ScriptMethod(111)  # GetLineTextFont
+_get_last_line_font = _ScriptMethod(57)  # GetLineTextFont
 _get_last_line_font.restype = _ushort
 
 
@@ -1330,7 +1330,7 @@ def LineTextFont():
     return _get_last_line_font()
 
 
-_get_last_line_index = _ScriptMethod(112)  # GetLineIndex
+_get_last_line_index = _ScriptMethod(58)  # GetLineIndex
 _get_last_line_index.restype = _int
 
 
@@ -1338,7 +1338,7 @@ def LineIndex():
     return _get_last_line_index()
 
 
-_get_last_line_count = _ScriptMethod(113)  # GetLineCount
+_get_last_line_count = _ScriptMethod(59)  # GetLineCount
 _get_last_line_count.restype = _int
 
 
@@ -1346,7 +1346,7 @@ def LineCount():
     return _get_last_line_count()
 
 
-_journal_ignore = _ScriptMethod(115)  # AddJournalIgnore
+_journal_ignore = _ScriptMethod(293)  # AddJournalIgnore
 _journal_ignore.argtypes = [_str]  # Str
 
 
@@ -1354,14 +1354,14 @@ def AddJournalIgnore(Str):
     _journal_ignore(Str)
 
 
-_clear_journal_ignore = _ScriptMethod(116)  # ClearJournalIgnore
+_clear_journal_ignore = _ScriptMethod(294)  # ClearJournalIgnore
 
 
 def ClearJournalIgnore():
     _clear_journal_ignore()
 
 
-_chat_ignore = _ScriptMethod(117)  # AddChatUserIgnore
+_chat_ignore = _ScriptMethod(295)  # AddChatUserIgnore
 _chat_ignore.argtypes = [_str]  # User
 
 
@@ -1369,7 +1369,7 @@ def AddChatUserIgnore(User):
     _chat_ignore(User)
 
 
-_journal_add = _ScriptMethod(304)  # AddToJournal
+_journal_add = _ScriptMethod(42)  # AddToJournal
 _journal_add.argtypes = [_str]  # Msg
 
 
@@ -1377,28 +1377,28 @@ def AddToJournal(Msg):
     _journal_add(Msg)
 
 
-_clear_chat_ignore = _ScriptMethod(118)  # ClearChatUserIgnore
+_clear_chat_ignore = _ScriptMethod(296)  # ClearChatUserIgnore
 
 
 def ClearChatUserIgnore():
     _clear_chat_ignore()
 
 
-_clear_journal = _ScriptMethod(119)  # ClearJournal
+_clear_journal = _ScriptMethod(43)  # ClearJournal
 
 
 def ClearJournal():
     _clear_journal()
 
 
-_clear_system_journal = _ScriptMethod(346)  # ClearSystemJournal
+_clear_system_journal = _ScriptMethod(41)  # ClearSystemJournal
 
 
 def ClearSystemJournal():
     _clear_system_journal()
 
 
-_last_journal_message = _ScriptMethod(120)  # LastJournalMessage
+_last_journal_message = _ScriptMethod(44)  # LastJournalMessage
 _last_journal_message.restype = _str
 
 
@@ -1406,7 +1406,7 @@ def LastJournalMessage():
     return _last_journal_message()
 
 
-_get_journal_line_index = _ScriptMethod(121)  # InJournal
+_get_journal_line_index = _ScriptMethod(45)  # InJournal
 _get_journal_line_index.restype = _int
 _get_journal_line_index.argtypes = [_str]  # Str
 
@@ -1415,7 +1415,7 @@ def InJournal(Str):
     return _get_journal_line_index(Str)
 
 
-_get_journal_line_index_time = _ScriptMethod(122)  # InJournalBetweenTimes
+_get_journal_line_index_time = _ScriptMethod(46)  # InJournalBetweenTimes
 _get_journal_line_index_time.restype = _int
 _get_journal_line_index_time.argtypes = [_str,  # Str
                                          _double,  # TimeBegin
@@ -1427,7 +1427,7 @@ def InJournalBetweenTimes(Str, TimeBegin, TimeEnd):
                                         _pdt2ddt(TimeEnd))
 
 
-_get_journal_line = _ScriptMethod(123)  # Journal
+_get_journal_line = _ScriptMethod(47)  # Journal
 _get_journal_line.restype = _str
 _get_journal_line.argtypes = [_int]  # StringIndex
 
@@ -1436,7 +1436,7 @@ def Journal(StringIndex):
     return _get_journal_line(StringIndex)
 
 
-_set_journal_line = _ScriptMethod(124)  # SetJournalLine
+_set_journal_line = _ScriptMethod(48)  # SetJournalLine
 _set_journal_line.argtypes = [_int,  # StringIndex
                               _str]  # Text
 
@@ -1445,7 +1445,7 @@ def SetJournalLine(StringIndex, Text):
     _set_journal_line(StringIndex, Text)
 
 
-_low_journal_index = _ScriptMethod(125)  # LowJournal
+_low_journal_index = _ScriptMethod(49)  # LowJournal
 _low_journal_index.restype = _int
 
 
@@ -1453,7 +1453,7 @@ def LowJournal():
     return _low_journal_index()
 
 
-_high_journal_index = _ScriptMethod(126)  # HighJournal
+_high_journal_index = _ScriptMethod(50)  # HighJournal
 _high_journal_index.restype = _int
 
 
@@ -1482,7 +1482,7 @@ def WaitJournalLineSystem(StartTime, Str, MaxWaitTimeMS=0):
     return False
 
 
-_set_search_distance = _ScriptMethod(127)  # SetFindDistance
+_set_search_distance = _ScriptMethod(297)  # SetFindDistance
 _set_search_distance.argtypes = [_uint]  # Value
 
 
@@ -1490,7 +1490,7 @@ def SetFindDistance(Value):
     _set_search_distance(Value)
 
 
-_get_search_distance = _ScriptMethod(128)  # GetFindDistance
+_get_search_distance = _ScriptMethod(298)  # GetFindDistance
 _get_search_distance.restype = _uint
 
 
@@ -1498,7 +1498,7 @@ def GetFindDistance():
     return _get_search_distance()
 
 
-_set_search_vertical = _ScriptMethod(129)  # SetFindVertical
+_set_search_vertical = _ScriptMethod(299)  # SetFindVertical
 _set_search_vertical.argtypes = [_uint]  # Value
 
 
@@ -1506,7 +1506,7 @@ def SetFindVertical(Value):
     _set_search_vertical(Value)
 
 
-_get_search_vertical = _ScriptMethod(130)  # GetFindVertical
+_get_search_vertical = _ScriptMethod(300)  # GetFindVertical
 _get_search_vertical.restype = _uint
 
 
@@ -1514,7 +1514,7 @@ def GetFindVertical():
     return _get_search_vertical()
 
 
-_set_search_at_null = _ScriptMethod(336)  # SetFindInNulPoint
+_set_search_at_null = _ScriptMethod(314)  # SetFindInNulPoint
 _set_search_at_null.argtypes = [_bool]  # Value
 
 
@@ -1522,7 +1522,7 @@ def SetFindInNulPoint(Value):
     _set_search_at_null(Value)
 
 
-_get_search_at_null = _ScriptMethod(337)  # GetFindInNulPoint
+_get_search_at_null = _ScriptMethod(315)  # GetFindInNulPoint
 _get_search_at_null.restype = _bool
 
 
@@ -1530,7 +1530,7 @@ def GetFindInNulPoint():
     return _get_search_at_null()
 
 
-_find_graphic = _ScriptMethod(131)  # FindTypeEx
+_find_graphic = _ScriptMethod(301)  # FindTypeEx
 _find_graphic.restype = _uint
 _find_graphic.argtypes = [_ushort,  # ObjType
                           _ushort,  # Color
@@ -1550,7 +1550,7 @@ def FindType(ObjType, Container=None):
     return _find_graphic(ObjType, 0xFFFF, Container, False)
 
 
-_find_graphics_array = _ScriptMethod(340)  # FindTypesArrayEx
+_find_graphics_array = _ScriptMethod(302)  # FindTypesArrayEx
 _find_graphics_array.restype = _uint
 _find_graphics_array.argtypes = [_uint,  # Len
                                  _buffer,  # ArrayBytes
@@ -1571,7 +1571,7 @@ def FindTypesArrayEx(ObjTypes, Colors, Containers, InSub):
     return _find_graphics_array(*args)
 
 
-_find_notoriety = _ScriptMethod(132)  # FindNotoriety
+_find_notoriety = _ScriptMethod(303)  # FindNotoriety
 _find_notoriety.restype = _uint
 _find_notoriety.argtypes = [_ushort,  # ObjType
                             _ubyte]  # Notoriety
@@ -1581,7 +1581,7 @@ def FindNotoriety(ObjType, Notoriety):
     return _find_notoriety(ObjType, Notoriety)
 
 
-_find_at_point = _ScriptMethod(133)  # FindAtCoord
+_find_at_point = _ScriptMethod(304)  # FindAtCoord
 _find_at_point.restype = _uint
 _find_at_point.argtypes = [_ushort,  # X
                            _ushort]  # Y
@@ -1591,7 +1591,7 @@ def FindAtCoord(X, Y):
     return _find_at_point(X, Y)
 
 
-_search_ignore = _ScriptMethod(134)  # Ignore
+_search_ignore = _ScriptMethod(305)  # Ignore
 _search_ignore.argtypes = [_uint]  # ObjID
 
 
@@ -1599,7 +1599,7 @@ def Ignore(ObjID):
     _search_ignore(ObjID)
 
 
-_unset_search_ignore = _ScriptMethod(135)  # IgnoreOff
+_unset_search_ignore = _ScriptMethod(306)  # IgnoreOff
 _unset_search_ignore.argtypes = [_uint]  # ObjID
 
 
@@ -1607,14 +1607,14 @@ def IgnoreOff(ObjID):
     _unset_search_ignore(ObjID)
 
 
-_reset_search_ignore = _ScriptMethod(136)  # IgnoreReset
+_reset_search_ignore = _ScriptMethod(307)  # IgnoreReset
 
 
 def IgnoreReset():
     _reset_search_ignore()
 
 
-_get_ignore_list = _ScriptMethod(137)  # GetIgnoreList
+_get_ignore_list = _ScriptMethod(308)  # GetIgnoreList
 _get_ignore_list.restype = _buffer  # TArray
 
 
@@ -1628,7 +1628,7 @@ def GetIgnoreList():
     return result
 
 
-_get_found_objects_list = _ScriptMethod(138)  # GetFoundList
+_get_found_objects_list = _ScriptMethod(309)  # GetFoundList
 _get_found_objects_list.restype = _buffer  # TArray
 
 
@@ -1646,7 +1646,7 @@ def GetFindedList():  # HATE THIS!!! but there is nothing to do(
     return GetFoundList()
 
 
-_get_found_object = _ScriptMethod(139)  # GetFindItem
+_get_found_object = _ScriptMethod(310)  # GetFindItem
 _get_found_object.restype = _uint
 
 
@@ -1654,7 +1654,7 @@ def FindItem():
     return _get_found_object()
 
 
-_count_found_objects = _ScriptMethod(140)  # GetFindCount
+_count_found_objects = _ScriptMethod(311)  # GetFindCount
 _count_found_objects.restype = _int
 
 
@@ -1662,7 +1662,7 @@ def FindCount():
     return _count_found_objects()
 
 
-_get_found_quantity = _ScriptMethod(141)  # GetFindCount
+_get_found_quantity = _ScriptMethod(312)  # GetFindCount
 _get_found_quantity.restype = _int
 
 
@@ -1670,7 +1670,7 @@ def FindQuantity():
     return _get_found_quantity()
 
 
-_count_found_quantities = _ScriptMethod(142)  # FindFullQuantity
+_count_found_quantities = _ScriptMethod(313)  # FindFullQuantity
 _count_found_quantities.restype = _int
 
 
@@ -1678,7 +1678,7 @@ def FindFullQuantity():
     return _count_found_quantities()
 
 
-_predicted_x = _ScriptMethod(143)  # PredictedX
+_predicted_x = _ScriptMethod(463)  # PredictedX
 _predicted_x.restype = _ushort
 
 
@@ -1686,7 +1686,7 @@ def PredictedX():
     return _predicted_x()
 
 
-_predicted_y = _ScriptMethod(144)  # PredictedY
+_predicted_y = _ScriptMethod(464)  # PredictedY
 _predicted_y.restype = _ushort
 
 
@@ -1694,7 +1694,7 @@ def PredictedY():
     return _predicted_y()
 
 
-_predicted_z = _ScriptMethod(145)  # PredictedZ
+_predicted_z = _ScriptMethod(465)  # PredictedZ
 _predicted_z.restype = _byte
 
 
@@ -1702,7 +1702,7 @@ def PredictedZ():
     return _predicted_z()
 
 
-_predicted_dir = _ScriptMethod(146)  # PredictedDirection
+_predicted_dir = _ScriptMethod(466)  # PredictedDirection
 _predicted_dir.restype = _ubyte
 
 
@@ -1710,7 +1710,7 @@ def PredictedDirection():
     return _predicted_dir()
 
 
-_get_x = _ScriptMethod(15)  # GetX
+_get_x = _ScriptMethod(201)  # GetX
 _get_x.restype = _ushort
 _get_x.argtypes = [_uint]  # ObjID
 
@@ -1719,7 +1719,7 @@ def GetX(ObjID):
     return _get_x(ObjID)
 
 
-_get_y = _ScriptMethod(16)  # GetY
+_get_y = _ScriptMethod(202)  # GetY
 _get_y.restype = _ushort
 _get_y.argtypes = [_uint]  # ObjID
 
@@ -1728,7 +1728,7 @@ def GetY(ObjID):
     return _get_y(ObjID)
 
 
-_get_z = _ScriptMethod(17)  # GetZ
+_get_z = _ScriptMethod(203)  # GetZ
 _get_z.restype = _byte
 _get_z.argtypes = [_uint]  # ObjID
 
@@ -1737,7 +1737,7 @@ def GetZ(ObjID):
     return _get_z(ObjID)
 
 
-_get_name = _ScriptMethod(147)  # GetName
+_get_name = _ScriptMethod(322)  # GetName
 _get_name.restype = _str
 _get_name.argtypes = [_uint]  # ObjectID
 
@@ -1746,7 +1746,7 @@ def GetName(ObjectID):
     return _get_name(ObjectID)
 
 
-_get_alt_name = _ScriptMethod(148)  # GetAltName
+_get_alt_name = _ScriptMethod(323)  # GetAltName
 _get_alt_name.restype = _str
 _get_alt_name.argtypes = [_uint]  # ObjectID
 
@@ -1755,7 +1755,7 @@ def GetAltName(ObjectID):
     return _get_alt_name(ObjectID)
 
 
-_get_title = _ScriptMethod(149)  # GetTitle
+_get_title = _ScriptMethod(324)  # GetTitle
 _get_title.restype = _str
 _get_title.argtypes = [_uint]  # ObjID
 
@@ -1764,7 +1764,7 @@ def GetTitle(ObjID):
     return _get_title(ObjID)
 
 
-_get_tooltip = _ScriptMethod(150)  # GetTooltip
+_get_tooltip = _ScriptMethod(325)  # GetTooltip
 _get_tooltip.restype = _str
 _get_tooltip.argtypes = [_uint]  # ObjID
 
@@ -1777,7 +1777,7 @@ def GetCliloc(ObjID):
     return GetTooltip(ObjID)
 
 
-_get_graphic = _ScriptMethod(151)  # GetType
+_get_graphic = _ScriptMethod(326)  # GetType
 _get_graphic.restype = _ushort
 _get_graphic.argtypes = [_uint]  # ObjID
 
@@ -1786,7 +1786,7 @@ def GetType(ObjID):
     return _get_graphic(ObjID)
 
 
-_get_tooltip_obj = _ScriptMethod(152)  # GetToolTipRec
+_get_tooltip_obj = _ScriptMethod(327)  # GetToolTipRec
 _get_tooltip_obj.restype = _buffer  # Array of TClilocRec
 _get_tooltip_obj.argtypes = [_uint]  # ObjID
 
@@ -1808,7 +1808,7 @@ def GetTooltipRec(ObjID):
     return result
 
 
-_get_object_tooltip = _ScriptMethod(153)  # GetClilocByID
+_get_object_tooltip = _ScriptMethod(328)  # GetClilocByID
 _get_object_tooltip.restype = _str
 _get_object_tooltip.argtypes = [_uint]  # ClilocID
 
@@ -1817,7 +1817,7 @@ def GetClilocByID(ClilocID):
     return _get_object_tooltip(ClilocID)
 
 
-_get_quantity = _ScriptMethod(154)  # GetQuantity
+_get_quantity = _ScriptMethod(329)  # GetQuantity
 _get_quantity.restype = _int
 _get_quantity.argtypes = [_uint]  # ObjID
 
@@ -1826,7 +1826,7 @@ def GetQuantity(ObjID):
     return _get_quantity(ObjID)
 
 
-_is_object_exists = _ScriptMethod(155)  # IsObjectExists
+_is_object_exists = _ScriptMethod(87)  # IsObjectExists
 _is_object_exists.restype = _bool
 _is_object_exists.argtypes = [_uint]  # ObjID
 
@@ -1835,7 +1835,7 @@ def IsObjectExists(ObjID):
     return _is_object_exists(ObjID)
 
 
-_is_npc = _ScriptMethod(172)  # IsNPC
+_is_npc = _ScriptMethod(346)  # IsNPC
 _is_npc.restype = _bool
 _is_npc.argtypes = [_uint]  # ObjID
 
@@ -1844,7 +1844,7 @@ def IsNPC(ObjID):
     return _is_npc(ObjID)
 
 
-_get_price = _ScriptMethod(156)  # GetPrice
+_get_price = _ScriptMethod(330)  # GetPrice
 _get_price.restype = _uint
 _get_price.argtypes = [_uint]  # ObjID
 
@@ -1853,7 +1853,7 @@ def GetPrice(ObjID):
     return _get_price(ObjID)
 
 
-_get_direction = _ScriptMethod(157)  # GetDirection
+_get_direction = _ScriptMethod(331)  # GetDirection
 _get_direction.restype = _ubyte
 _get_direction.argtypes = [_uint]  # ObjID
 
@@ -1862,7 +1862,7 @@ def GetDirection(ObjID):
     return _get_direction(ObjID)
 
 
-_get_distance = _ScriptMethod(158)  # GetDistance
+_get_distance = _ScriptMethod(332)  # GetDistance
 _get_distance.restype = _int
 _get_distance.argtypes = [_uint]  # ObjID
 
@@ -1871,7 +1871,7 @@ def GetDistance(ObjID):
     return _get_distance(ObjID)
 
 
-_get_color = _ScriptMethod(159)  # GetColor
+_get_color = _ScriptMethod(333)  # GetColor
 _get_color.restype = _ushort
 _get_color.argtypes = [_uint]  # ObjID
 
@@ -1880,7 +1880,7 @@ def GetColor(ObjID):
     return _get_color(ObjID)
 
 
-_get_strength = _ScriptMethod(160)  # GetStr
+_get_strength = _ScriptMethod(334)  # GetStr
 _get_strength.restype = _int
 _get_strength.argtypes = [_uint]  # ObjID
 
@@ -1889,7 +1889,7 @@ def GetStr(ObjID):
     return _get_strength(ObjID)
 
 
-_get_intelligence = _ScriptMethod(161)  # GetInt
+_get_intelligence = _ScriptMethod(335)  # GetInt
 _get_intelligence.restype = _int
 _get_intelligence.argtypes = [_uint]  # ObjID
 
@@ -1898,7 +1898,7 @@ def GetInt(ObjID):
     return _get_intelligence(ObjID)
 
 
-_get_dexterity = _ScriptMethod(162)  # GetDex
+_get_dexterity = _ScriptMethod(336)  # GetDex
 _get_dexterity.restype = _int
 _get_dexterity.argtypes = [_uint]  # ObjID
 
@@ -1907,7 +1907,7 @@ def GetDex(ObjID):
     return _get_dexterity(ObjID)
 
 
-_get_hp = _ScriptMethod(163)  # GetHP
+_get_hp = _ScriptMethod(337)  # GetHP
 _get_hp.restype = _int
 _get_hp.argtypes = [_uint]  # ObjID
 
@@ -1921,7 +1921,7 @@ def GetHP(ObjID):
     return result
 
 
-_get_max_hp = _ScriptMethod(164)  # GetMaxHP
+_get_max_hp = _ScriptMethod(338)  # GetMaxHP
 _get_max_hp.restype = _int
 _get_max_hp.argtypes = [_uint]  # ObjID
 
@@ -1930,7 +1930,7 @@ def GetMaxHP(ObjID):
     return _get_max_hp(ObjID)
 
 
-_get_mana = _ScriptMethod(165)  # GetMana
+_get_mana = _ScriptMethod(339)  # GetMana
 _get_mana.restype = _int
 _get_mana.argtypes = [_uint]  # ObjID
 
@@ -1944,7 +1944,7 @@ def GetMana(ObjID):
     return result
 
 
-_get_max_mana = _ScriptMethod(166)  # GetMaxMana
+_get_max_mana = _ScriptMethod(340)  # GetMaxMana
 _get_max_mana.restype = _int
 _get_max_mana.argtypes = [_uint]  # ObjID
 
@@ -1953,7 +1953,7 @@ def GetMaxMana(ObjID):
     return _get_max_mana(ObjID)
 
 
-_get_stamina = _ScriptMethod(167)  # GetStam
+_get_stamina = _ScriptMethod(341)  # GetStam
 _get_stamina.restype = _int
 _get_stamina.argtypes = [_uint]  # ObjID
 
@@ -1967,7 +1967,7 @@ def GetStam(ObjID):
     return result
 
 
-_get_max_stamina = _ScriptMethod(168)  # GetMaxStam
+_get_max_stamina = _ScriptMethod(342)  # GetMaxStam
 _get_max_stamina.restype = _int
 _get_max_stamina.argtypes = [_uint]  # ObjID
 
@@ -1976,7 +1976,7 @@ def GetMaxStam(ObjID):
     return _get_max_stamina(ObjID)
 
 
-_get_notoriety = _ScriptMethod(169)  # GetNotoriety
+_get_notoriety = _ScriptMethod(343)  # GetNotoriety
 _get_notoriety.restype = _ubyte
 _get_notoriety.argtypes = [_uint]  # ObjId
 
@@ -1985,7 +1985,7 @@ def GetNotoriety(ObjID):
     return _get_notoriety(ObjID)
 
 
-_get_container = _ScriptMethod(170)  # GetParent
+_get_container = _ScriptMethod(344)  # GetParent
 _get_container.restype = _uint
 _get_container.argtypes = [_uint]  # ObjID
 
@@ -1998,7 +1998,7 @@ def IsWarMode(ObjID):
     return _get_warmode(ObjID)
 
 
-_get_dead_status = _ScriptMethod(173)  # IsDead
+_get_dead_status = _ScriptMethod(347)  # IsDead
 _get_dead_status.restype = _bool
 _get_dead_status.argtypes = [_uint]  # ObjID
 
@@ -2007,7 +2007,7 @@ def IsDead(ObjID):
     return _get_dead_status(ObjID)
 
 
-_get_running_status = _ScriptMethod(174)  # IsRunning
+_get_running_status = _ScriptMethod(348)  # IsRunning
 _get_running_status.restype = _bool
 _get_running_status.argtypes = [_uint]  # ObjID
 
@@ -2016,7 +2016,7 @@ def IsRunning(ObjID):
     return _get_running_status(ObjID)
 
 
-_is_container = _ScriptMethod(175)  # IsContainer
+_is_container = _ScriptMethod(349)  # IsContainer
 _is_container.restype = _bool
 _is_container.argtypes = [_uint]  # ObjID
 
@@ -2025,7 +2025,7 @@ def IsContainer(ObjID):
     return _is_container(ObjID)
 
 
-_get_hidden_status = _ScriptMethod(176)  # IsHidden
+_get_hidden_status = _ScriptMethod(350)  # IsHidden
 _get_hidden_status.restype = _bool
 _get_hidden_status.argtypes = [_uint]  # ObjID
 
@@ -2034,7 +2034,7 @@ def IsHidden(ObjID):
     return _get_hidden_status(ObjID)
 
 
-_is_movable = _ScriptMethod(177)  # IsMovable
+_is_movable = _ScriptMethod(351)  # IsMovable
 _is_movable.restype = _bool
 _is_movable.argtypes = [_uint]  # ObjID
 
@@ -2043,7 +2043,7 @@ def IsMovable(ObjID):
     return _is_movable(ObjID)
 
 
-_get_yellow_hits_status = _ScriptMethod(178)  # IsYellowHits
+_get_yellow_hits_status = _ScriptMethod(352)  # IsYellowHits
 _get_yellow_hits_status.restype = _bool
 _get_yellow_hits_status.argtypes = [_uint]  # ObjID
 
@@ -2052,7 +2052,7 @@ def IsYellowHits(ObjID):
     return _get_yellow_hits_status(ObjID)
 
 
-_get_poisoned_status = _ScriptMethod(179)  # IsPoisoned
+_get_poisoned_status = _ScriptMethod(353)  # IsPoisoned
 _get_poisoned_status.restype = _bool
 _get_poisoned_status.argtypes = [_uint]  #
 
@@ -2061,7 +2061,7 @@ def IsPoisoned(ObjID):
     return _get_poisoned_status(ObjID)
 
 
-_get_paralyzed_status = _ScriptMethod(180)  # IsParalyzed
+_get_paralyzed_status = _ScriptMethod(354)  # IsParalyzed
 _get_paralyzed_status.restype = _bool
 _get_paralyzed_status.argtypes = [_uint]  # ObjID
 
@@ -2070,7 +2070,7 @@ def IsParalyzed(ObjID):
     return _get_paralyzed_status(ObjID)
 
 
-_is_female = _ScriptMethod(181)  # IsFemale
+_is_female = _ScriptMethod(355)  # IsFemale
 _is_female.restype = _bool
 _is_female.argtypes = [_uint]  # ObjID
 
@@ -2079,7 +2079,7 @@ def IsFemale(ObjID):
     return _is_female(ObjID)
 
 
-_is_house = _ScriptMethod(382)  # IsHouse
+_is_house = _ScriptMethod(356)  # IsHouse
 _is_house.restype = _bool
 _is_house.argtypes = [_uint]  # ObjID
 
@@ -2088,28 +2088,28 @@ def IsHouse(ObjID):
     return _is_house(ObjID)
 
 
-_open_door = _ScriptMethod(182)  # OpenDoor
+_open_door = _ScriptMethod(280)  # OpenDoor
 
 
 def OpenDoor():
     _open_door()
 
 
-_bow = _ScriptMethod(183)  # Bow
+_bow = _ScriptMethod(281)  # Bow
 
 
 def Bow():
     _bow()
 
 
-_salute = _ScriptMethod(184)  # Salute
+_salute = _ScriptMethod(282)  # Salute
 
 
 def Salute():
     _salute()
 
 
-_get_picked_item = _ScriptMethod(185)  # GetPickupedItem
+_get_picked_item = _ScriptMethod(285)  # GetPickupedItem
 _get_picked_item.restype = _uint
 
 
@@ -2117,7 +2117,7 @@ def GetPickupedItem():
     return _get_picked_item()
 
 
-_set_picked_item = _ScriptMethod(186)  # SetPickupedItem
+_set_picked_item = _ScriptMethod(286)  # SetPickupedItem
 _set_picked_item.argtypes = [_uint]  # ID
 
 
@@ -2125,7 +2125,7 @@ def SetPickupedItem(ID):
     _set_picked_item(ID)
 
 
-_get_drop_check_coord = _ScriptMethod(187)  # GetDropCheckCoord
+_get_drop_check_coord = _ScriptMethod(287)  # GetDropCheckCoord
 _get_drop_check_coord.restype = _bool
 
 
@@ -2133,7 +2133,7 @@ def GetDropCheckCoord():
     return _get_drop_check_coord()
 
 
-_set_drop_check_coord = _ScriptMethod(188)  # SetDropCheckCoord
+_set_drop_check_coord = _ScriptMethod(288)  # SetDropCheckCoord
 _set_drop_check_coord.argtypes = [_bool]  # Value
 
 
@@ -2141,7 +2141,7 @@ def SetDropCheckCoord(Value):
     _set_drop_check_coord(Value)
 
 
-_get_drop_delay = _ScriptMethod(189)  # GetDropDelay
+_get_drop_delay = _ScriptMethod(289)  # GetDropDelay
 _get_drop_delay.restype = _uint
 
 
@@ -2149,7 +2149,7 @@ def GetDropDelay():
     return _get_drop_delay()
 
 
-_set_drop_delay = _ScriptMethod(190)  # SetDropDelay
+_set_drop_delay = _ScriptMethod(290)  # SetDropDelay
 _set_drop_delay.argtypes = [_uint]  # Value
 
 
@@ -2157,7 +2157,7 @@ def SetDropDelay(Value):
     _set_drop_delay(Value)
 
 
-_drag_item = _ScriptMethod(191)  # DragItem
+_drag_item = _ScriptMethod(291)  # DragItem
 _drag_item.restype = _bool
 _drag_item.argtypes = [_uint,  # ItemID
                        _int]  # Count
@@ -2167,7 +2167,7 @@ def DragItem(ItemID, Count):
     return _drag_item(ItemID, Count)
 
 
-_drop_item = _ScriptMethod(192)  # DropItem
+_drop_item = _ScriptMethod(292)  # DropItem
 _drop_item.restype = _bool
 _drop_item.argtypes = [_uint,  # MoveIntoID
                        _int,  # X
@@ -2223,7 +2223,7 @@ def EmptyContainer(Container, DestContainer, delay_ms):
                      0xFFFF, 0xFFFF, 0, delay_ms)
 
 
-_request_context_menu = _ScriptMethod(193)  # RequestContextMenu
+_request_context_menu = _ScriptMethod(357)  # RequestContextMenu
 _request_context_menu.argtypes = [_uint]  # ID
 
 
@@ -2231,7 +2231,7 @@ def RequestContextMenu(ID):
     _request_context_menu(ID)
 
 
-_wait_context_menu = _ScriptMethod(194)  # SetContextMenuHook
+_wait_context_menu = _ScriptMethod(358)  # SetContextMenuHook
 _wait_context_menu.argtypes = [_uint,  # MenuID
                                _ubyte]  # EntryNumber
 
@@ -2240,7 +2240,7 @@ def SetContextMenuHook(MenuID, EntryNumber):
     _wait_context_menu(MenuID, EntryNumber)
 
 
-_get_context_menu = _ScriptMethod(195)  # GetContextMenu
+_get_context_menu = _ScriptMethod(359)  # GetContextMenu
 _get_context_menu.restype = _buffer
 
 
@@ -2258,7 +2258,7 @@ def GetContextMenu():
     return result
 
 
-_get_context_menu_record = _ScriptMethod(345)  # GetContextMenuRec
+_get_context_menu_record = _ScriptMethod(361)  # GetContextMenuRec
 _get_context_menu_record.restype = _buffer  # TODO: What is this do?
 
 
@@ -2274,14 +2274,14 @@ def GetContextMenuRec():
     return res
 
 
-_clear_context_menu = _ScriptMethod(196)  # ClearContextMenu
+_clear_context_menu = _ScriptMethod(360)  # ClearContextMenu
 
 
 def ClearContextMenu():
     AddToSystemJournal('ClearContextMenu deprecated and removed')
 
 
-_is_trade = _ScriptMethod(197)  # CheckTradeState
+_is_trade = _ScriptMethod(362)  # CheckTradeState
 _is_trade.restype = _bool
 
 
@@ -2289,7 +2289,7 @@ def IsTrade():
     return _is_trade()
 
 
-_get_trade_container_serial = _ScriptMethod(198)  # GetTradeContainer
+_get_trade_container_serial = _ScriptMethod(363)  # GetTradeContainer
 _get_trade_container_serial.restype = _uint
 _get_trade_container_serial.argtypes = [_ubyte,  # TradeNum
                                         _ubyte]  # Num
@@ -2299,7 +2299,7 @@ def GetTradeContainer(TradeNum, Num):
     return _get_trade_container_serial(TradeNum, Num)
 
 
-_get_trade_opponent_serial = _ScriptMethod(199)  # GetTradeOpponent
+_get_trade_opponent_serial = _ScriptMethod(364)  # GetTradeOpponent
 _get_trade_opponent_serial.restype = _uint
 _get_trade_opponent_serial.argtypes = [_ubyte]  # TradeNum
 
@@ -2308,7 +2308,7 @@ def GetTradeOpponent(TradeNum):
     return _get_trade_opponent_serial(TradeNum)
 
 
-_get_trades_count = _ScriptMethod(200)  # GetTradeCount
+_get_trades_count = _ScriptMethod(365)  # GetTradeCount
 _get_trades_count.restype = _ubyte
 
 
@@ -2316,7 +2316,7 @@ def TradeCount():
     return _get_trades_count()
 
 
-_get_trade_opponent_name = _ScriptMethod(201)  # GetTradeOpponentName
+_get_trade_opponent_name = _ScriptMethod(366)  # GetTradeOpponentName
 _get_trade_opponent_name.restype = _str
 _get_trade_opponent_name.argtypes = [_ubyte]  # TradeNum
 
@@ -2325,7 +2325,7 @@ def GetTradeOpponentName(TradeNum):
     return _get_trade_opponent_name(TradeNum)
 
 
-_get_trade_state = _ScriptMethod(202)  # TradeCheck
+_get_trade_state = _ScriptMethod(367)  # TradeCheck
 _get_trade_state.restype = _bool
 _get_trade_state.argtypes = [_ubyte,  # TradeNum
                              _ubyte]  # Num
@@ -2335,7 +2335,7 @@ def TradeCheck(TradeNum, Num):
     return _get_trade_state(TradeNum, Num)
 
 
-_confirm_trade = _ScriptMethod(203)  # ConfirmTrade
+_confirm_trade = _ScriptMethod(368)  # ConfirmTrade
 _confirm_trade.argtypes = [_ubyte]  # TradeNum
 
 
@@ -2343,7 +2343,7 @@ def ConfirmTrade(TradeNum):
     _confirm_trade(TradeNum)
 
 
-_cancel_trade = _ScriptMethod(204)  # CancelTrade
+_cancel_trade = _ScriptMethod(369)  # CancelTrade
 _cancel_trade.restype = _bool
 _cancel_trade.argtypes = [_ubyte]  # TradeNum
 
@@ -2352,7 +2352,7 @@ def CancelTrade(TradeNum):
     return _cancel_trade(TradeNum)
 
 
-_wait_menu = _ScriptMethod(205)  # WaitMenu
+_wait_menu = _ScriptMethod(370)  # WaitMenu
 _wait_menu.argtypes = [_str,  # MenuCaption
                        _str]  # ElementCaption
 
@@ -2361,7 +2361,7 @@ def WaitMenu(MenuCaption, ElementCaption):
     _wait_menu(MenuCaption, ElementCaption)
 
 
-_auto_menu = _ScriptMethod(206)  # AutoMenu
+_auto_menu = _ScriptMethod(371)  # AutoMenu
 _auto_menu.argtypes = [_str,  # MenuCaption
                        _str]  # ElementCaption
 
@@ -2370,7 +2370,7 @@ def AutoMenu(MenuCaption, ElementCaption):
     _auto_menu(MenuCaption, ElementCaption)
 
 
-_is_menu_hook = _ScriptMethod(207)  # MenuHookPresent
+_is_menu_hook = _ScriptMethod(372)  # MenuHookPresent
 _is_menu_hook.restype = _bool
 
 
@@ -2378,7 +2378,7 @@ def MenuHookPresent():
     return _is_menu_hook()
 
 
-_is_menu = _ScriptMethod(208)  # MenuPresent
+_is_menu = _ScriptMethod(373)  # MenuPresent
 _is_menu.restype = _bool
 
 
@@ -2386,7 +2386,7 @@ def MenuPresent():
     return _is_menu()
 
 
-_cancel_menu = _ScriptMethod(209)  # CancelMenu
+_cancel_menu = _ScriptMethod(374)  # CancelMenu
 
 
 def CancelMenu():
@@ -2397,14 +2397,14 @@ def CancelAllMenuHooks():
     _cancel_menu()
 
 
-_close_menu = _ScriptMethod(210)  # CloseMenu
+_close_menu = _ScriptMethod(375)  # CloseMenu
 
 
 def CloseMenu():
     _close_menu()
 
 
-_get_menu = _ScriptMethod(338)  # GetMenuItems
+_get_menu = _ScriptMethod(376)  # GetMenuItems
 _get_menu.restype = _buffer
 _get_menu.argtypes = [_str]  # MenuCaption
 
@@ -2427,7 +2427,7 @@ def GetMenuItems(MenuCaption):
     return '\n'.join(GetMenu(MenuCaption))
 
 
-_get_last_menu = _ScriptMethod(339)  # GetLastMenuItems
+_get_last_menu = _ScriptMethod(378)  # GetLastMenuItems
 _get_last_menu.restype = _buffer
 
 
@@ -2449,7 +2449,7 @@ def GetLastMenuItems():
     return '\n'.join(GetLastMenu())
 
 
-_wait_gump = _ScriptMethod(211)  # WaitGumpInt
+_wait_gump = _ScriptMethod(379)  # WaitGumpInt
 _wait_gump.argtypes = [_int]  # Value
 
 
@@ -2457,7 +2457,7 @@ def WaitGump(Value):
     _wait_gump(int(Value))
 
 
-_wait_gump_text_entry = _ScriptMethod(212)  # WaitGumpTextEntry
+_wait_gump_text_entry = _ScriptMethod(380)  # WaitGumpTextEntry
 _wait_gump_text_entry.argtypes = [_str]  # Value
 
 
@@ -2465,7 +2465,7 @@ def WaitTextEntry(Value):
     _wait_gump_text_entry(Value)
 
 
-_auto_text_entry = _ScriptMethod(213)  # GumpAutoTextEntry
+_auto_text_entry = _ScriptMethod(381)  # GumpAutoTextEntry
 _auto_text_entry.argtypes = [_int,  # TextEntryID
                              _str]  # Value
 
@@ -2474,7 +2474,7 @@ def GumpAutoTextEntry(TextEntryID, Value):
     _auto_text_entry(TextEntryID, Value)
 
 
-_auto_radiobutton = _ScriptMethod(214)  # GumpAutoRadiobutton
+_auto_radiobutton = _ScriptMethod(382)  # GumpAutoRadiobutton
 _auto_radiobutton.argtypes = [_int,  # RadiobuttonID
                               _int]  # Value
 
@@ -2483,7 +2483,7 @@ def GumpAutoRadiobutton(RadiobuttonID, Value):
     _auto_radiobutton(RadiobuttonID, Value)
 
 
-_auto_checkbox = _ScriptMethod(215)  # GumpAutoCheckBox
+_auto_checkbox = _ScriptMethod(383)  # GumpAutoCheckBox
 _auto_checkbox.argtypes = [_int,  # CBID
                            _int]  # Value
 
@@ -2492,7 +2492,7 @@ def GumpAutoCheckBox(CBID, Value):
     _auto_checkbox(CBID, Value)
 
 
-_send_gump_button = _ScriptMethod(216)  # NumGumpButton
+_send_gump_button = _ScriptMethod(384)  # NumGumpButton
 _send_gump_button.restype = _bool
 _send_gump_button.argtypes = [_ushort,  # GumpIndex
                               _int]  # Value
@@ -2502,7 +2502,7 @@ def NumGumpButton(GumpIndex, Value):
     return _send_gump_button(GumpIndex, Value)
 
 
-_send_gump_text_entry = _ScriptMethod(217)  # NumGumpTextEntry
+_send_gump_text_entry = _ScriptMethod(385)  # NumGumpTextEntry
 _send_gump_text_entry.restype = _bool
 _send_gump_text_entry.argtypes = [_ushort,  # GumpIndex
                                   _int,  # TextEntryID
@@ -2513,7 +2513,7 @@ def NumGumpTextEntry(GumpIndex, TextEntryID, Value):
     return _send_gump_text_entry(GumpIndex, TextEntryID, Value)
 
 
-_send_gump_radiobutton = _ScriptMethod(218)  # NumGumpRadiobutton
+_send_gump_radiobutton = _ScriptMethod(386)  # NumGumpRadiobutton
 _send_gump_radiobutton.restype = _bool
 _send_gump_radiobutton.argtypes = [_ushort,  # GumpIndex
                                    _int,  # RadiobuttonID
@@ -2524,7 +2524,7 @@ def NumGumpRadiobutton(GumpIndex, RadiobuttonID, Value):
     return _send_gump_radiobutton(GumpIndex, RadiobuttonID, Value)
 
 
-_send_gump_checkbox = _ScriptMethod(219)  # NumGumpCheckBox
+_send_gump_checkbox = _ScriptMethod(387)  # NumGumpCheckBox
 _send_gump_checkbox.restype = _bool
 _send_gump_checkbox.argtypes = [_ushort,  # GumpIndex
                                 _int,  # CBID
@@ -2535,7 +2535,7 @@ def NumGumpCheckBox(GumpIndex, CBID, Value):
     return _send_gump_checkbox(GumpIndex, CBID, Value)
 
 
-_get_gumps_count = _ScriptMethod(220)  # GetGumpsCount
+_get_gumps_count = _ScriptMethod(388)  # GetGumpsCount
 _get_gumps_count.restype = _ushort
 
 
@@ -2543,7 +2543,7 @@ def GetGumpsCount():
     return _get_gumps_count()
 
 
-_close_gump = _ScriptMethod(221)  # CloseSimpleGump
+_close_gump = _ScriptMethod(389)  # CloseSimpleGump
 _close_gump.argtypes = [_ushort]  # GumpIndex
 
 
@@ -2555,7 +2555,7 @@ def IsGump():
     return GetGumpsCount() > 0
 
 
-_get_gump_serial = _ScriptMethod(222)  # GetGumpSerial
+_get_gump_serial = _ScriptMethod(390)  # GetGumpSerial
 _get_gump_serial.restype = _uint
 _get_gump_serial.argtypes = [_ushort]  # GumpIndex
 
@@ -2564,7 +2564,7 @@ def GetGumpSerial(GumpIndex):
     return _get_gump_serial(GumpIndex)
 
 
-_get_gump_type = _ScriptMethod(223)  # GetGumpID
+_get_gump_type = _ScriptMethod(391)  # GetGumpID
 _get_gump_type.restype = _uint
 _get_gump_type.argtypes = [_ushort]  # GumpIndex
 
@@ -2573,7 +2573,7 @@ def GetGumpID(GumpIndex):
     return _get_gump_type(GumpIndex)
 
 
-_get_gump_no_close = _ScriptMethod(224)  # GetGumpNoClose
+_get_gump_no_close = _ScriptMethod(392)  # GetGumpNoClose
 _get_gump_no_close.restype = _bool
 _get_gump_no_close.argtypes = [_ushort]  # GumpIndex
 
@@ -2582,7 +2582,7 @@ def IsGumpCanBeClosed(GumpIndex):
     return _get_gump_no_close(GumpIndex)
 
 
-_get_gump_text = _ScriptMethod(225)  # GetGumpTextLines
+_get_gump_text = _ScriptMethod(393)  # GetGumpTextLines
 _get_gump_text.restype = _buffer
 _get_gump_text.argtypes = [_ushort]  # GumpIndex
 
@@ -2601,7 +2601,7 @@ def GetGumpTextLines(GumpIndex):
     return result
 
 
-_get_gump_full_lines = _ScriptMethod(226)  # GetGumpFullLines
+_get_gump_full_lines = _ScriptMethod(394)  # GetGumpFullLines
 _get_gump_full_lines.restype = _buffer
 _get_gump_full_lines.argtypes = [_ushort]  # GumpIndex
 
@@ -2620,7 +2620,7 @@ def GetGumpFullLines(GumpIndex):
     return result
 
 
-_get_gump_short_lines = _ScriptMethod(227)  # GetGumpShortLines
+_get_gump_short_lines = _ScriptMethod(395)  # GetGumpShortLines
 _get_gump_short_lines.restype = _buffer
 _get_gump_short_lines.argtypes = [_ushort]  # GumpIndex
 
@@ -2639,7 +2639,7 @@ def GetGumpShortLines(GumpIndex):
     return result
 
 
-_get_gump_buttons = _ScriptMethod(228)  # GetGumpButtonsDescription
+_get_gump_buttons = _ScriptMethod(396)  # GetGumpButtonsDescription
 _get_gump_buttons.restype = _buffer
 _get_gump_buttons.argtypes = [_ushort]  # GumpIndex
 
@@ -2658,7 +2658,7 @@ def GetGumpButtonsDescription(GumpIndex):
     return result
 
 
-_get_gump_info = _ScriptMethod(229)  # GetGumpInfo
+_get_gump_info = _ScriptMethod(397)  # GetGumpInfo
 _get_gump_info.restype = _buffer  # TGumpInfo
 _get_gump_info.argtypes = [_ushort]  # GumpIndex
 
@@ -2893,7 +2893,7 @@ def GetGumpInfo(GumpIndex):
     return result
 
 
-_ignore_gump_id = _ScriptMethod(230)  # AddGumpIgnoreByID
+_ignore_gump_id = _ScriptMethod(398)  # AddGumpIgnoreByID
 _ignore_gump_id.argtypes = [_uint]  # ID
 
 
@@ -2901,7 +2901,7 @@ def AddGumpIgnoreByID(ID):
     _ignore_gump_id(ID)
 
 
-_ignore_gump_serial = _ScriptMethod(231)  # AddGumpIgnoreBySerial
+_ignore_gump_serial = _ScriptMethod(399)  # AddGumpIgnoreBySerial
 _ignore_gump_serial.argtypes = [_uint]  # Serial
 
 
@@ -2909,7 +2909,7 @@ def AddGumpIgnoreBySerial(Serial):
     _ignore_gump_serial(Serial)
 
 
-_gumps_ignore_reset = _ScriptMethod(232)  # ClearGumpsIgnore
+_gumps_ignore_reset = _ScriptMethod(400)  # ClearGumpsIgnore
 
 
 def ClearGumpsIgnore():
@@ -3028,7 +3028,7 @@ def BankLayer():
     return 0x1D
 
 
-_get_obj_at_layer = _ScriptMethod(233)  # ObjAtLayerEx
+_get_obj_at_layer = _ScriptMethod(401)  # ObjAtLayerEx
 _get_obj_at_layer.restype = _uint
 _get_obj_at_layer.argtypes = [_ubyte,  # LayerType
                               _uint]  # PlayerID
@@ -3042,7 +3042,7 @@ def ObjAtLayer(LayerType):
     return ObjAtLayerEx(LayerType, Self())
 
 
-_get_layer = _ScriptMethod(234)  # GetLayer
+_get_layer = _ScriptMethod(402)  # GetLayer
 _get_layer.restype = _ubyte
 _get_layer.argtypes = [_uint]  # Obj
 
@@ -3051,7 +3051,7 @@ def GetLayer(Obj):
     return _get_layer(Obj)
 
 
-_wear_item = _ScriptMethod(235)  # WearItem
+_wear_item = _ScriptMethod(403)  # WearItem
 _wear_item.restype = _bool
 _wear_item.argtypes = [_ubyte,  # Layer
                        _uint]  # Obj
@@ -3107,7 +3107,7 @@ def UnEquip(Layer):
     return False
 
 
-_get_dress_delay = _ScriptMethod(236)  # GetDressSpeed
+_get_dress_delay = _ScriptMethod(404)  # GetDressSpeed
 _get_dress_delay.restype = _ushort
 
 
@@ -3115,7 +3115,7 @@ def GetDressSpeed():
     return _get_dress_delay()
 
 
-_set_dress_delay = _ScriptMethod(237)  # SetDressSpeed
+_set_dress_delay = _ScriptMethod(405)  # SetDressSpeed
 _set_dress_delay.argtypes = [_ushort]  # Value
 
 
@@ -3123,7 +3123,7 @@ def SetDressSpeed(Value):
     _set_dress_delay(Value)
 
 
-_get_client_version_int = _ScriptMethod(355)  # SCGetClientVersionInt
+_get_client_version_int = _ScriptMethod(532)  # SCGetClientVersionInt
 _get_client_version_int.restype = _int
 
 
@@ -3137,7 +3137,7 @@ _wearable_layers = (RhandLayer(), LhandLayer(), ShoesLayer(), PantsLayer(),
                     TorsoHLayer(), EarLayer(), ArmsLayer(), CloakLayer(),
                     RobeLayer(), EggsLayer(), LegsLayer())
 
-_unequip_itemsset_macro = _ScriptMethod(356)  # SCUnequipItemsSetMacro
+_unequip_itemsset_macro = _ScriptMethod(408)  # SCUnequipItemsSetMacro
 
 
 def UnequipItemsSetMacro():
@@ -3163,21 +3163,21 @@ def Undress():
     return all(tmp)
 
 
-_set_dress = _ScriptMethod(238)  # SetDress
+_set_dress = _ScriptMethod(406)  # SetDress
 
 
 def SetDress():
     _set_dress()
 
 
-_equip_item_set_macro = _ScriptMethod(357)  # SCEquipItemsSetMacro
+_equip_item_set_macro = _ScriptMethod(409)  # SCEquipItemsSetMacro
 
 
 def EquipItemsSetMacro():
     _equip_item_set_macro()
 
 
-_get_dress_set = _ScriptMethod(239)  # GetDressSet
+_get_dress_set = _ScriptMethod(407)  # GetDressSet
 _get_dress_set.restype = _buffer  # TLayersObjectsList
 
 
@@ -3286,7 +3286,7 @@ def SSCount():
     return FindFullQuantity()
 
 
-_auto_buy = _ScriptMethod(240)  # AutoBuy
+_auto_buy = _ScriptMethod(411)  # AutoBuy
 _auto_buy.argtypes = [_ushort,  # ItemType
                       _ushort,  # ItemColor
                       _ushort]  # Quantity
@@ -3296,7 +3296,7 @@ def AutoBuy(ItemType, ItemColor, Quantity):
     _auto_buy(ItemType, ItemColor, Quantity)
 
 
-_get_shop_list = _ScriptMethod(241)  # GetShopList
+_get_shop_list = _ScriptMethod(412)  # GetShopList
 _get_shop_list.restype = _buffer
 
 
@@ -3314,14 +3314,14 @@ def GetShopList():
     return result
 
 
-_clear_shop_list = _ScriptMethod(242)  # ClearShopList
+_clear_shop_list = _ScriptMethod(413)  # ClearShopList
 
 
 def ClearShopList():
     _clear_shop_list()
 
 
-_auto_buy_extended = _ScriptMethod(243)  # AutoBuyEx
+_auto_buy_extended = _ScriptMethod(414)  # AutoBuyEx
 _auto_buy_extended.argtypes = [_ushort,  # ItemType
                                _ushort,  # ItemColor
                                _ushort,  # Quantity
@@ -3333,7 +3333,7 @@ def AutoBuyEx(ItemType, ItemColor, Quantity, Price, ItemName):
     _auto_buy_extended(ItemType, ItemColor, Quantity, Price, ItemName)
 
 
-_get_auto_buy_delay = _ScriptMethod(244)  # GetAutoBuyDelay
+_get_auto_buy_delay = _ScriptMethod(415)  # GetAutoBuyDelay
 _get_auto_buy_delay.restype = _ushort
 
 
@@ -3341,7 +3341,7 @@ def GetAutoBuyDelay():
     return _get_auto_buy_delay()
 
 
-_set_auto_buy_delay = _ScriptMethod(245)  # SetAutoBuyDelay
+_set_auto_buy_delay = _ScriptMethod(416)  # SetAutoBuyDelay
 _set_auto_buy_delay.argtypes = [_ushort]  # Value
 
 
@@ -3349,7 +3349,7 @@ def SetAutoBuyDelay(Value):
     _set_auto_buy_delay(Value)
 
 
-_get_auto_sell_delay = _ScriptMethod(246)  # GetAutoSellDelay
+_get_auto_sell_delay = _ScriptMethod(417)  # GetAutoSellDelay
 _get_auto_sell_delay.restype = _ushort
 
 
@@ -3357,7 +3357,7 @@ def GetAutoSellDelay():
     return _get_auto_sell_delay()
 
 
-_set_auto_sell_delay = _ScriptMethod(247)  # SetAutoSellDelay
+_set_auto_sell_delay = _ScriptMethod(418)  # SetAutoSellDelay
 _set_auto_sell_delay.argtypes = [_ushort]  # Value
 
 
@@ -3365,7 +3365,7 @@ def SetAutoSellDelay(Value):
     _set_auto_sell_delay(Value)
 
 
-_auto_sell = _ScriptMethod(248)  # AutoSell
+_auto_sell = _ScriptMethod(419)  # AutoSell
 _auto_sell.argtypes = [_ushort,  # ItemType
                        _ushort,  # ItemColor
                        _ushort]  # Quantity
@@ -3375,7 +3375,7 @@ def AutoSell(ItemType, ItemColor, Quantity):
     _auto_sell(ItemType, ItemColor, Quantity)
 
 
-_request_stats = _ScriptMethod(249)  # RequestStats
+_request_stats = _ScriptMethod(267)  # RequestStats
 _request_stats.argtypes = [_uint]  # ObjID
 
 
@@ -3383,21 +3383,21 @@ def RequestStats(ObjID):
     _request_stats(ObjID)
 
 
-_help_request = _ScriptMethod(250)  # HelpRequest
+_help_request = _ScriptMethod(268)  # HelpRequest
 
 
 def HelpRequest():
     _help_request()
 
 
-_quest_request = _ScriptMethod(251)  # QuestRequest
+_quest_request = _ScriptMethod(269)  # QuestRequest
 
 
 def QuestRequest():
     _quest_request()
 
 
-_rename_mobile = _ScriptMethod(252)  # RenameMobile
+_rename_mobile = _ScriptMethod(420)  # RenameMobile
 _rename_mobile.argtypes = [_uint,  # Mob_ID
                            _str]  # NewName
 
@@ -3406,7 +3406,7 @@ def RenameMobile(Mob_ID, NewName):
     _rename_mobile(Mob_ID, NewName)
 
 
-_mobile_can_be_renamed = _ScriptMethod(253)  # MobileCanBeRenamed
+_mobile_can_be_renamed = _ScriptMethod(421)  # MobileCanBeRenamed
 _mobile_can_be_renamed.restype = _bool
 _mobile_can_be_renamed.argtypes = [_uint]  # Mob_ID
 
@@ -3424,7 +3424,7 @@ def SetStatState(statNum, statState):
     _lock_stat(statNum, statState)
 
 
-_get_static_art_bitmap = _ScriptMethod(255)  # GetStaticArtBitmap
+_get_static_art_bitmap = _ScriptMethod(443)  # GetStaticArtBitmap
 _get_static_art_bitmap.restype = _buffer  # Bitmap file in bytes
 _get_static_art_bitmap.argtypes = [_uint,  # Id
                                    _ushort]  # Hue
@@ -3434,7 +3434,7 @@ def GetStaticArtBitmap(Id, Hue):
     return _get_static_art_bitmap(Id, Hue)
 
 
-_print_script_methods = _ScriptMethod(256)  # PrintScriptMethodsList
+_print_script_methods = _ScriptMethod(88)  # PrintScriptMethodsList
 _print_script_methods.argtypes = [_str,  # FileName
                                   _bool]  # SortedList
 
@@ -3443,14 +3443,14 @@ def PrintScriptMethodsList(FileName, SortedList):
     _print_script_methods(FileName, SortedList)
 
 
-_alarm = _ScriptMethod(257)  # SetAlarm
+_alarm = _ScriptMethod(89)  # SetAlarm
 
 
 def Alarm():
     _alarm()
 
 
-_uo_say = _ScriptMethod(308)  # SendTextToUO
+_uo_say = _ScriptMethod(459)  # SendTextToUO
 _uo_say.argtypes = [_str]  # Text
 
 
@@ -3458,7 +3458,7 @@ def UOSay(Text):
     _uo_say(Text)
 
 
-_uo_say_color = _ScriptMethod(309)  # SendTextToUOColor
+_uo_say_color = _ScriptMethod(460)  # SendTextToUOColor
 _uo_say_color.argtypes = [_str,  # Text
                           _ushort]  # Color
 
@@ -3470,7 +3470,7 @@ def UOSayColor(Text, Color):
 _reg_stealth = 0, '0', 'reg_stealth', 'stealth'
 _reg_char = 1, '1', 'reg_char', 'char'
 
-_set_global = _ScriptMethod(310)  # SetGlobal
+_set_global = _ScriptMethod(65)  # SetGlobal
 _set_global.argtypes = [_ubyte,  # GlobalRegion
                         _str,  # VarName
                         _str]  # VarValue
@@ -3487,7 +3487,7 @@ def SetGlobal(GlobalRegion, VarName, VarValue):
         raise ValueError('GlobalRegion must be "stealth" or "char".')
 
 
-_get_global = _ScriptMethod(311)
+_get_global = _ScriptMethod(66)
 _get_global.restype = _str
 _get_global.argtypes = [_ubyte,  # GlobalRegion
                         _str]  # VarName
@@ -3503,7 +3503,7 @@ def GetGlobal(GlobalRegion, VarName):
         raise ValueError('GlobalRegion must be "stealth" or "char".')
 
 
-_console_entry_reply = _ScriptMethod(312)
+_console_entry_reply = _ScriptMethod(461)
 _console_entry_reply.argtypes = [_str]  # Text
 
 
@@ -3511,7 +3511,7 @@ def ConsoleEntryReply(Text):
     _console_entry_reply(Text)
 
 
-_console_entry_unicode_reply = _ScriptMethod(313)  # ConsoleEntryUnicodeReply
+_console_entry_unicode_reply = _ScriptMethod(462)  # ConsoleEntryUnicodeReply
 _console_entry_unicode_reply.argtypes = [_str]  # Text
 
 
@@ -3519,7 +3519,7 @@ def ConsoleEntryUnicodeReply(Text):
     _console_entry_unicode_reply(Text)
 
 
-_game_server_ip_string = _ScriptMethod(341)  # GameServerIPString
+_game_server_ip_string = _ScriptMethod(526)  # GameServerIPString
 _game_server_ip_string.restype = _str
 
 
@@ -3583,7 +3583,7 @@ def EUO2StealthID(EUO):
     return (res - 7) ^ 0x0045
 
 
-_http_get = _ScriptMethod(258)  # HTTP_Get
+_http_get = _ScriptMethod(61)  # HTTP_Get
 _http_get.argtypes = [_str]  # URL
 
 
@@ -3591,7 +3591,7 @@ def HTTP_Get(URL):
     _http_get(URL)
 
 
-_http_post = _ScriptMethod(259)  # HTTP_Post
+_http_post = _ScriptMethod(62)  # HTTP_Post
 _http_post.restype = _str
 _http_post.argtypes = [_str,  # URL
                        _str]  # PostData
@@ -3601,7 +3601,7 @@ def HTTP_Post(URL, PostData):
     return _http_post(URL, PostData)
 
 
-_http_body = _ScriptMethod(260)  # HTTP_Body
+_http_body = _ScriptMethod(63)  # HTTP_Body
 _http_body.restype = _str
 
 
@@ -3609,7 +3609,7 @@ def HTTP_Body():
     return _http_body()
 
 
-_http_header = _ScriptMethod(261)  # HTTP_Header
+_http_header = _ScriptMethod(64)  # HTTP_Header
 _http_header.restype = _str
 
 
@@ -3617,7 +3617,7 @@ def HTTP_Header():
     return _http_header()
 
 
-_party_invite = _ScriptMethod(262)  # InviteToParty
+_party_invite = _ScriptMethod(422)  # InviteToParty
 _party_invite.argtypes = [_uint]  # ID
 
 
@@ -3625,7 +3625,7 @@ def InviteToParty(ID):
     _party_invite(ID)
 
 
-_party_kick = _ScriptMethod(263)  # RemoveFromParty
+_party_kick = _ScriptMethod(423)  # RemoveFromParty
 _party_kick.argtypes = [_uint]  # ID
 
 
@@ -3633,7 +3633,7 @@ def RemoveFromParty(ID):
     _party_kick(ID)
 
 
-_party_msg_to = _ScriptMethod(264)  # PartyMessageTo
+_party_msg_to = _ScriptMethod(424)  # PartyMessageTo
 _party_msg_to.argtypes = [_uint,  # ID
                           _str]  # Msg
 
@@ -3642,7 +3642,7 @@ def PartyMessageTo(ID, Msg):
     _party_msg_to(ID, Msg)
 
 
-_party_msg = _ScriptMethod(265)  # PartySay
+_party_msg = _ScriptMethod(425)  # PartySay
 _party_msg.argtypes = [_str]  # Msg
 
 
@@ -3650,7 +3650,7 @@ def PartySay(Msg):
     _party_msg(Msg)
 
 
-_party_can_loot = _ScriptMethod(266)  # PartyCanLootMe
+_party_can_loot = _ScriptMethod(426)  # PartyCanLootMe
 _party_can_loot.argtypes = [_bool]  # Value
 
 
@@ -3658,28 +3658,28 @@ def PartyCanLootMe(Value):
     _party_can_loot(Value)
 
 
-_party_accept = _ScriptMethod(267)  # PartyAcceptInvite
+_party_accept = _ScriptMethod(427)  # PartyAcceptInvite
 
 
 def PartyAcceptInvite():
     _party_accept()
 
 
-_party_reject = _ScriptMethod(268)  # PartyDeclineInvite
+_party_reject = _ScriptMethod(428)  # PartyDeclineInvite
 
 
 def PartyDeclineInvite():
     _party_reject()
 
 
-_party_leave = _ScriptMethod(269)  # PartyLeave
+_party_leave = _ScriptMethod(429)  # PartyLeave
 
 
 def PartyLeave():
     _party_leave()
 
 
-_is_in_party = _ScriptMethod(271)  # InParty
+_is_in_party = _ScriptMethod(431)  # InParty
 _is_in_party.restype = _bool
 
 
@@ -3687,7 +3687,7 @@ def InParty():
     return _is_in_party()
 
 
-_get_party_members = _ScriptMethod(270)  # PartyMembersList
+_get_party_members = _ScriptMethod(430)  # PartyMembersList
 _get_party_members.restype = _buffer  # Array of Cardinal
 
 
@@ -3706,7 +3706,7 @@ _messengers = {0: 1,  # default - telegram
                2: 2, 'Viber': 2, 'viber': 2,
                3: 3, 'Discord': 3, 'discord': 3}
 
-_messenger_get_connected = _ScriptMethod(501)  # Messenger_GetConnected
+_messenger_get_connected = _ScriptMethod(80)  # Messenger_GetConnected
 _messenger_get_connected.restype = _bool
 _messenger_get_connected.argtypes = [_ubyte]  # MesID
 
@@ -3718,7 +3718,7 @@ def MessengerGetConnected(MesID):
     return _messenger_get_connected(_messengers[MesID])
 
 
-_messenger_set_connected = _ScriptMethod(502)  # Messenger_SetConnected
+_messenger_set_connected = _ScriptMethod(81)  # Messenger_SetConnected
 _messenger_set_connected.argtypes = [_ubyte,  # MesID
                                      _bool]  # Value
 
@@ -3730,7 +3730,7 @@ def MessengerSetConnected(MesID, Value):
     _messenger_set_connected(_messengers[MesID], Value)
 
 
-_messenger_get_token = _ScriptMethod(503)  # Messenger_GetToken
+_messenger_get_token = _ScriptMethod(82)  # Messenger_GetToken
 _messenger_get_token.restype = _str
 _messenger_get_token.argtypes = [_ubyte]  # MesID
 
@@ -3742,7 +3742,7 @@ def MessengerGetToken(MesID):
     return _messenger_get_token(_messengers[MesID])
 
 
-_messenger_set_token = _ScriptMethod(504)  # Messenger_SetToken
+_messenger_set_token = _ScriptMethod(83)  # Messenger_SetToken
 _messenger_set_token.argtypes = [_ubyte,  # MesID
                                  _str]  # Value
 
@@ -3754,7 +3754,7 @@ def MessengerSetToken(MesID, Value):
     _messenger_set_token(_messengers[MesID], Value)
 
 
-_messenger_get_name = _ScriptMethod(505)  # Messenger_GetName
+_messenger_get_name = _ScriptMethod(84)  # Messenger_GetName
 _messenger_get_name.restype = _str
 _messenger_get_name.argtypes = [_ubyte]  # MesID
 
@@ -3766,7 +3766,7 @@ def MessengerGetName(MesID):
     return _messenger_get_name(_messengers[MesID])
 
 
-_messenger_send_message = _ScriptMethod(506)  # Messenger_SendMessage
+_messenger_send_message = _ScriptMethod(85)  # Messenger_SendMessage
 _messenger_send_message.argtypes = [_ubyte,  # MesID
                                     _str,  # Msg
                                     _str]  # UserID
@@ -3782,7 +3782,7 @@ def MessengerSendMessage(MesID, Msg, UserID):
 _tile_groups = {0: 0, 'tfLand': 0, 'tfland': 0, 'Land': 0, 'land': 0,
                 1: 1, 'tfStatic': 1, 'tfstatic': 1, 'Static': 1, 'static': 1}
 
-_get_tile_flags = _ScriptMethod(278)  # GetTileFlags
+_get_tile_flags = _ScriptMethod(432)  # GetTileFlags
 _get_tile_flags.restype = _uint
 _get_tile_flags.argtypes = [_ubyte,  # TileGroup
                             _ushort]  # Tile
@@ -3795,7 +3795,7 @@ def GetTileFlags(TileGroup, Tile):
     return _get_tile_flags(group, Tile)
 
 
-_uint_to_flags = _ScriptMethod(350)  # ConvertIntegerToFlags
+_uint_to_flags = _ScriptMethod(442)  # ConvertIntegerToFlags
 _uint_to_flags.restype = _buffer
 _uint_to_flags.argtypes = [_ubyte,  # Group
                            _uint]  # Flags
@@ -3817,7 +3817,7 @@ def ConvertIntegerToFlags(Group, Flags):
     return result
 
 
-_get_land_tile_data = _ScriptMethod(280)  # GetLandTileData
+_get_land_tile_data = _ScriptMethod(433)  # GetLandTileData
 _get_land_tile_data.restype = _buffer  # TLandTileData
 _get_land_tile_data.argtypes = [_ushort]  # Tile
 
@@ -3836,7 +3836,7 @@ def GetLandTileData(Tile):
     return result
 
 
-_get_static_tile_data = _ScriptMethod(281)  # GetStaticTileData
+_get_static_tile_data = _ScriptMethod(434)  # GetStaticTileData
 _get_static_tile_data.restype = _buffer  # TStaticTileDataNew
 _get_static_tile_data.argtypes = [_ushort]  # Tile
 
@@ -3857,7 +3857,7 @@ def GetStaticTileData(Tile):
     return result
 
 
-_get_cell = _ScriptMethod(388)  # GetCell
+_get_cell = _ScriptMethod(441)  # GetCell
 _get_cell.restype = _buffer  # TMapCell
 _get_cell.argtypes = [_ushort,  # X
                       _ushort,  # Y
@@ -3875,7 +3875,7 @@ def GetCell(X, Y, WorldNum):
     return result
 
 
-_get_layer_count = _ScriptMethod(282)  # GetLayerCount
+_get_layer_count = _ScriptMethod(435)  # GetLayerCount
 _get_layer_count.restype = _ubyte
 _get_layer_count.argtypes = [_ushort,  # X
                              _ushort,  # Y
@@ -3886,7 +3886,7 @@ def GetLayerCount(X, Y, WorldNum):
     return _get_layer_count(X, Y, WorldNum)
 
 
-_read_static_xy = _ScriptMethod(283)  # ReadStaticsXY
+_read_static_xy = _ScriptMethod(436)  # ReadStaticsXY
 _read_static_xy.restype = _buffer  # Array of TStaticItemRealXY
 _read_static_xy.argtypes = [_ushort,  # X
                             _ushort,  # Y
@@ -3914,7 +3914,7 @@ def ReadStaticsXY(X, Y, WorldNum):
     return result
 
 
-_get_surface_z = _ScriptMethod(284)  # GetSurfaceZ
+_get_surface_z = _ScriptMethod(437)  # GetSurfaceZ
 _get_surface_z.restype = _byte
 _get_surface_z.argtypes = [_ushort,  # X
                            _ushort,  # Y
@@ -3925,7 +3925,7 @@ def GetSurfaceZ(X, Y, WorldNum):
     return _get_surface_z(X, Y, WorldNum)
 
 
-_is_cell_passable = _ScriptMethod(285)  # IsWorldCellPassable
+_is_cell_passable = _ScriptMethod(438)  # IsWorldCellPassable
 _is_cell_passable.restype = _buffer  # Boolean, ShortInt  4 bytes
 _is_cell_passable.argtypes = [_ushort,  # CurrX
                               _ushort,  # CurrY
@@ -3940,7 +3940,7 @@ def IsWorldCellPassable(CurrX, CurrY, CurrZ, DestX, DestY, WorldNum):
     return _struct.unpack('<?b', data)
 
 
-_get_statics_array = _ScriptMethod(286)  # GetStaticTilesArray
+_get_statics_array = _ScriptMethod(439)  # GetStaticTilesArray
 _get_statics_array.restype = _buffer  # Array of TFoundTile
 _get_statics_array.argtypes = [_ushort,  # Xmin
                                _ushort,  # Ymin
@@ -3967,7 +3967,7 @@ def GetStaticTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
     return result
 
 
-_get_lands_array = _ScriptMethod(287)  # GetLandTilesArray
+_get_lands_array = _ScriptMethod(440)  # GetLandTilesArray
 _get_lands_array.restype = _buffer  # Array of TFoundTile
 _get_lands_array.argtypes = [_ushort,  # Xmin
                              _ushort,  # Ymin
@@ -3994,7 +3994,7 @@ def GetLandTilesArray(Xmin, Ymin, Xmax, Ymax, WorldNum, TileTypes):
     return result
 
 
-_client_print = _ScriptMethod(289)  # ClientPrint
+_client_print = _ScriptMethod(446)  # ClientPrint
 _client_print.argtypes = [_str]  # Text
 
 
@@ -4002,7 +4002,7 @@ def ClientPrint(Text):
     _client_print(Text)
 
 
-_client_print_ex = _ScriptMethod(290)  # ClientPrintEx
+_client_print_ex = _ScriptMethod(447)  # ClientPrintEx
 _client_print_ex.argtypes = [_uint,  # SenderID
                              _ushort,  # Color
                              _ushort,  # Font
@@ -4018,7 +4018,7 @@ _wnd = {0: 0, '0': 0, 'wtpaperdoll': 0, 'paperdoll': 0,
         2: 2, '2': 2, 'wtcharprofile': 2, 'charprofile': 2, 'profile': 2,
         3: 3, '3': 3, 'wtcontainer': 3, 'container': 3}
 
-_close_client_ui_window = _ScriptMethod(291)  # CloseClientUIWindow
+_close_client_ui_window = _ScriptMethod(448)  # CloseClientUIWindow
 _close_client_ui_window.argtypes = [_ubyte,  # UIWindowType
                                     _uint]  # ID
 
@@ -4032,21 +4032,21 @@ def CloseClientUIWindow(UIWindowType, ID):
     _close_client_ui_window(_wnd[UIWindowType], ID)
 
 
-_client_target_object_request = _ScriptMethod(292)  # ClientRequestObjectTarget
+_client_target_object_request = _ScriptMethod(449)  # ClientRequestObjectTarget
 
 
 def ClientRequestObjectTarget():
     _client_target_object_request()
 
 
-_client_target_tile_request = _ScriptMethod(293)  # ClientRequestTileTarget
+_client_target_tile_request = _ScriptMethod(450)  # ClientRequestTileTarget
 
 
 def ClientRequestTileTarget():
     _client_target_tile_request()
 
 
-_client_is_target_response = _ScriptMethod(294)  # ClientTargetResponsePresent
+_client_is_target_response = _ScriptMethod(451)  # ClientTargetResponsePresent
 _client_is_target_response.restype = _bool
 
 
@@ -4054,7 +4054,7 @@ def ClientTargetResponsePresent():
     return _client_is_target_response()
 
 
-_client_target_response = _ScriptMethod(295)  # ClientTargetResponse
+_client_target_response = _ScriptMethod(452)  # ClientTargetResponse
 _client_target_response.restype = _buffer  # TTargetInfo
 
 
@@ -4078,9 +4078,9 @@ def WaitForClientTargetResponse(MaxWaitTimeMS):
     return False
 
 
-_check_lag_begin = _ScriptMethod(297)  # CheckLagBegin
-_check_lag_end = _ScriptMethod(298)  # CheckLagEnd
-_is_check_lag_ended = _ScriptMethod(299)  # IsCheckLagEnd
+_check_lag_begin = _ScriptMethod(453)  # CheckLagBegin
+_check_lag_end = _ScriptMethod(454)  # CheckLagEnd
+_is_check_lag_ended = _ScriptMethod(455)  # IsCheckLagEnd
 _is_check_lag_ended.restype = _bool
 
 
@@ -4095,7 +4095,7 @@ def CheckLag(timeoutMS=10000):
     return result
 
 
-_get_quest_arrow = _ScriptMethod(300)  # GetQuestArrow
+_get_quest_arrow = _ScriptMethod(456)  # GetQuestArrow
 _get_quest_arrow.restype = _buffer  # TPoint
 
 
@@ -4106,7 +4106,7 @@ def GetQuestArrow():
     return ()
 
 
-_get_silent_mode = _ScriptMethod(302)  # GetSilentMode
+_get_silent_mode = _ScriptMethod(458)  # GetSilentMode
 _get_silent_mode.restype = _bool
 
 
@@ -4114,14 +4114,14 @@ def GetSilentMode():
     return _get_silent_mode()
 
 
-_clear_info_window = _ScriptMethod(348)  # ClearInfoWindow
+_clear_info_window = _ScriptMethod(515)  # ClearInfoWindow
 
 
 def ClearInfoWindow():
     _clear_info_window()
 
 
-_set_silent_mode = _ScriptMethod(301)  # SetSilentMode
+_set_silent_mode = _ScriptMethod(457)  # SetSilentMode
 _set_silent_mode.argtypes = [_bool]  # Value
 
 
@@ -4129,7 +4129,7 @@ def SetSilentMode(Value):
     _set_silent_mode(Value)
 
 
-_fill_info_window = _ScriptMethod(303)  # FillInfoWindow
+_fill_info_window = _ScriptMethod(514)  # FillInfoWindow
 _fill_info_window.argtypes = [_str]  # s
 
 
@@ -4137,7 +4137,7 @@ def FillNewWindow(s):
     _fill_info_window(s)
 
 
-_get_stealth_path = _ScriptMethod(305)  # GetStealthPath
+_get_stealth_path = _ScriptMethod(36)  # GetStealthPath
 _get_stealth_path.restype = _str
 
 
@@ -4149,7 +4149,7 @@ def CurrentScriptPath():
     return __file__
 
 
-_get_stealth_profile_path = _ScriptMethod(306)  # GetStealthProfilePath
+_get_stealth_profile_path = _ScriptMethod(37)  # GetStealthProfilePath
 _get_stealth_profile_path.restype = _str
 
 
@@ -4157,7 +4157,7 @@ def GetStealthProfilePath():
     return _get_stealth_profile_path()
 
 
-_get_shard_path = _ScriptMethod(307)  # GetShardPath
+_get_shard_path = _ScriptMethod(38)  # GetShardPath
 _get_shard_path.restype = _str
 
 
@@ -4165,7 +4165,7 @@ def GetShardPath():
     return _get_shard_path()
 
 
-_step = _ScriptMethod(324)  # Step
+_step = _ScriptMethod(490)  # Step
 _step.restype = _ubyte
 _step.argtypes = [_ubyte,  # Direction
                   _bool]  # Running
@@ -4175,7 +4175,7 @@ def Step(Direction, Running=False):
     return _step(Direction, Running)
 
 
-_step_q = _ScriptMethod(325)  # StepQ
+_step_q = _ScriptMethod(491)  # StepQ
 _step_q.restype = _int
 _step_q.argtypes = [_ubyte,  # Direction
                     _bool]  # Running
@@ -4185,7 +4185,7 @@ def StepQ(Direction, Running):
     return _step_q(Direction, Running)
 
 
-_move_xyz = _ScriptMethod(326)  # MoveXYZ
+_move_xyz = _ScriptMethod(492)  # MoveXYZ
 _move_xyz.restype = _bool
 _move_xyz.argtypes = [_ushort,  # Xdst
                       _ushort,  # Ydst
@@ -4294,7 +4294,7 @@ def NewMoveXY(Xdst, Ydst, Optimized, Accuracy, Running):
     return newMoveXY(Xdst, Ydst, Optimized, Accuracy, Running)
 
 
-_move_xy = _ScriptMethod(327)  # MoveXY
+_move_xy = _ScriptMethod(493)  # MoveXY
 _move_xy.restype = _bool
 _move_xy.argtypes = [_ushort,  # Xdst
                      _ushort,  # Ydst
@@ -4307,7 +4307,7 @@ def MoveXY(Xdst, Ydst, Optimized, Accuracy, Running):
     return _move_xy(Xdst, Ydst, Optimized, Accuracy, Running)
 
 
-_set_impassable_location = _ScriptMethod(328)  # SetBadLocation
+_set_impassable_location = _ScriptMethod(494)  # SetBadLocation
 _set_impassable_location.argtypes = [_ushort,  # X
                                      _ushort]  # Y
 
@@ -4316,7 +4316,7 @@ def SetBadLocation(X, Y):
     _set_impassable_location(X, Y)
 
 
-_set_passable_location = _ScriptMethod(329)  # SetGoodLocation
+_set_passable_location = _ScriptMethod(495)  # SetGoodLocation
 _set_passable_location.argtypes = [_ushort,  # X
                                    _ushort]  # Y
 
@@ -4325,14 +4325,14 @@ def SetGoodLocation(X, Y):
     _set_passable_location(X, Y)
 
 
-_clear_impassable_locations = _ScriptMethod(330)  # ClearBadLocationList
+_clear_impassable_locations = _ScriptMethod(496)  # ClearBadLocationList
 
 
 def ClearBadLocationList():
     _clear_impassable_locations()
 
 
-_set_impassable_object = _ScriptMethod(331)  # SetBadObject
+_set_impassable_object = _ScriptMethod(497)  # SetBadObject
 _set_impassable_object.argtypes = [_ushort,  # Type
                                    _ushort,  # Color
                                    _ubyte]  # Radius
@@ -4342,7 +4342,7 @@ def SetBadObject(Type, Color, Radius):
     _set_impassable_object(Type, Color, Radius)
 
 
-_clear_impassable_objects = _ScriptMethod(332)  # ClearBadObjectList
+_clear_impassable_objects = _ScriptMethod(498)  # ClearBadObjectList
 
 
 def ClearBadObjectList():
@@ -4365,7 +4365,7 @@ _los_check_options = {0: 0, '0': 0, None: 0,
                       'lospollosthroughwindow': 0x400,
                       'pollosthroughwindow': 0x400}
 
-_check_los = _ScriptMethod(333)  # CheckLOS
+_check_los = _ScriptMethod(499)  # CheckLOS
 _check_los.restype = _bool
 _check_los.argtypes = [_ushort,  # xf
                        _ushort,  # yf
@@ -4398,7 +4398,7 @@ def CheckLOS(xf, yf, zf, xt, yt, zt, WorldNum, LOSCheckType, LOSOptions=None):
     return _check_los(xf, yf, zf, xt, yt, zt, WorldNum, LOSCheckType, options)
 
 
-_get_path_array = _ScriptMethod(334)  # GetPathArray
+_get_path_array = _ScriptMethod(500)  # GetPathArray
 _get_path_array.restype = _buffer  # Array of TMyPoint
 _get_path_array.argtypes = [_ushort,  # DestX
                             _ushort,  # DestY
@@ -4417,7 +4417,7 @@ def GetPathArray(DestX, DestY, Optimized, Accuracy):
     return result
 
 
-_get_path_array_3d = _ScriptMethod(335)  # GetPathArray3D
+_get_path_array_3d = _ScriptMethod(501)  # GetPathArray3D
 _get_path_array_3d.restype = _buffer  # Array of TMyPoint
 _get_path_array_3d.argtypes = [_ushort,  # StartX
                                _ushort,  # StartY
@@ -4480,7 +4480,7 @@ def CalcDir(Xfrom, Yfrom, Xto, Yto):
         return 1 if Yfrom > Yto else 3
 
 
-_set_run_unmount_timer = _ScriptMethod(316)  # SetRunUnmountTimer
+_set_run_unmount_timer = _ScriptMethod(481)  # SetRunUnmountTimer
 _set_run_unmount_timer.argtypes = [_ushort]  # Value
 
 
@@ -4488,7 +4488,7 @@ def SetRunUnmountTimer(Value):
     _set_run_unmount_timer(Value)
 
 
-_set_walk_mount_timer = _ScriptMethod(317)  # SetWalkMountTimer
+_set_walk_mount_timer = _ScriptMethod(482)  # SetWalkMountTimer
 _set_walk_mount_timer.argtypes = [_ushort]  # Value
 
 
@@ -4496,7 +4496,7 @@ def SetWalkMountTimer(Value):
     _set_walk_mount_timer(Value)
 
 
-_set_run_mount_timer = _ScriptMethod(318)  # SetRunMountTimer
+_set_run_mount_timer = _ScriptMethod(483)  # SetRunMountTimer
 _set_run_mount_timer.argtypes = [_ushort]  # Value
 
 
@@ -4504,7 +4504,7 @@ def SetRunMountTimer(Value):
     _set_run_mount_timer(Value)
 
 
-_set_walk_unmount_timer = _ScriptMethod(319)  # SetWalkUnmountTimer
+_set_walk_unmount_timer = _ScriptMethod(484)  # SetWalkUnmountTimer
 _set_walk_unmount_timer.argtypes = [_ushort]  # Value
 
 
@@ -4512,7 +4512,7 @@ def SetWalkUnmountTimer(Value):
     _set_walk_unmount_timer(Value)
 
 
-_get_run_mount_timer = _ScriptMethod(320)  # GetRunMountTimer
+_get_run_mount_timer = _ScriptMethod(485)  # GetRunMountTimer
 _get_run_mount_timer.restype = _ushort
 
 
@@ -4520,7 +4520,7 @@ def GetRunMountTimer():
     return _get_run_mount_timer()
 
 
-_get_walk_mount_timer = _ScriptMethod(321)  # GetWalkMountTimer
+_get_walk_mount_timer = _ScriptMethod(486)  # GetWalkMountTimer
 _get_walk_mount_timer.restype = _ushort
 
 
@@ -4528,7 +4528,7 @@ def GetWalkMountTimer():
     return _get_walk_mount_timer()
 
 
-_get_run_unmount_timer = _ScriptMethod(322)  # GetRunUnmountTimer
+_get_run_unmount_timer = _ScriptMethod(487)  # GetRunUnmountTimer
 _get_run_unmount_timer.restype = _ushort
 
 
@@ -4536,7 +4536,7 @@ def GetRunUnmountTimer():
     return _get_run_unmount_timer()
 
 
-_get_walk_unmount_timer = _ScriptMethod(323)  # GetWalkUnmountTimer
+_get_walk_unmount_timer = _ScriptMethod(488)  # GetWalkUnmountTimer
 _get_walk_unmount_timer.restype = _ushort
 
 
@@ -4544,7 +4544,7 @@ def GetWalkUnmountTimer():
     return _get_walk_unmount_timer()
 
 
-_get_last_step_q_used_door = _ScriptMethod(344)  # GetLastStepQUsedDoor
+_get_last_step_q_used_door = _ScriptMethod(503)  # GetLastStepQUsedDoor
 _get_last_step_q_used_door.restype = _uint
 
 
@@ -4552,7 +4552,7 @@ def GetLastStepQUsedDoor():
     return _get_last_step_q_used_door()
 
 
-_stop_mover = _ScriptMethod(353)  # MoverStop
+_stop_mover = _ScriptMethod(502)  # MoverStop
 
 
 def StopMover():
@@ -4563,7 +4563,7 @@ def MoverStop():
     StopMover()
 
 
-_set_reconnector_ext = _ScriptMethod(354)  # SetARExtParams
+_set_reconnector_ext = _ScriptMethod(529)  # SetARExtParams
 _set_reconnector_ext.argtypes = [_str,  # ShardName
                                  _str,  # CharName
                                  _bool]  # UseAtEveryConnect
@@ -4573,7 +4573,7 @@ def SetARExtParams(ShardName, CharName, UseAtEveryConnect):
     _set_reconnector_ext(ShardName, CharName, UseAtEveryConnect)
 
 
-_use_item_on_mobile = _ScriptMethod(359)  # SCUseItemOnMobile
+_use_item_on_mobile = _ScriptMethod(277)  # SCUseItemOnMobile
 _use_item_on_mobile.argtypes = [_uint,  # ItemSerial
                                 _uint]  # TargetSerial
 
@@ -4582,14 +4582,14 @@ def UseItemOnMobile(ItemSerial, TargetSerial):
     _use_item_on_mobile(ItemSerial, TargetSerial)
 
 
-_bandage_self = _ScriptMethod(360)  # SCBandageSelf
+_bandage_self = _ScriptMethod(278)  # SCBandageSelf
 
 
 def BandageSelf():
     _bandage_self()
 
 
-_global_chat_join_channel = _ScriptMethod(361)  # SCGlobalChatJoinChannel
+_global_chat_join_channel = _ScriptMethod(509)  # SCGlobalChatJoinChannel
 _global_chat_join_channel.argtypes = [_str]  # ChName
 
 
@@ -4597,14 +4597,14 @@ def GlobalChatJoinChannel(ChName):
     _global_chat_join_channel(ChName)
 
 
-global_chat_leave_channel = _ScriptMethod(362)  # SCGlobalChatLeaveChannel
+global_chat_leave_channel = _ScriptMethod(510)  # SCGlobalChatLeaveChannel
 
 
 def GlobalChatLeaveChannel():
     global_chat_leave_channel()
 
 
-_global_chat_send_msg = _ScriptMethod(363)  # SCGlobalChatSendMsg
+_global_chat_send_msg = _ScriptMethod(511)  # SCGlobalChatSendMsg
 _global_chat_send_msg.argtypes = [_str]  # MsgText
 
 
@@ -4612,7 +4612,7 @@ def GlobalChatSendMsg(MsgText):
     _global_chat_send_msg(MsgText)
 
 
-global_chat_active_channel = _ScriptMethod(364)  # SCGlobalChatActiveChannel
+global_chat_active_channel = _ScriptMethod(512)  # SCGlobalChatActiveChannel
 global_chat_active_channel.restype = _str
 
 
@@ -4620,7 +4620,7 @@ def GlobalChatActiveChannel():
     return global_chat_active_channel()
 
 
-global_chat_channel_list = _ScriptMethod(365)  # SCGlobalChatChannelsList
+global_chat_channel_list = _ScriptMethod(513)  # SCGlobalChatChannelsList
 global_chat_channel_list.restype = _buffer
 
 
@@ -4636,7 +4636,7 @@ def GlobalChatChannelsList():
     return result
 
 
-_set_open_doors = _ScriptMethod(400)  # SetMoveOpenDoor
+_set_open_doors = _ScriptMethod(467)  # SetMoveOpenDoor
 _set_open_doors.argtypes = [_bool]  # Value
 
 
@@ -4644,7 +4644,7 @@ def SetMoveOpenDoor(Value):
     _set_open_doors(Value)
 
 
-_get_open_doors = _ScriptMethod(401)  # GetMoveOpenDoor
+_get_open_doors = _ScriptMethod(468)  # GetMoveOpenDoor
 _get_open_doors.restype = _bool
 
 
@@ -4652,7 +4652,7 @@ def GetMoveOpenDoor():
     return _get_open_doors()
 
 
-_set_move_through_npc = _ScriptMethod(402)  # SetMoveThroughNPC
+_set_move_through_npc = _ScriptMethod(469)  # SetMoveThroughNPC
 _set_move_through_npc.argtypes = [_ushort]  # Value
 
 
@@ -4660,7 +4660,7 @@ def SetMoveThroughNPC(Value):
     _set_move_through_npc(Value)
 
 
-_get_move_through_npc = _ScriptMethod(403)  # GetMoveThroughNPC
+_get_move_through_npc = _ScriptMethod(470)  # GetMoveThroughNPC
 _get_move_through_npc.restype = _ushort
 
 
@@ -4668,7 +4668,7 @@ def GetMoveThroughNPC():
     return _get_move_through_npc()
 
 
-_set_move_through_corner = _ScriptMethod(404)  # SetMoveThroughCorner
+_set_move_through_corner = _ScriptMethod(471)  # SetMoveThroughCorner
 _set_move_through_corner.argtypes = [_bool]  # Value
 
 
@@ -4676,7 +4676,7 @@ def SetMoveThroughCorner(Value):
     _set_move_through_corner(Value)
 
 
-_get_move_through_corner = _ScriptMethod(405)  # GetMoveThroughCorner
+_get_move_through_corner = _ScriptMethod(472)  # GetMoveThroughCorner
 _get_move_through_corner.restype = _bool
 
 
@@ -4684,7 +4684,7 @@ def GetMoveThroughCorner():
     return _get_move_through_corner()
 
 
-_set_move_heuristic_mult = _ScriptMethod(406)  # SetMoveHeuristicMult
+_set_move_heuristic_mult = _ScriptMethod(473)  # SetMoveHeuristicMult
 _set_move_heuristic_mult.argtypes = [_int]  # Value
 
 
@@ -4692,7 +4692,7 @@ def SetMoveHeuristicMult(Value):
     _set_move_heuristic_mult(Value)
 
 
-_get_move_heuristic_mult = _ScriptMethod(407)  # GetMoveHeuristicMult
+_get_move_heuristic_mult = _ScriptMethod(474)  # GetMoveHeuristicMult
 _get_move_heuristic_mult.restype = _int
 
 
@@ -4700,7 +4700,7 @@ def GetMoveHeuristicMult():
     return _get_move_heuristic_mult()
 
 
-_set_move_check_stamina = _ScriptMethod(408)  # SetMoveCheckStamina
+_set_move_check_stamina = _ScriptMethod(475)  # SetMoveCheckStamina
 _set_move_check_stamina.argtypes = [_ushort]  # Value
 
 
@@ -4708,7 +4708,7 @@ def SetMoveCheckStamina(Value):
     _set_move_check_stamina(Value)
 
 
-_get_move_check_stamina = _ScriptMethod(409)  # GetMoveCheckStamina
+_get_move_check_stamina = _ScriptMethod(476)  # GetMoveCheckStamina
 _get_move_check_stamina.restype = _ushort
 
 
@@ -4716,7 +4716,7 @@ def GetMoveCheckStamina():
     return _get_move_check_stamina()
 
 
-_set_move_turn_cost = _ScriptMethod(410)  # SetMoveTurnCost
+_set_move_turn_cost = _ScriptMethod(477)  # SetMoveTurnCost
 _set_move_turn_cost.argtypes = [_int]  # Value
 
 
@@ -4724,7 +4724,7 @@ def SetMoveTurnCost(Value):
     _set_move_turn_cost(Value)
 
 
-_get_move_turn_cost = _ScriptMethod(411)  # GetMoveTurnCost
+_get_move_turn_cost = _ScriptMethod(478)  # GetMoveTurnCost
 _get_move_turn_cost.restype = _int
 
 
@@ -4732,7 +4732,7 @@ def GetMoveTurnCost():
     return _get_move_turn_cost()
 
 
-_set_move_between_two_corners = _ScriptMethod(412)  # SetMoveBetweenTwoCorners
+_set_move_between_two_corners = _ScriptMethod(479)  # SetMoveBetweenTwoCorners
 _set_move_between_two_corners.argtypes = [_bool]  # Value
 
 
@@ -4740,7 +4740,7 @@ def SetMoveBetweenTwoCorners(Value):
     _set_move_between_two_corners(Value)
 
 
-_get_move_between_two_corners = _ScriptMethod(413)  # GetMoveBetweenTwoCorners
+_get_move_between_two_corners = _ScriptMethod(480)  # GetMoveBetweenTwoCorners
 _get_move_between_two_corners.restype = _bool
 
 
@@ -4766,7 +4766,7 @@ def PlayWav(FileName):
         AddToSystemJournal(error)
 
 
-_get_multis = _ScriptMethod(347)  # GetMultis
+_get_multis = _ScriptMethod(516)  # GetMultis
 _get_multis.restype = _buffer
 
 
@@ -4786,7 +4786,7 @@ def GetMultis():
     return result
 
 
-_get_menu_items_ex = _ScriptMethod(358)  # GetMenuItemsEx
+_get_menu_items_ex = _ScriptMethod(377)  # GetMenuItemsEx
 _get_menu_items_ex.restype = _buffer
 _get_menu_items_ex.argtypes = [_str]
 
@@ -4838,7 +4838,7 @@ def GetMenuItemsEx(MenuCaption):
     return result
 
 
-_close_client_gump = _ScriptMethod(342)  # CloseClientGump
+_close_client_gump = _ScriptMethod(444)  # CloseClientGump
 _close_client_gump.argtypes = [_uint]  # ID
 
 
@@ -4846,7 +4846,7 @@ def CloseClientGump(ID):
     _close_client_gump(ID)
 
 
-_get_next_step_z = _ScriptMethod(366)  # GetNextStepZ
+_get_next_step_z = _ScriptMethod(489)  # GetNextStepZ
 _get_next_step_z.restype = _byte
 _get_next_step_z.argtypes = [_ushort,  # CurrX
                              _ushort,  # CurrY
@@ -4860,7 +4860,7 @@ def GetNextStepZ(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ):
     return _get_next_step_z(CurrX, CurrY, DestX, DestY, WorldNum, CurrZ)
 
 
-_client_hide = _ScriptMethod(368)  # ClientHide
+_client_hide = _ScriptMethod(445)  # ClientHide
 _client_hide.restype = _bool
 _client_hide.argtypes = [_uint]  # ID
 
@@ -4869,7 +4869,7 @@ def ClientHide(ID):
     return _client_hide(ID)
 
 
-_get_skill_lock_state = _ScriptMethod(369)  # GetSkillLockState
+_get_skill_lock_state = _ScriptMethod(255)  # GetSkillLockState
 _get_skill_lock_state.restype = _byte
 _get_skill_lock_state.argtypes = [_int]  # SkillName
 
@@ -4878,7 +4878,7 @@ def GetSkillLockState(SkillName):
     return _get_skill_lock_state(_get_skill_id(SkillName))
 
 
-_get_stat_lock_state = _ScriptMethod(372)  # GetStatLockState
+_get_stat_lock_state = _ScriptMethod(253)  # GetStatLockState
 _get_stat_lock_state.restype = _byte
 _get_stat_lock_state.argtypes = [_byte]  # StatId
 
@@ -4887,7 +4887,7 @@ def GetStatLockState(StatId):
     return _get_stat_lock_state(StatId)
 
 
-_equip_last_weapon = _ScriptMethod(370)
+_equip_last_weapon = _ScriptMethod(410)
 
 
 def EquipLastWeapon():
@@ -4896,7 +4896,7 @@ def EquipLastWeapon():
 
 # Book functions
 
-_book_get_page_text = _ScriptMethod(373)
+_book_get_page_text = _ScriptMethod(504)
 _book_get_page_text.restype = _str
 _book_get_page_text.argtypes = [_ushort]
 
@@ -4905,7 +4905,7 @@ def BookGetPageText(Page):
     return _book_get_page_text(Page)
 
 
-_book_set_text = _ScriptMethod(374)
+_book_set_text = _ScriptMethod(505)
 _book_set_text.argtypes = [_str]
 
 
@@ -4913,7 +4913,7 @@ def BookSetText(Text):
     _book_set_text(Text)
 
 
-_book_set_page_text = _ScriptMethod(375)
+_book_set_page_text = _ScriptMethod(506)
 _book_set_page_text.argtypes = [_ushort, _str]
 
 
@@ -4921,14 +4921,14 @@ def BookSetPageText(Page, Text):
     _book_set_page_text(Page, Text)
 
 
-_book_clear_text = _ScriptMethod(376)
+_book_clear_text = _ScriptMethod(507)
 
 
 def BookClearText():
     _book_clear_text()
 
 
-_book_set_header = _ScriptMethod(377)
+_book_set_header = _ScriptMethod(508)
 _book_set_header.argtypes = [_str, _str]
 
 
@@ -4938,7 +4938,7 @@ def BookSetHeader(title, author):
 
 # Character creation
 
-_create_char = _ScriptMethod(371)
+_create_char = _ScriptMethod(530)
 _create_char.argtypes =[
     _str,  # ProfileName
     _str,  # ShardName
@@ -5005,7 +5005,7 @@ def CreateChar(
 
 # Script control functions
 
-_get_script_count = _ScriptMethod(450)
+_get_script_count = _ScriptMethod(67)
 _get_script_count.restype = _ushort
 
 
@@ -5013,7 +5013,7 @@ def GetScriptCount():
     return _get_script_count()
 
 
-_get_script_path = _ScriptMethod(451)
+_get_script_path = _ScriptMethod(68)
 _get_script_path.argtypes = [_ushort]
 _get_script_path.restype = _str
 
@@ -5022,7 +5022,7 @@ def GetScriptPath(ScriptIndex):
     return _get_script_path(ScriptIndex)
 
 
-_get_script_state = _ScriptMethod(452)
+_get_script_state = _ScriptMethod(69)
 _get_script_state.argtypes = [_ushort]
 _get_script_state.restype = _ubyte
 
@@ -5031,7 +5031,7 @@ def GetScriptState(ScriptIndex):
     return _get_script_state(ScriptIndex)
 
 
-_start_script = _ScriptMethod(453)
+_start_script = _ScriptMethod(70)
 _start_script.argtypes = [_str]
 _start_script.restype = _ushort
 
@@ -5040,7 +5040,7 @@ def StartScript(ScriptPath):
     return _start_script(ScriptPath)
 
 
-_stop_script = _ScriptMethod(454)
+_stop_script = _ScriptMethod(71)
 _stop_script.argtypes = [_ushort]
 
 
@@ -5048,7 +5048,7 @@ def StopScript(ScriptIndex):
     _stop_script(ScriptIndex)
 
 
-_pause_resume_sel_script = _ScriptMethod(455)
+_pause_resume_sel_script = _ScriptMethod(72)
 _pause_resume_sel_script.argtypes = [_ushort]
 
 
@@ -5056,14 +5056,14 @@ def PauseResumeScript(ScriptIndex):
     _pause_resume_sel_script(ScriptIndex)
 
 
-_stop_all_scripts = _ScriptMethod(456)
+_stop_all_scripts = _ScriptMethod(73)
 
 
 def StopAllScripts():
     _stop_all_scripts()
 
 
-_set_script_name = _ScriptMethod(457)
+_set_script_name = _ScriptMethod(74)
 _set_script_name.argtypes = [_ushort, _str]
 
 
@@ -5071,7 +5071,7 @@ def SetScriptName(ScriptIndex, ScriptName):
     return _set_script_name(ScriptIndex, ScriptName)
 
 
-_get_script_name = _ScriptMethod(458)
+_get_script_name = _ScriptMethod(75)
 _get_script_name.argtypes = [_ushort]
 _get_script_name.restype = _str
 
@@ -5080,7 +5080,7 @@ def GetScriptName(ScriptIndex):
     return _get_script_name(ScriptIndex)
 
 
-_add_user_static = _ScriptMethod(383)
+_add_user_static = _ScriptMethod(519)
 _add_user_static.argtypes = [_buffer, _ubyte]
 _add_user_static.restype = _int
 
@@ -5094,7 +5094,7 @@ def AddUserStaticItem(StaticItem, WorldNum):
     return AddUserStatic(StaticItem["tile"], StaticItem["x"], StaticItem["y"], StaticItem["z"], StaticItem["color"], WorldNum)
 
 
-_remove_user_static = _ScriptMethod(384)
+_remove_user_static = _ScriptMethod(520)
 _remove_user_static.argtypes = [_int]
 _remove_user_static.restype = _bool
 
@@ -5103,13 +5103,13 @@ def RemoveUserStatic(ID):
     return _remove_user_static(ID)
 
 
-_clear_user_static = _ScriptMethod(385)
+_clear_user_static = _ScriptMethod(521)
 
 
 def ClearUserStatics():
     return _clear_user_static()
 
-_get_multi_parts_at_position = _ScriptMethod(380)
+_get_multi_parts_at_position = _ScriptMethod(517)
 _get_multi_parts_at_position.argtypes = [_ushort, _ushort]
 _get_multi_parts_at_position.restype = _buffer
 def GetMultiPartsAtPosition(X, Y):
@@ -5126,7 +5126,7 @@ def GetMultiPartsAtPosition(X, Y):
     result.append(data)
     return result
 
-_get_multi_all_parts = _ScriptMethod(381)
+_get_multi_all_parts = _ScriptMethod(518)
 _get_multi_all_parts.argtypes = [_uint]
 _get_multi_all_parts.restype = _buffer
 
@@ -5145,13 +5145,13 @@ def GetMultiAllParts(MultiID):
     return result
 
 
-_get_script_params = _ScriptMethod(459)
+_get_script_params = _ScriptMethod(76)
 _get_script_params.restype = _uint
 def GetScriptParams():
     return _get_script_params()
 
     
-_get_script_list = _ScriptMethod(460)
+_get_script_list = _ScriptMethod(77)
 _get_script_list.restype = _buffer
 
 def GetScriptsList():
@@ -5171,7 +5171,7 @@ def GetScriptsList():
     return result
 
 
-_target_by_resource = _ScriptMethod(389)
+_target_by_resource = _ScriptMethod(279)
 _target_by_resource.argtypes = [_uint, _ushort]
 
 def TargetByResource(ID, Resource):
@@ -5195,10 +5195,57 @@ def TargetByResource(ID, Resource):
         else:
             raise ValueError(f"Unknown resource name: {resource_name}")
 
-_get_player_status_text = _ScriptMethod(390)  # GetPlayerStatusText
+_get_player_status_text = _ScriptMethod(316)  # GetPlayerStatusText
 _get_player_status_text.restype = _str
 _get_player_status_text.argtypes = [_uint]  # ObjID
 
 
 def GetPlayerStatusText(ObjID):
     return _get_player_status_text(ObjID)
+
+
+_get_show_ipc_exception = _ScriptMethod(78)  # SCGetShowIPCExceptionWindow
+_get_show_ipc_exception.restype = _bool
+
+def GetShowIPCException():
+    return _get_show_ipc_exception()
+
+
+_set_show_ipc_exception = _ScriptMethod(79)  # SCSetShowIPCExceptionWindow
+_set_show_ipc_exception.argtypes = [_bool]
+
+def SetShowIPCException(Value):
+    return _set_show_ipc_exception(Value)
+
+
+_get_now_unix = _ScriptMethod(90)  # SCGetNow
+_get_now_unix.restype = _long
+
+def GetNowUnix():
+    return _get_now_unix()
+
+
+_get_now = _ScriptMethod(91)  # SCGetNowUnix
+_get_now.restype = _double
+
+def GetNow():
+    return _ddt2pdt(_get_now())
+
+
+_get_chars_list_for_shard = _ScriptMethod(531)  # SCGetCharsListForShard
+_get_chars_list_for_shard.restype = _buffer
+
+
+def GetCharsListForShard():
+    data = _get_chars_list_for_shard()
+    count = _uint.from_buffer(data)
+    fmt = '<2Hb'
+    result = []
+    offset = count.size
+    while 42:
+        if offset >= len(data) - 1:
+            break
+        string = _str.from_buffer(data, offset)
+        offset += string.size
+        result.append(string.value)
+    return result

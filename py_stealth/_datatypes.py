@@ -3,7 +3,7 @@
 from .config import STEALTH_CODEC, SCRIPT_CODEC
 
 __all__ = ['_char', '_byte', '_ubyte', '_short', '_ushort', '_int',
-           '_uint', '_float', '_double', '_ulong', '_bool', '_str', '_buffer']
+           '_uint', '_float', '_double', '_long', '_ulong', '_bool', '_str', '_buffer']
 
 UNICODE_LENGTH = len('s'.encode(STEALTH_CODEC))
 
