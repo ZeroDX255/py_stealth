@@ -1462,22 +1462,28 @@ def HighJournal():
 
 
 def WaitJournalLine(StartTime, Str, MaxWaitTimeMS=0):
-    time = {'milliseconds': MaxWaitTimeMS} if MaxWaitTimeMS else {'weeks': 999}
-    stop = StartTime + _datetime.timedelta(**time)
-    while _datetime.datetime.now() <= stop:
-        if InJournalBetweenTimes(Str, StartTime, stop) >= 0:
+    stop = StartTime.timestamp() + (MaxWaitTimeMS or 604800000) / 1000
+    last_check_time = StartTime  
+    
+    while _datetime.datetime.now().timestamp() <= stop:
+        current_time = _datetime.datetime.now()
+        if InJournalBetweenTimes(Str, last_check_time, current_time) >= 0: 
             return True
+        last_check_time = current_time 
         Wait(10)
     return False
 
 
 def WaitJournalLineSystem(StartTime, Str, MaxWaitTimeMS=0):
-    time = {'milliseconds': MaxWaitTimeMS} if MaxWaitTimeMS else {'weeks': 999}
-    stop = StartTime + _datetime.timedelta(**time)
-    while _datetime.datetime.now() <= stop:
-        if InJournalBetweenTimes(Str, StartTime, stop) >= 0:
+    stop = StartTime.timestamp() + (MaxWaitTimeMS or 604800000) / 1000
+    last_check_time = StartTime  
+    
+    while _datetime.datetime.now().timestamp() <= stop:
+        current_time = _datetime.datetime.now()
+        if InJournalBetweenTimes(Str, last_check_time, current_time) >= 0: 
             if LineName() == 'System':
                 return True
+        last_check_time = current_time 
         Wait(10)
     return False
 
