@@ -828,9 +828,14 @@ _get_skill_id_from_socket.argtypes = [_str]  # SkillName
 
 
 def _get_skill_id(name):
-    skill_id = _get_skill_id_from_socket(name)
+    if isinstance(name, str):
+        skill_id = _get_skill_id_from_socket(name)
+    else:
+        skill_id = name
+
     if skill_id < 0:
-        raise ValueError('Unknown skill name "' + name + '".')
+        raise ValueError(f'Unknown skill name "{name}".')
+
     return skill_id
 
 
@@ -1159,9 +1164,13 @@ _SPELLS = {
 
 
 def _get_spell_id(name):
+    if isinstance(name, int):
+        return name
+
     name = name.lower()
     if name not in _SPELLS:
         raise ValueError('Unknown spell name "' + name + '".')
+
     return _SPELLS[name]
 
 
@@ -1462,10 +1471,10 @@ def HighJournal():
 
 
 def WaitJournalLine(StartTime, Str, MaxWaitTimeMS=0):
-    stop = StartTime.timestamp() + (MaxWaitTimeMS or 604800000) / 1000
-    last_check_time = StartTime  
-    
-    while _datetime.datetime.now().timestamp() <= stop:
+    stop = StartTime + _datetime.timedelta(milliseconds=MaxWaitTimeMS) if MaxWaitTimeMS else _datetime.datetime.max
+    last_check_time = StartTime
+
+    while _datetime.datetime.now() <= stop:
         current_time = _datetime.datetime.now()
         if InJournalBetweenTimes(Str, last_check_time, current_time) >= 0: 
             return True
@@ -1475,10 +1484,10 @@ def WaitJournalLine(StartTime, Str, MaxWaitTimeMS=0):
 
 
 def WaitJournalLineSystem(StartTime, Str, MaxWaitTimeMS=0):
-    stop = StartTime.timestamp() + (MaxWaitTimeMS or 604800000) / 1000
-    last_check_time = StartTime  
+    stop = StartTime + _datetime.timedelta(milliseconds=MaxWaitTimeMS) if MaxWaitTimeMS else _datetime.datetime.max
+    last_check_time = StartTime
     
-    while _datetime.datetime.now().timestamp() <= stop:
+    while _datetime.datetime.now() <= stop:
         current_time = _datetime.datetime.now()
         if InJournalBetweenTimes(Str, last_check_time, current_time) >= 0: 
             if LineName() == 'System':
@@ -1816,11 +1825,21 @@ def GetTooltipRec(ObjID):
 
 _get_object_tooltip = _ScriptMethod(328)  # GetClilocByID
 _get_object_tooltip.restype = _str
-_get_object_tooltip.argtypes = [_uint]  # ClilocID
+_get_object_tooltip.argtypes = [_uint,      # ClilocID
+                                _uint,      # count of Params
+                                _buffer]    # Params
 
 
-def GetClilocByID(ClilocID):
-    return _get_object_tooltip(ClilocID)
+def GetClilocByID(ClilocID, Params=None):
+    if Params is None:
+        Params = []
+
+    count = len(Params)
+    params = bytes()
+    for param in Params:
+        params += _str(param).serialize()
+
+    return _get_object_tooltip(ClilocID, count, params)
 
 
 _get_quantity = _ScriptMethod(329)  # GetQuantity
@@ -5213,14 +5232,14 @@ def GetPlayerStatusText(ObjID):
 _get_show_ipc_exception = _ScriptMethod(78)  # SCGetShowIPCExceptionWindow
 _get_show_ipc_exception.restype = _bool
 
-def GetShowIPCException():
+def GetShowIPCExceptionWindow():
     return _get_show_ipc_exception()
 
 
 _set_show_ipc_exception = _ScriptMethod(79)  # SCSetShowIPCExceptionWindow
 _set_show_ipc_exception.argtypes = [_bool]
 
-def SetShowIPCException(Value):
+def SetShowIPCExceptionWindow(Value):
     return _set_show_ipc_exception(Value)
 
 
